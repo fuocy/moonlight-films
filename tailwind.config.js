@@ -1,11 +1,18 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        dark: "#0c1117",
-        "dark-lighten": "#24292e",
-        primary: "#5179ff",
+        "black-lighten": "#161616",
+        // primary: "#5179ff",
+        primary: "#bd0000",
+        gray: "#989898",
+        "gray-darken": "#3a3939",
+      },
+      fontFamily: {
+        roboto: ["Roboto", ...defaultTheme.fontFamily.sans],
       },
     },
   },

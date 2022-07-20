@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
+
+body {
+  @apply bg-black text-gray font-roboto text-sm;
+}
+
+.tw-flex-center {
+  @apply flex justify-center items-center;
+}
+
+.tw-black-backdrop {
+  background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.85) 65%);
+}
+
+:root {
+  --swiper-theme-color: white !important;
+  --swiper-navigation-size: 15px !important;
+}
+
+.swiper-button-prev {
+  @apply !top-[6%] !left-[2%];
+}
+
+.swiper-button-next {
+  @apply !top-[6%] !left-[5%];
+}
+
+.tw-multiline-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+/* scrollbar custom styling */
