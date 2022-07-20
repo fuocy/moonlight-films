@@ -4,7 +4,6 @@ import { HomeMovies } from "../shared/types";
 export const getHomeMovies = async (): Promise<HomeMovies> => {
   const endpoints: { [key: string]: string } = {
     Trending: "/trending/movie/day",
-    "Now Playing": "/movie/now_playing",
     Popular: "/movie/popular",
     "Top Rated": "/movie/top_rated",
     Upcoming: "/movie/upcoming",
@@ -13,6 +12,8 @@ export const getHomeMovies = async (): Promise<HomeMovies> => {
   const responses = await Promise.all(
     Object.entries(endpoints).map((endpoint) => axios.get(endpoint[1]))
   );
+
+  console.log(responses);
 
   const data = responses.reduce((final, current, index) => {
     final[Object.entries(endpoints)[index][0]] = current.data.results.map(
@@ -28,7 +29,7 @@ export const getHomeMovies = async (): Promise<HomeMovies> => {
   return data;
 };
 
-// Change any to real Type later //BUG
+// Change any to real DetailType later //BUG
 export const getDetailMovies = async (movies: Item[]): Promise<any> => {
   const detailRes = await Promise.all(
     movies.map((movie) => axios.get(`/movie/${movie.id}`))

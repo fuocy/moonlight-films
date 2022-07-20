@@ -16,9 +16,8 @@ interface BannerSliderProps {
 }
 
 const BannerSlider: FC<BannerSliderProps> = ({ films, dataDetail }) => {
-  console.log(dataDetail);
   return (
-    <div className="mt-6 relative h-0 pb-[45%]">
+    <div className="mt-6 relative h-0 pb-[45%] tw-banner-slider">
       <Swiper
         modules={[Navigation, Autoplay]}
         navigation
@@ -52,7 +51,7 @@ const BannerSlider: FC<BannerSliderProps> = ({ films, dataDetail }) => {
               </div>
 
               <div className="absolute top-[50%] -translate-y-1/2 left-[5%] max-w-md ">
-                <h2 className="text-5xl text-primary font-black tracking-wide">
+                <h2 className="text-5xl text-primary font-black tracking-wide tw-multiline-ellipsis-2">
                   {film.title || film.name}
                 </h2>
                 <p className="text-white font-semibold text-2xl mt-6">
@@ -63,7 +62,7 @@ const BannerSlider: FC<BannerSliderProps> = ({ films, dataDetail }) => {
                     dataDetail[index].translation[4] ||
                     dataDetail[index].translation[5]}
                 </p>
-                <p className="text-lg mt-1">
+                <p className="text-base mt-1">
                   {film.release_date && `Release date: ${film.release_date}`}
                   {film.first_air_date &&
                     `Last episode date: ${film.first_air_date}`}
@@ -78,13 +77,14 @@ const BannerSlider: FC<BannerSliderProps> = ({ films, dataDetail }) => {
                     </div>
                   ))}
                 </div>
-                <p className="mt-3 text-lg  tw-multiline-ellipsis">
+                <p className="mt-3 text-base  tw-multiline-ellipsis">
                   {film.overview}
                 </p>
               </div>
             </Link>
           </SwiperSlide>
         ))}
+        <div className="absolute top-0 left-0 w-[8%] h-[11%] z-10"></div>
       </Swiper>
     </div>
   );
