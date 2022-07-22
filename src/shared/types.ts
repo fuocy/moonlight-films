@@ -28,6 +28,6 @@ export interface Item {
 
 ////////////////////////////////////////////
 // Type for async function's returned value
-export interface HomeMovies {
+export interface HomeFilms {
   [key: string]: Item[];
 }

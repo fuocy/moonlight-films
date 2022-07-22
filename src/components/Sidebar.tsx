@@ -9,11 +9,12 @@ import { FiSettings } from "react-icons/fi";
 import { TbBrandTiktok } from "react-icons/tb";
 import { HiOutlineLogout } from "react-icons/hi";
 import { HiOutlineLogin } from "react-icons/hi";
+import { BiSearch } from "react-icons/bi";
 const Sidebar: FC = () => {
   const location = useLocation();
 
   return (
-    <div className="shrink-0 max-w-[260px] w-[90vw] mt-4 pl-8">
+    <div className="shrink-0 max-w-[260px] w-[90vw] mt-4 pl-8 sticky top-4">
       <Link to="/" className="flex items-center gap-3">
         <LazyLoadImage
           alt="Logo"
@@ -22,7 +23,8 @@ const Sidebar: FC = () => {
           className="w-10 h-10"
         />
         <h1 className="text-xl text-white tracking-widest font-semibold uppercase">
-          Moonlight
+          <span>Moon</span>
+          <span className="text-primary">light</span>
         </h1>
       </Link>
 
@@ -59,6 +61,17 @@ const Sidebar: FC = () => {
         >
           <TbBrandTiktok size={30} />
           <p>Shorts</p>
+        </Link>
+
+        <Link
+          to="/search"
+          className={`flex md:hidden gap-6 items-center  ${
+            location.pathname === "/search" &&
+            "text-primary border-r-4 border-primary font-medium"
+          }`}
+        >
+          <BiSearch size={25} />
+          <p>Search</p>
         </Link>
       </div>
 
@@ -102,9 +115,9 @@ const Sidebar: FC = () => {
 
         <Link
           to={`/login&redirect=${encodeURIComponent(location.pathname)}`}
-          className="flex gap-6 items-center"
+          className="flex gap-5 items-center"
         >
-          <HiOutlineLogin size={25} />
+          <HiOutlineLogin size={30} />
           <p>Login</p>
         </Link>
 

@@ -1,44 +1,84 @@
 import { FC, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getDetailMovies, getHomeMovies } from "../services/home";
-import { HomeMovies, Item } from "../shared/types";
+import {
+  getDetailMovies,
+  getDetailTvs,
+  getHomeMovies,
+  getHomeTVs,
+} from "../services/home";
+import { HomeFilms, Item } from "../shared/types";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Title from "../components/Title";
 import BannerSlider from "../components/Slider/BannerSlider";
 import SectionSlider from "../components/Slider/SectionSlider";
 import Sidebar from "../components/Sidebar";
+import SearchBox from "../components/Search/SearchBox";
+import RecommendGenres from "../components/Search/RecommendGenres";
+import TrendingNow from "../components/Search/TrendingNow";
+import MainHomeFilms from "../components/MainHomeFilm";
 const Home: FC = () => {
   const [currentTab, setCurrentTab] = useState("movie");
 
-  const { data, isLoading, isError, error } = useQuery<HomeMovies, Error>(
-    ["home-movies"],
-    getHomeMovies
+  const {
+    data: dataMovie,
+    isLoading: isLoadingMovie,
+    isError: isErrorMovie,
+    error: errorMovie,
+  } = useQuery<HomeFilms, Error>(["home-movies"], getHomeMovies);
+
+  const {
+    data: dataMovieDetail,
+    isLoading: isLoadingMovieDetail,
+    isError: isErrorMovieDetail,
+    error: errorMovieDetail,
+  } = useQuery<any, Error>(
+    ["detailMovies", dataMovie?.Trending],
+    () => getDetailMovies(dataMovie?.Trending as Item[]),
+    { enabled: !!dataMovie?.Trending }
   );
 
   const {
-    data: dataDetail,
-    isLoading: isLoadingDetail,
-    isError: isErrorDetail,
-    error: errorDetail,
+    data: dataTV,
+    isLoading: isLoadingTV,
+    isError: isErrorTV,
+    error: errorTV,
+  } = useQuery<HomeFilms, Error>(["home-tvs"], getHomeTVs);
+
+  const {
+    data: dataTVDetail,
+    isLoading: isLoadingTVDetail,
+    isError: isErrorTVDetail,
+    error: errorTVDetail,
   } = useQuery<any, Error>(
-    ["detailMovies", data?.Trending],
-    () => getDetailMovies(data?.Trending as Item[]),
-    { enabled: !!data?.Trending }
+    ["detailTvs", dataTV?.Trending],
+    () => getDetailTvs(dataTV?.Trending as Item[]),
+    { enabled: !!dataTV?.Trending }
   );
 
-  if (isError) return <p>ERROR: ${error.message}</p>;
+  // MOVIE
+  if (isErrorMovie) return <p>ERROR: ${errorMovie.message}</p>;
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoadingMovie) return <p>Loading...</p>;
 
-  if (isErrorDetail) return <p>ERROR: ${errorDetail.message}</p>;
+  if (isErrorMovieDetail) return <p>ERROR: ${errorMovieDetail.message}</p>;
 
-  if (isLoadingDetail) return <p>Loading...</p>;
+  if (isLoadingMovieDetail) return <p>Loading...</p>;
+
+  // TV
+
+  if (isErrorTV) return <p>ERROR: ${errorTV.message}</p>;
+
+  if (isLoadingTV) return <p>Loading...</p>;
+
+  if (isErrorTVDetail) return <p>ERROR: ${errorTVDetail.message}</p>;
+
+  if (isLoadingTVDetail) return <p>Loading...</p>;
 
   return (
     <>
       <Title value="Moonlight | Watching Website" />
-      <div className="flex">
+      <div className="flex items-start">
         <Sidebar />
 
         <div className="flex-grow py-7 border-x px-[2vw] border-gray-darken min-h-screen">
@@ -76,24 +116,19 @@ const Home: FC = () => {
             </div>
           </div>
 
-          <BannerSlider films={data.Trending} dataDetail={dataDetail} />
-
-          <ul className="flex flex-col gap-10 mt-16">
-            {Object.entries(data)
-              .filter((section) => section[0] !== "Trending")
-              .map((section, index) => (
-                <li key={index}>
-                  <h2 className="text-xl text-white font-medium tracking-wider mb-3">
-                    {section[0]}
-                  </h2>
-
-                  <SectionSlider films={section[1]} />
-                </li>
-              ))}
-          </ul>
+          {currentTab === "movie" && (
+            <MainHomeFilms data={dataMovie} dataDetail={dataMovieDetail} />
+          )}
+          {currentTab === "tv" && (
+            <MainHomeFilms data={dataTV} dataDetail={dataTVDetail} />
+          )}
         </div>
 
-        <div className="shrink-0 max-w-[310px] w-full hidden md:block"></div>
+        <div className="shrink-0 max-w-[310px] w-full hidden md:block px-6 top-0 sticky ">
+          <SearchBox />
+          <RecommendGenres />
+          <TrendingNow />
+        </div>
       </div>
     </>
   );

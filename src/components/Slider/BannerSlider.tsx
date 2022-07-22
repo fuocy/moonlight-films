@@ -46,7 +46,7 @@ const BannerSlider: FC<BannerSliderProps> = ({ films, dataDetail }) => {
                 <span>{film.vote_average.toFixed(1)}</span>
                 <AiFillStar size={15} />
               </div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-16 h-16 rounded-full bg-gradient-to-br from-primary to-orange-600 tw-flex-center z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-700">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-16 h-16 rounded-full bg-gradient-to-br from-primary to-[#c353b4] tw-flex-center z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-700">
                 <BsFillPlayFill size={35} className="text-white" />
               </div>
 
@@ -62,7 +62,7 @@ const BannerSlider: FC<BannerSliderProps> = ({ films, dataDetail }) => {
                     dataDetail[index].translation[4] ||
                     dataDetail[index].translation[5]}
                 </p>
-                <p className="text-base mt-1">
+                <p className="mt-1">
                   {film.release_date && `Release date: ${film.release_date}`}
                   {film.first_air_date &&
                     `Last episode date: ${film.first_air_date}`}
