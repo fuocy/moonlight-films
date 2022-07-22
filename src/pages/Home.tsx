@@ -10,8 +10,6 @@ import { HomeFilms, Item } from "../shared/types";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Title from "../components/Title";
-import BannerSlider from "../components/Slider/BannerSlider";
-import SectionSlider from "../components/Slider/SectionSlider";
 import Sidebar from "../components/Sidebar";
 import SearchBox from "../components/Search/SearchBox";
 import RecommendGenres from "../components/Search/RecommendGenres";
@@ -56,24 +54,13 @@ const Home: FC = () => {
     { enabled: !!dataTV?.Trending }
   );
 
-  // MOVIE
   if (isErrorMovie) return <p>ERROR: ${errorMovie.message}</p>;
-
-  if (isLoadingMovie) return <p>Loading...</p>;
 
   if (isErrorMovieDetail) return <p>ERROR: ${errorMovieDetail.message}</p>;
 
-  if (isLoadingMovieDetail) return <p>Loading...</p>;
-
-  // TV
-
   if (isErrorTV) return <p>ERROR: ${errorTV.message}</p>;
 
-  if (isLoadingTV) return <p>Loading...</p>;
-
   if (isErrorTVDetail) return <p>ERROR: ${errorTVDetail.message}</p>;
-
-  if (isLoadingTVDetail) return <p>Loading...</p>;
 
   return (
     <>
@@ -89,7 +76,7 @@ const Home: FC = () => {
                 className={`${
                   currentTab === "movie" &&
                   "text-white font-medium after:absolute after:bottom-0 after:left-[6%] after:bg-white after:h-[3px] after:w-5"
-                } transition duration-300`}
+                } transition duration-300 hover:text-white`}
               >
                 Movie
               </button>
@@ -98,7 +85,7 @@ const Home: FC = () => {
                 className={`${
                   currentTab === "tv" &&
                   "text-white font-medium after:absolute after:bottom-0 after:right-[13%] after:bg-white after:h-[3px] after:w-5"
-                } transition duration-300`}
+                } transition duration-300 hover:text-white`}
               >
                 TV Show
               </button>
@@ -111,20 +98,30 @@ const Home: FC = () => {
                 src="/avatarTest.jpg"
                 alt="User avatar"
                 className="w-7 h-7 rounded-full object-cover"
-                effect="blur"
+                effect="opacity"
               />
             </div>
           </div>
 
           {currentTab === "movie" && (
-            <MainHomeFilms data={dataMovie} dataDetail={dataMovieDetail} />
+            <MainHomeFilms
+              data={dataMovie}
+              dataDetail={dataMovieDetail}
+              isLoadingBanner={isLoadingMovieDetail}
+              isLoadingSection={isLoadingMovie}
+            />
           )}
           {currentTab === "tv" && (
-            <MainHomeFilms data={dataTV} dataDetail={dataTVDetail} />
+            <MainHomeFilms
+              data={dataTV}
+              dataDetail={dataTVDetail}
+              isLoadingBanner={isLoadingTVDetail}
+              isLoadingSection={isLoadingTV}
+            />
           )}
         </div>
 
-        <div className="shrink-0 max-w-[310px] w-full hidden md:block px-6 top-0 sticky ">
+        <div className="shrink-0 max-w-[310px] w-full hidden lg:block px-6 top-0 sticky ">
           <SearchBox />
           <RecommendGenres />
           <TrendingNow />

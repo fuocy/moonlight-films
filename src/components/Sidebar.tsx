@@ -19,7 +19,7 @@ const Sidebar: FC = () => {
         <LazyLoadImage
           alt="Logo"
           src="./logo.png"
-          effect="blur"
+          effect="opacity"
           className="w-10 h-10"
         />
         <h1 className="text-xl text-white tracking-widest font-semibold uppercase">
@@ -34,8 +34,8 @@ const Sidebar: FC = () => {
           to="/"
           className={`flex gap-6 items-center  ${
             location.pathname === "/" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <AiOutlineHome size={25} />
           <p>Home</p>
@@ -45,8 +45,8 @@ const Sidebar: FC = () => {
           to="/explore"
           className={`flex gap-6 items-center  ${
             location.pathname === "/explore" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <MdOutlineExplore size={25} />
           <p>Explore</p>
@@ -56,8 +56,8 @@ const Sidebar: FC = () => {
           to="/shorts"
           className={`flex gap-5 items-center  ${
             location.pathname === "/shorts" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <TbBrandTiktok size={30} />
           <p>Shorts</p>
@@ -65,10 +65,10 @@ const Sidebar: FC = () => {
 
         <Link
           to="/search"
-          className={`flex md:hidden gap-6 items-center  ${
+          className={`flex lg:hidden gap-6 items-center  ${
             location.pathname === "/search" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <BiSearch size={25} />
           <p>Search</p>
@@ -81,8 +81,8 @@ const Sidebar: FC = () => {
           to="/bookmarked"
           className={`flex gap-6 items-center  ${
             location.pathname === "/bookmarked" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <BsBookmarkHeart size={25} />
           <p>Bookmarked</p>
@@ -92,8 +92,8 @@ const Sidebar: FC = () => {
           to="/history"
           className={`flex gap-6 items-center  ${
             location.pathname === "/history" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <AiOutlineHistory size={25} />
           <p>History</p>
@@ -106,8 +106,8 @@ const Sidebar: FC = () => {
           to="/settings"
           className={`flex gap-6 items-center  ${
             location.pathname === "/settings" &&
-            "text-primary border-r-4 border-primary font-medium"
-          }`}
+            "!text-primary border-r-4 border-primary font-medium"
+          } hover:text-white transition duration-300`}
         >
           <FiSettings size={25} />
           <p>Settings</p>

@@ -6,6 +6,7 @@ export const getHomeMovies = async (): Promise<HomeFilms> => {
     Trending: "/trending/movie/day",
     Popular: "/movie/popular",
     "Top Rated": "/movie/top_rated",
+    Hot: "/trending/movie/day?page=2",
     Upcoming: "/movie/upcoming",
   };
 
@@ -70,8 +71,8 @@ export const getHomeTVs = async (): Promise<HomeFilms> => {
     Trending: "/trending/tv/day",
     Popular: "/tv/popular",
     "Top Rated": "/tv/top_rated",
+    Hot: "/trending/tv/day?page=2",
     "On the air": "/tv/on_the_air",
-    "Airing today": "/tv/airing_today",
   };
 
   const responses = await Promise.all(
