@@ -18,7 +18,7 @@ const Sidebar: FC = () => {
       <Link to="/" className="flex items-center gap-3">
         <LazyLoadImage
           alt="Logo"
-          src="./logo.png"
+          src="/logo.png"
           effect="opacity"
           className="w-10 h-10"
         />

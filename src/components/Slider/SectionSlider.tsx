@@ -13,7 +13,6 @@ interface SectionSliderProps {
 }
 
 const SectionSlider: FC<SectionSliderProps> = ({ films }) => {
-  console.log(new Array(Math.ceil(window.innerWidth / 200)).fill(""));
   return (
     <div className="relative">
       <Swiper

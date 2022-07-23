@@ -1,5 +1,5 @@
 import axios from "../shared/axios";
-import { Item } from "../shared/types";
+import { DetailMovie, Item } from "../shared/types";
 import { HomeFilms } from "../shared/types";
 export const getHomeMovies = async (): Promise<HomeFilms> => {
   const endpoints: { [key: string]: string } = {
@@ -28,7 +28,6 @@ export const getHomeMovies = async (): Promise<HomeFilms> => {
   return data;
 };
 
-// Change any to real DetailType later //BUG
 export const getDetailMovies = async (movies: Item[]): Promise<any> => {
   const detailRes = await Promise.all(
     movies.map((movie) => axios.get(`/movie/${movie.id}`))
@@ -62,7 +61,7 @@ export const getDetailMovies = async (movies: Item[]): Promise<any> => {
   }));
 };
 
-export const getTrendingNow = async (): Promise<any> => {
+export const getTrendingNow = async (): Promise<Item[]> => {
   return (await axios.get("/trending/all/day?page=2")).data.results;
 };
 
@@ -93,7 +92,6 @@ export const getHomeTVs = async (): Promise<HomeFilms> => {
   return data;
 };
 
-// Change any to real DetailType later //BUG
 export const getDetailTvs = async (tvs: Item[]): Promise<any> => {
   const detailRes = await Promise.all(
     tvs.map((tv) => axios.get(`/tv/${tv.id}`))
