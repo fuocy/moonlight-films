@@ -40,7 +40,7 @@ const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
 
   return (
     <div
-      className={`absolute left-6 right-6 top-7 group bg-dark-lighten rounded-full ${
+      className={`absolute z-10 shadow-md left-6 right-6 top-7 group bg-dark-lighten rounded-full ${
         suggestions.length > 0 && "!rounded-3xl"
       }`}
     >

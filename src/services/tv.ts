@@ -1,19 +1,19 @@
 import axios from "../shared/axios";
 import { FilmInfo, Reviews, Video } from "../shared/types";
 
-export const getMovieDetail = async (id: number): Promise<FilmInfo> => {
+export const getTVDetail = async (id: number): Promise<FilmInfo> => {
   const response = await Promise.all([
-    axios.get(`/movie/${id}`),
-    axios.get(`/movie/${id}/credits`),
-    axios.get(`/movie/${id}/reviews`),
-    axios.get(`/movie/${id}/recommendations`),
-    axios.get(`/movie/${id}/videos`),
+    axios.get(`/tv/${id}`),
+    axios.get(`/tv/${id}/credits`),
+    axios.get(`/tv/${id}/reviews`),
+    axios.get(`/tv/${id}/recommendations`),
+    axios.get(`/tv/${id}/videos`),
   ]);
 
-  const movieInfo = response.reduce((final, current, index) => {
+  const tvInfo = response.reduce((final, current, index) => {
     switch (index) {
       case 0:
-        final.detail = { ...current.data, media_type: "movie" };
+        final.detail = { ...current.data, media_type: "tv" };
         break;
 
       case 1:
@@ -43,5 +43,5 @@ export const getMovieDetail = async (id: number): Promise<FilmInfo> => {
     return final;
   }, {} as FilmInfo);
 
-  return movieInfo;
+  return tvInfo;
 };

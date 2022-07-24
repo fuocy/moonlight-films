@@ -16,7 +16,9 @@ import RecommendGenres from "../components/Search/RecommendGenres";
 import TrendingNow from "../components/Search/TrendingNow";
 import MainHomeFilms from "../components/MainHomeFilm";
 const Home: FC = () => {
-  const [currentTab, setCurrentTab] = useState("movie");
+  const [currentTab, setCurrentTab] = useState(
+    localStorage.getItem("currentTab") || "tv"
+  );
 
   const {
     data: dataMovie,
@@ -72,7 +74,10 @@ const Home: FC = () => {
           <div className="flex justify-between items-end">
             <div className="inline-flex gap-[40px] pb-[14px] border-b border-gray-darken relative">
               <button
-                onClick={() => setCurrentTab("movie")}
+                onClick={() => {
+                  setCurrentTab("movie");
+                  localStorage.setItem("currentTab", "movie");
+                }}
                 className={`${
                   currentTab === "movie" &&
                   "text-white font-medium after:absolute after:bottom-0 after:left-[6%] after:bg-white after:h-[3px] after:w-5"
@@ -81,7 +86,10 @@ const Home: FC = () => {
                 Movie
               </button>
               <button
-                onClick={() => setCurrentTab("tv")}
+                onClick={() => {
+                  setCurrentTab("tv");
+                  localStorage.setItem("currentTab", "tv");
+                }}
                 className={`${
                   currentTab === "tv" &&
                   "text-white font-medium after:absolute after:bottom-0 after:right-[13%] after:bg-white after:h-[3px] after:w-5"

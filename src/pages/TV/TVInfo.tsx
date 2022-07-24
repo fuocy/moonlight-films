@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import FilmDetail from "../../components/FilmDetail/FilmDetail";
-import { getMovieDetail } from "../../services/movie";
+import { getTVDetail } from "../../services/tv";
 import { FilmInfo } from "../../shared/types";
 
-const MovieInfo: FC = () => {
+const TVInfo: FC = () => {
   const { id } = useParams();
+
   const { data, isError, error } = useQuery<FilmInfo, Error>(
-    ["movieDetail", id],
-    () => getMovieDetail(Number(id as string))
+    ["tvDetail", id],
+    () => getTVDetail(Number(id as string))
   );
 
   if (isError) return <div>ERROR: {error.message}</div>;
@@ -18,4 +19,4 @@ const MovieInfo: FC = () => {
   return <FilmDetail {...data} />;
 };
 
-export default MovieInfo;
+export default TVInfo;

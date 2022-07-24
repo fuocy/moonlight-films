@@ -29,7 +29,7 @@ const RecommendGenres: FC = () => {
       <div className="mt-36 mb-20 mx-auto h-10 w-10 rounded-full border-[5px] border-dark-lighten border-t-transparent animate-spin"></div>
     );
 
-  const randomGenres = getRandomGenres(data);
+  const randomGenres = getRandomGenres(data as { id: number; name: string }[]);
 
   return (
     <ul className="mt-28 flex gap-3 flex-wrap ">

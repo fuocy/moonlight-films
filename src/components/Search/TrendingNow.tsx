@@ -31,13 +31,13 @@ const TrendingNow: FC = () => {
                 <Skeleton className="flex-grow h-[85%] rounded-md" />
               </li>
             ))
-          : data.slice(0, 2).map((item) => (
+          : (data as Item[]).slice(0, 2).map((item) => (
               <li key={item.id}>
                 <Link
                   to={
                     item.media_type === "movie"
-                      ? `movie/${item.id}`
-                      : `tv/${item.id}`
+                      ? `/movie/${item.id}`
+                      : `/tv/${item.id}`
                   }
                   className="hover:brightness-75 transiton duration-300 flex gap-5 items-center"
                 >

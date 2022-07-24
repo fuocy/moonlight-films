@@ -145,29 +145,6 @@ export interface Cast {
   order: number;
 }
 
-export interface Image {
-  id: number;
-  backdrops: {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: any;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-
-  posters: {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: string;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-}
-
 export interface Reviews {
   author: string;
   author_details: {
@@ -195,6 +172,16 @@ export interface Video {
   published_at: string;
   id: string;
 }
+
+// export interface SeasonsSummary {
+//   air_date: string;
+//   episode_count: number;
+//   id: number;
+//   name: string;
+//   overview: string;
+//   poster_path: string;
+//   season_number: number;
+// }
 ////////////////////////////////////////////
 // Type for async function's returned value
 export interface HomeFilms {
@@ -202,10 +189,9 @@ export interface HomeFilms {
 }
 
 export interface FilmInfo {
-  detail: DetailMovie | DetailTV;
-  credits: Cast[];
-  images: Image;
-  reviews: Reviews[];
-  similar: Item[];
-  videos: Video[];
+  detail?: DetailMovie | DetailTV | undefined;
+  credits?: Cast[] | undefined;
+  reviews?: Reviews[] | undefined;
+  similar?: Item[] | undefined;
+  videos?: Video[] | undefined;
 }
