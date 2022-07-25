@@ -1,37 +1,42 @@
-import { useQuery } from "@tanstack/react-query";
-import { FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { getTrendingNow } from "../../services/home";
-import { Item } from "../../shared/types";
-import { resizeImage } from "../../shared/utils";
+import { FunctionComponent } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
-import Skeleton from "../Skeleton/Skeleton";
+import { Item } from "../../shared/types";
+import { resizeImage } from "../../shared/utils";
+import Skeleton from "./Skeleton";
 
-const TrendingNow: FC = () => {
-  const { isLoading, data, isError, error } = useQuery<Item[], Error>(
-    ["trending"],
-    getTrendingNow
-  );
+interface RightbarFilmsProps {
+  films: Item[] | undefined;
+  name: string;
+  limitNumber?: number;
+  isLoading: boolean;
+  className?: string;
+}
 
-  if (isError) return <div>ERROR: ${error.message}</div>;
-  // if (isLoading) return <div>Loading...</div>;
+const RightbarFilms: FunctionComponent<RightbarFilmsProps> = ({
+  films,
+  name,
+  limitNumber,
+  isLoading,
+  className = "",
+}) => {
   return (
-    <>
-      <p className="mt-7 mb-6 text-xl font-medium flex justify-between items-center">
-        <span className="text-white">Trending</span>{" "}
+    <div className={className}>
+      <p className="mb-6 text-xl font-medium flex justify-between items-center">
+        <span className="text-white">{name}</span>
         <BsThreeDotsVertical size={20} />
       </p>
       <ul className="flex flex-col gap-5">
         {isLoading
-          ? new Array(2).fill("").map((_, index) => (
+          ? new Array(limitNumber).fill("").map((_, index) => (
               <li key={index} className="flex gap-5 items-center h-[156px]">
                 <Skeleton className="shrink-0 max-w-[100px] w-full h-full rounded-md" />
                 <Skeleton className="flex-grow h-[85%] rounded-md" />
               </li>
             ))
-          : (data as Item[]).slice(0, 2).map((item) => (
+          : (films as Item[]).slice(0, limitNumber).map((item) => (
               <li key={item.id}>
                 <Link
                   to={
@@ -68,8 +73,8 @@ const TrendingNow: FC = () => {
       <button className="bg-dark-lighten py-2 w-full rounded-full mt-7 hover:brightness-75 transition duration-300">
         See more
       </button>
-    </>
+    </div>
   );
 };
 
-export default TrendingNow;
+export default RightbarFilms;

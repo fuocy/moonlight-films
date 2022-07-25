@@ -1,20 +1,20 @@
 import { FC, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
-  getDetailMovies,
-  getDetailTvs,
+  getMovieBannerInfo,
+  getTVBannerInfo,
   getHomeMovies,
   getHomeTVs,
 } from "../services/home";
 import { HomeFilms, Item } from "../shared/types";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import Title from "../components/Title";
-import Sidebar from "../components/Sidebar";
-import SearchBox from "../components/Search/SearchBox";
-import RecommendGenres from "../components/Search/RecommendGenres";
-import TrendingNow from "../components/Search/TrendingNow";
-import MainHomeFilms from "../components/MainHomeFilm";
+import Title from "../components/Common/Title";
+import Sidebar from "../components/Common/Sidebar";
+import SearchBox from "../components/Common/SearchBox";
+import RecommendGenres from "../components/Home/RecommendGenres";
+import TrendingNow from "../components/Home/TrendingNow";
+import MainHomeFilms from "../components/Home/MainHomeFilm";
 const Home: FC = () => {
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "tv"
@@ -34,7 +34,7 @@ const Home: FC = () => {
     error: errorMovieDetail,
   } = useQuery<any, Error>(
     ["detailMovies", dataMovie?.Trending],
-    () => getDetailMovies(dataMovie?.Trending as Item[]),
+    () => getMovieBannerInfo(dataMovie?.Trending as Item[]),
     { enabled: !!dataMovie?.Trending }
   );
 
@@ -52,7 +52,7 @@ const Home: FC = () => {
     error: errorTVDetail,
   } = useQuery<any, Error>(
     ["detailTvs", dataTV?.Trending],
-    () => getDetailTvs(dataTV?.Trending as Item[]),
+    () => getTVBannerInfo(dataTV?.Trending as Item[]),
     { enabled: !!dataTV?.Trending }
   );
 

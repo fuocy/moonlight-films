@@ -1,7 +1,12 @@
 import axios from "../shared/axios";
-import { FilmInfo, Reviews, Video } from "../shared/types";
+import {
+  FilmInfo,
+  getWatchReturnedType,
+  Reviews,
+  Video,
+} from "../shared/types";
 
-export const getMovieDetail = async (id: number): Promise<FilmInfo> => {
+export const getMovieFullDetail = async (id: number): Promise<FilmInfo> => {
   const response = await Promise.all([
     axios.get(`/movie/${id}`),
     axios.get(`/movie/${id}/credits`),
@@ -44,4 +49,18 @@ export const getMovieDetail = async (id: number): Promise<FilmInfo> => {
   }, {} as FilmInfo);
 
   return movieInfo;
+};
+
+export const getWatchMovie = async (
+  id: number
+): Promise<getWatchReturnedType> => {
+  const res = await Promise.all([
+    axios.get(`/movie/${id}`),
+    axios.get(`/movie/${id}/recommendations`),
+  ]);
+
+  return {
+    detail: res[0].data,
+    recommendations: res[1].data.results,
+  };
 };

@@ -7,7 +7,7 @@ import { resizeImage } from "../../shared/utils";
 import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { BsFillPlayFill } from "react-icons/bs";
-import Skeleton from "../Skeleton/Skeleton";
+import Skeleton from "../Common/Skeleton";
 interface BannerSliderProps {
   films: Item[] | undefined;
   dataDetail: {

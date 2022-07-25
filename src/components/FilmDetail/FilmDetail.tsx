@@ -1,29 +1,23 @@
 import { FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link } from "react-router-dom";
-import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";
-import { resizeImage } from "../../shared/utils";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import {
-  BsBookmarkHeart,
   BsFillPlayFill,
+  BsShareFill,
+  BsThreeDots,
   BsThreeDotsVertical,
 } from "react-icons/bs";
-import Title from "../Title";
-import FilmTabInfo from "./FilmTabInfo";
-import {
-  AiFillHeart,
-  AiFillStar,
-  AiOutlineHistory,
-  AiOutlineHome,
-} from "react-icons/ai";
-import { BsThreeDots } from "react-icons/bs";
-import { BsShareFill } from "react-icons/bs";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { MdOutlineExplore } from "react-icons/md";
-import { BiSearch } from "react-icons/bi";
-import SearchBox from "../Search/SearchBox";
-import Skeleton from "../Skeleton/Skeleton";
+import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";
+import { resizeImage } from "../../shared/utils";
+import RightbarFilms from "../Common/RightbarFilms";
+import SearchBox from "../Common/SearchBox";
+import SidebarMini from "../Common/SidebarMini";
+import Skeleton from "../Common/Skeleton";
+import Title from "../Common/Title";
+import FilmTabInfo from "./FilmTabInfo";
 
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
   return (
@@ -37,51 +31,8 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
       )}
 
       <div className="flex">
-        <div className="shrink-0 max-w-[80px] w-full py-8 flex flex-col items-center justify-between h-screen sticky top-0">
-          <Link to="/">
-            <LazyLoadImage
-              alt="Logo"
-              src="/logo.png"
-              effect="opacity"
-              className="w-10 h-10"
-            />
-          </Link>
-          <div className="flex flex-col gap-7">
-            <Link to="/" className="hover:text-primary transition duration-300">
-              <AiOutlineHome size={25} />
-            </Link>
-            <Link
-              to="/bookmarked"
-              className="hover:text-primary transition duration-300"
-            >
-              <BsBookmarkHeart size={25} />
-            </Link>
-            <Link
-              to="/history"
-              className="hover:text-primary transition duration-300"
-            >
-              <AiOutlineHistory size={25} />
-            </Link>
-            <Link
-              to="/explore"
-              className="hover:text-primary transition duration-300"
-            >
-              <MdOutlineExplore size={25} />
-            </Link>
-            <Link
-              to="/search"
-              className="hover:text-primary transition duration-300"
-            >
-              <BiSearch size={25} />
-            </Link>
-          </div>
-          <LazyLoadImage
-            src="/avatarTest.jpg"
-            alt="Avatar"
-            effect="opacity"
-            className="w-10 h-10 rounded-full"
-          />
-        </div>
+        <SidebarMini />
+
         <div className="flex-grow min-h-screen">
           {!detail && (
             <Skeleton className="h-[400px] rounded-bl-2xl "></Skeleton>
@@ -123,10 +74,14 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                       ))}
                     </ul>
                   </div>
-                  <button className="flex gap-6 items-center pl-6 pr-12 py-3 rounded-full bg-primary text-white hover:bg-blue-600 transition duration-300 mt-24">
+
+                  <Link
+                    to="watch"
+                    className="flex gap-6 items-center pl-6 pr-12 py-3 rounded-full bg-primary text-white hover:bg-blue-600 transition duration-300 mt-24"
+                  >
                     <BsFillPlayFill size={25} />
                     <span className="text-lg font-medium">WATCH</span>
-                  </button>
+                  </Link>
                 </div>
                 <div className="flex gap-3 absolute top-[5%] right-[3%]">
                   <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
@@ -151,6 +106,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
               </div>
             </div>
           )}
+
           <div className="flex z-20 relative">
             <div className="shrink-0 max-w-[150px] w-full flex items-center flex-col gap-20 mt-20 border-r border-dark-lighten">
               <div className="flex flex-col gap-6 items-center mt-16">
@@ -175,6 +131,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                   {!detail && <Skeleton className="w-16 h-16 rounded-full" />}
                 </div>
               </div>
+
               <div className="flex flex-col gap-3 items-center">
                 {detail && (
                   <>
@@ -204,10 +161,12 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                 )}
               </div>
             </div>
+
             <div className="flex-grow min-h-[500px] border-r border-dark-lighten px-16 py-7">
               {/* {!detail && <Skeleton className="w-full h-[500px]" />} */}
               <FilmTabInfo detail={detail} {...others} />
             </div>
+
             <div className="shrink-0 max-w-[300px] w-full px-6 pt-6">
               <p className="text-white font-medium text-lg mb-5">MEDIA</p>
               <ul className="flex flex-col gap-[75px]">
@@ -239,23 +198,20 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
         <div className="shrink-0 max-w-[310px] w-full relative px-6">
           <SearchBox />
           {/* <RecommendGenres /> */}
-          <>
-            {/* mt-7 */}
+          <RightbarFilms
+            name="Recommendations"
+            films={similar}
+            limitNumber={4}
+            isLoading={!similar}
+            className="mt-24"
+          />
+          {/* <>
+            
             <p className="mt-24 mb-6 text-xl font-medium flex justify-between items-center">
               <span className="text-white">Recommendations</span>
               <BsThreeDotsVertical size={20} />
             </p>
             <ul className="flex flex-col gap-5">
-              {/* isLoading
-                ? new Array(2).fill("").map((_, index) => (
-                    <li
-                      key={index}
-                      className="flex gap-5 items-center h-[156px]"
-                    >
-                      
-                    </li>
-                  ))
-                : */}
               {!similar && (
                 <>
                   {[...new Array(4)].map((_, index) => (
@@ -307,7 +263,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
             <button className="bg-dark-lighten py-2 w-full rounded-full mt-7 hover:brightness-75 transition duration-300 mb-3">
               See more
             </button>
-          </>
+          </> */}
         </div>
       </div>
     </>

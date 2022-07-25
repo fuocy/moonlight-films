@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Reviews } from "../../shared/types";
 import { calculateTimePassed } from "../../shared/utils";
-import StarRating from "../StarRating";
+import StarRating from "../Common/StarRating";
 import ReadMore from "./ReadMore";
 import { SortReview } from "./SortReview";
 import { useAutoAnimate } from "@formkit/auto-animate/react";

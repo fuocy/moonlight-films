@@ -1,6 +1,9 @@
 import axios from "../shared/axios";
-import { DetailMovie, Item } from "../shared/types";
+import { Item } from "../shared/types";
 import { HomeFilms } from "../shared/types";
+
+// MOVIE TAB
+///////////////////////////////////////////////////////////////
 export const getHomeMovies = async (): Promise<HomeFilms> => {
   const endpoints: { [key: string]: string } = {
     Trending: "/trending/movie/day",
@@ -28,7 +31,7 @@ export const getHomeMovies = async (): Promise<HomeFilms> => {
   return data;
 };
 
-export const getDetailMovies = async (movies: Item[]): Promise<any> => {
+export const getMovieBannerInfo = async (movies: Item[]): Promise<any> => {
   const detailRes = await Promise.all(
     movies.map((movie) => axios.get(`/movie/${movie.id}`))
   );
@@ -61,9 +64,8 @@ export const getDetailMovies = async (movies: Item[]): Promise<any> => {
   }));
 };
 
-export const getTrendingNow = async (): Promise<Item[]> => {
-  return (await axios.get("/trending/all/day?page=2")).data.results;
-};
+// TV TAB
+///////////////////////////////////////////////////////////////
 
 export const getHomeTVs = async (): Promise<HomeFilms> => {
   const endpoints: { [key: string]: string } = {
@@ -92,7 +94,7 @@ export const getHomeTVs = async (): Promise<HomeFilms> => {
   return data;
 };
 
-export const getDetailTvs = async (tvs: Item[]): Promise<any> => {
+export const getTVBannerInfo = async (tvs: Item[]): Promise<any> => {
   const detailRes = await Promise.all(
     tvs.map((tv) => axios.get(`/tv/${tv.id}`))
   );
@@ -123,4 +125,10 @@ export const getDetailTvs = async (tvs: Item[]): Promise<any> => {
     genre,
     translation: translations[index],
   }));
+};
+
+// GENERAL
+///////////////////////////////////////////////////////////////
+export const getTrendingNow = async (): Promise<Item[]> => {
+  return (await axios.get("/trending/all/day?page=2")).data.results;
 };

@@ -18,5 +18,5 @@ export const getRecommendGenres = async (): Promise<
   const movieGenres = (await axios.get("/genre/movie/list")).data.genres;
   const tvGenres = (await axios.get("/genre/tv/list")).data.genres;
 
-  return movieGenres.concat(tvGenres);
+  return Array.from(new Set(movieGenres.concat(tvGenres)));
 };

@@ -1,7 +1,16 @@
 import axios from "../shared/axios";
-import { FilmInfo, Reviews, Video } from "../shared/types";
+import {
+  DetailSeasons,
+  DetailTV,
+  Episode,
+  FilmInfo,
+  getWatchReturnedType,
+  Item,
+  Reviews,
+  Video,
+} from "../shared/types";
 
-export const getTVDetail = async (id: number): Promise<FilmInfo> => {
+export const getTVFullDetail = async (id: number): Promise<FilmInfo> => {
   const response = await Promise.all([
     axios.get(`/tv/${id}`),
     axios.get(`/tv/${id}/credits`),
@@ -44,4 +53,26 @@ export const getTVDetail = async (id: number): Promise<FilmInfo> => {
   }, {} as FilmInfo);
 
   return tvInfo;
+};
+
+export const getWatchTV = async (id: number): Promise<getWatchReturnedType> => {
+  const res = await Promise.all([
+    axios.get(`/tv/${id}`),
+    axios.get(`/tv/${id}/recommendations`),
+  ]);
+
+  const data = {
+    detail: res[0].data,
+    recommendations: res[1].data.results,
+  };
+
+  const detailSeasons = (
+    await Promise.all(
+      data.detail.seasons.map((season: DetailSeasons) =>
+        axios.get(`/tv/${id}/season/${season.season_number}`)
+      )
+    )
+  ).map((res) => res.data);
+
+  return { ...data, detailSeasons };
 };

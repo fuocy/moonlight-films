@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import FilmDetail from "../../components/FilmDetail/FilmDetail";
-import { getTVDetail } from "../../services/tv";
+import { getTVFullDetail } from "../../services/tv";
 import { FilmInfo } from "../../shared/types";
 
 const TVInfo: FC = () => {
@@ -10,7 +10,7 @@ const TVInfo: FC = () => {
 
   const { data, isError, error } = useQuery<FilmInfo, Error>(
     ["tvDetail", id],
-    () => getTVDetail(Number(id as string))
+    () => getTVFullDetail(Number(id as string))
   );
 
   if (isError) return <div>ERROR: {error.message}</div>;

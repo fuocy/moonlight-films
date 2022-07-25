@@ -6,7 +6,7 @@ import { AiFillStar } from "react-icons/ai";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Item } from "../../shared/types";
 import { resizeImage } from "../../shared/utils";
-import Skeleton from "../Skeleton/Skeleton";
+import Skeleton from "../Common/Skeleton";
 
 interface SectionSliderProps {
   films: Item[] | undefined;

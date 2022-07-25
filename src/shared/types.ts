@@ -1,3 +1,5 @@
+import { LargeNumberLike } from "crypto";
+
 export interface Item {
   poster_path: string;
   overview: string;
@@ -57,7 +59,7 @@ export interface DetailMovie {
   video: boolean;
   vote_average: number;
   vote_count: number;
-  media_type: "movie";
+  media_type?: "movie";
 }
 
 export interface DetailTV {
@@ -127,7 +129,7 @@ export interface DetailTV {
   type: string;
   vote_average: number;
   vote_count: number;
-  media_type: "tv";
+  media_type?: "tv";
 }
 
 export interface Cast {
@@ -173,6 +175,56 @@ export interface Video {
   id: string;
 }
 
+export interface Episode {
+  air_date: string;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  season_number: number;
+  still_path: string;
+  vote_average: number;
+  vote_count: number;
+  crew: {
+    department: string;
+    job: string;
+    credit_id: string;
+    adult: boolean;
+    gender: number;
+    id: LargeNumberLike;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+  }[];
+  guest_stars: {
+    credit_id: string;
+    order: number;
+    character: string;
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+  }[];
+}
+
+export interface DetailSeasons {
+  _id: string;
+  air_date: string;
+  episodes: Episode[];
+  name: string;
+  overview: string;
+  id: number;
+  poster_path: string;
+  season_number: number;
+}
+
 // export interface SeasonsSummary {
 //   air_date: string;
 //   episode_count: number;
@@ -194,4 +246,10 @@ export interface FilmInfo {
   reviews?: Reviews[] | undefined;
   similar?: Item[] | undefined;
   videos?: Video[] | undefined;
+}
+
+export interface getWatchReturnedType {
+  detail: DetailTV | DetailMovie;
+  recommendations: Item[];
+  detailSeasons?: DetailSeasons[];
 }
