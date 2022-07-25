@@ -28,7 +28,7 @@ const ReadMore: FC<ReadMoreProps & HTMLProps<HTMLSpanElement>> = ({
           className="font-medium italic hover:brightness-75 transition duration-300"
         >
           {!isReadingMore &&
-            (children as string).length > 250 &&
+            (children as string).length > limitTextLength &&
             "... See more"}
           {isReadingMore && <>&nbsp; Show less</>}
         </button>

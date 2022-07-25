@@ -14,7 +14,7 @@ const MovieWatch: FC = () => {
 
   if (error) return <div>ERROR: {error.message}</div>;
 
-  if (!data) return <div>Loading...</div>;
+  // if (!data) return <div>Loading...</div>;
 
   return <FilmWatch {...data} media_type="movie" />;
 };

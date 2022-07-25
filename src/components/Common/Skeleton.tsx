@@ -11,7 +11,10 @@ const Skeleton: FC<HTMLProps<HTMLDivElement> | SkeletonProps> = ({
   ...others
 }) => {
   return (
-    <div className={`${className} animate-pulse bg-dark-lighten`} {...others}>
+    <div
+      className={`${className} animate-pulse bg-dark-lighten rounded-md`}
+      {...others}
+    >
       {children}
     </div>
   );

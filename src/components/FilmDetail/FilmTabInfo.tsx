@@ -3,7 +3,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Cast, DetailMovie, DetailTV, Reviews } from "../../shared/types";
 import { resizeImage } from "../../shared/utils";
 import Skeleton from "../Common/Skeleton";
-import ReadMore from "./ReadMore";
+import ReadMore from "../Common/ReadMore";
 import ReviewTab from "./ReviewTab";
 interface FilmTabInfoProps {
   detail?: DetailMovie | DetailTV | undefined;

@@ -4,6 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import { DetailSeason } from "../../shared/types";
 import { resizeImage } from "../../shared/utils";
+import Skeleton from "../Common/Skeleton";
 interface SeasonSelectionProps {
   detailSeasons?: DetailSeason[];
   seasonId?: number;
@@ -30,7 +31,7 @@ const Season: FunctionComponent<SeasonProps> = ({
     <li
       // @ts-ignore
       ref={list}
-      key={season.id}
+      // key={season.id}:  key is now set for custom component named Season
     >
       <button
         onClick={() =>
@@ -131,9 +132,28 @@ const SeasonSelection: FunctionComponent<SeasonSelectionProps> = ({
       ref={parent}
       className="flex flex-col gap-4 max-h-[750px] overflow-y-auto"
     >
-      {(detailSeasons as DetailSeason[]).map((season) => (
-        <Season season={season} seasonId={seasonId} episodeId={episodeId} />
-      ))}
+      {detailSeasons &&
+        (detailSeasons as DetailSeason[]).map((season) => (
+          <Season
+            key={season.id}
+            season={season}
+            seasonId={seasonId}
+            episodeId={episodeId}
+          />
+        ))}
+      {!detailSeasons && (
+        <div>
+          <Skeleton className="h-[118px] mb-6" />
+
+          <ul className="flex flex-col gap-4 pl-10">
+            {new Array(6).fill("").map((_, index) => (
+              <li key={index}>
+                <Skeleton className="h-[81px]" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </ul>
   );
 };

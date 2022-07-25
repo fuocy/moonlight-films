@@ -249,7 +249,7 @@ export interface FilmInfo {
 }
 
 export interface getWatchReturnedType {
-  detail: DetailTV | DetailMovie;
-  recommendations: Item[];
-  detailSeasons?: DetailSeason[];
+  detail?: DetailTV | DetailMovie | undefined;
+  recommendations?: Item[] | undefined;
+  detailSeasons?: DetailSeason[] | undefined;
 }

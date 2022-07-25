@@ -20,9 +20,9 @@ const TVWatch: FC = () => {
 
   if (error) return <div>ERROR: {error.message}</div>;
 
-  if (!data) return <div>Loading...</div>;
+  // if (!data) return <div>Loading...</div>;
 
-  const currentSeason = (data.detailSeasons as DetailSeason[]).find(
+  const currentSeason = data?.detailSeasons?.find(
     (season) => season.season_number === seasonId
   );
 
@@ -30,8 +30,8 @@ const TVWatch: FC = () => {
     (episode) => episode.episode_number === episodeId
   );
 
-  if (!currentSeason) return <div>ERROR: 404</div>;
-  if (!currentEpisode) return <div>ERROR: 404</div>;
+  // I check data is truthy because I want to show 404 only when invalid episode or season are accessed, NOT when data is fetching
+  if (!currentEpisode && data) return <div>ERROR: 404</div>;
 
   return (
     <FilmWatch
@@ -40,7 +40,6 @@ const TVWatch: FC = () => {
       seasonId={seasonId}
       episodeId={episodeId}
       currentEpisode={currentEpisode}
-      currentSeason={currentSeason}
     />
   );
 };
