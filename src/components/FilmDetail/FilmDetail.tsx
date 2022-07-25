@@ -1,12 +1,7 @@
 import { FC } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-import { AiFillHeart, AiFillStar } from "react-icons/ai";
-import {
-  BsFillPlayFill,
-  BsShareFill,
-  BsThreeDots,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+import { BsFillPlayFill, BsShareFill, BsThreeDots } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
@@ -45,7 +40,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
               className="bg-cover bg-center bg-no-repeat h-[400px] rounded-bl-2xl relative"
             >
               <div className="bg-gradient-to-br from-transparent to-black/70 h-full rounded-bl-2xl">
-                <div className="flex items-start gap-14 absolute left-1/2 -translate-x-1/2  w-full max-w-[1000px] bottom-[-20%]">
+                <div className="flex items-start absolute left-1/2 -translate-x-1/2  w-full max-w-[1000px] bottom-[-20%]">
                   <div className="shrink-0 max-w-[185px] w-full ">
                     <LazyLoadImage
                       src={resizeImage(detail.poster_path, "w185")}
@@ -54,7 +49,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                       alt="Poster"
                     />
                   </div>
-                  <div className="flex-grow">
+                  <div className="flex-grow ml-14">
                     <div className="h-28 flex items-end">
                       <h1 className=" text-white text-[45px] font-bold leading-tight ">
                         {(detail as DetailMovie).title ||

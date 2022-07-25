@@ -214,7 +214,7 @@ export interface Episode {
   }[];
 }
 
-export interface DetailSeasons {
+export interface DetailSeason {
   _id: string;
   air_date: string;
   episodes: Episode[];
@@ -251,5 +251,5 @@ export interface FilmInfo {
 export interface getWatchReturnedType {
   detail: DetailTV | DetailMovie;
   recommendations: Item[];
-  detailSeasons?: DetailSeasons[];
+  detailSeasons?: DetailSeason[];
 }

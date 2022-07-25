@@ -75,27 +75,27 @@ const Home: FC = () => {
             <div className="inline-flex gap-[40px] pb-[14px] border-b border-gray-darken relative">
               <button
                 onClick={() => {
-                  setCurrentTab("movie");
-                  localStorage.setItem("currentTab", "movie");
-                }}
-                className={`${
-                  currentTab === "movie" &&
-                  "text-white font-medium after:absolute after:bottom-0 after:left-[6%] after:bg-white after:h-[3px] after:w-5"
-                } transition duration-300 hover:text-white`}
-              >
-                Movie
-              </button>
-              <button
-                onClick={() => {
                   setCurrentTab("tv");
                   localStorage.setItem("currentTab", "tv");
                 }}
                 className={`${
                   currentTab === "tv" &&
-                  "text-white font-medium after:absolute after:bottom-0 after:right-[13%] after:bg-white after:h-[3px] after:w-5"
+                  "text-white font-medium after:absolute after:bottom-0 after:left-[13%] after:bg-white after:h-[3px] after:w-5"
                 } transition duration-300 hover:text-white`}
               >
                 TV Show
+              </button>
+              <button
+                onClick={() => {
+                  setCurrentTab("movie");
+                  localStorage.setItem("currentTab", "movie");
+                }}
+                className={`${
+                  currentTab === "movie" &&
+                  "text-white font-medium after:absolute after:bottom-0 after:right-[9%] after:bg-white after:h-[3px] after:w-5"
+                } transition duration-300 hover:text-white`}
+              >
+                Movie
               </button>
             </div>
             <div className="flex gap-6 items-center">

@@ -20,7 +20,7 @@ const ReadMore: FC<ReadMoreProps & HTMLProps<HTMLSpanElement>> = ({
 
   return (
     <>
-      <span {...others} className={`${className}`}>
+      <span {...others} className={`${className} inline-block`}>
         {content}
 
         <button

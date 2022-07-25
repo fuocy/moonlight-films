@@ -1,11 +1,8 @@
 import axios from "../shared/axios";
 import {
-  DetailSeasons,
-  DetailTV,
-  Episode,
+  DetailSeason,
   FilmInfo,
   getWatchReturnedType,
-  Item,
   Reviews,
   Video,
 } from "../shared/types";
@@ -68,7 +65,7 @@ export const getWatchTV = async (id: number): Promise<getWatchReturnedType> => {
 
   const detailSeasons = (
     await Promise.all(
-      data.detail.seasons.map((season: DetailSeasons) =>
+      data.detail.seasons.map((season: DetailSeason) =>
         axios.get(`/tv/${id}/season/${season.season_number}`)
       )
     )
