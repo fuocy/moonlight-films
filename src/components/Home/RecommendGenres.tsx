@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { getRecommendGenres } from "../../services/search";
+import { getRecommendGenres2 } from "../../services/search";
+import { getRecommendGenres2Type } from "../../shared/types";
 
 const getRandomGenres = (genres: { id: number; name: string }[]) => {
   // const NUMBER_OF_GENRES = 6;
@@ -18,9 +19,9 @@ const getRandomGenres = (genres: { id: number; name: string }[]) => {
 
 const RecommendGenres: FC = () => {
   const { isLoading, data, isError, error } = useQuery<
-    { id: number; name: string }[],
+    getRecommendGenres2Type,
     Error
-  >(["genres"], getRecommendGenres);
+  >(["genres"], getRecommendGenres2);
 
   if (isError) return <div>ERROR: {error.message}</div>;
 
@@ -29,7 +30,8 @@ const RecommendGenres: FC = () => {
       <div className="mt-36 mb-20 mx-auto h-10 w-10 rounded-full border-[5px] border-dark-lighten border-t-transparent animate-spin"></div>
     );
 
-  const randomGenres = getRandomGenres(data as { id: number; name: string }[]);
+  //  as { id: number; name: string }[]
+  const randomGenres = getRandomGenres(data.movieGenres);
 
   return (
     <ul className="mt-28 flex gap-3 flex-wrap ">

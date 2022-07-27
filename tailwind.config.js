@@ -18,6 +18,10 @@ module.exports = {
       fontFamily: {
         roboto: ["Roboto", ...defaultTheme.fontFamily.sans],
       },
+      gridTemplateColumns: {
+        sm: "repeat(auto-fit, minmax(130px, 1fr))",
+        lg: "repeat(auto-fit, minmax(160px, 1fr))",
+      },
     },
   },
   plugins: [],

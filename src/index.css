@@ -87,3 +87,7 @@ body {
 ::-webkit-scrollbar-thumb {
   @apply bg-[#121212] rounded-full hover:bg-[#0e0d0d] transition duration-300;
 }
+
+select:focus {
+  outline: none !important;
+}

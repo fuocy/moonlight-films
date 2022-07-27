@@ -26,7 +26,6 @@ const Season: FunctionComponent<SeasonProps> = ({
     seasonId
   );
   const [list] = useAutoAnimate();
-
   return (
     <li
       // @ts-ignore

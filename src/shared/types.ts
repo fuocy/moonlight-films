@@ -253,3 +253,19 @@ export interface getWatchReturnedType {
   recommendations?: Item[] | undefined;
   detailSeasons?: DetailSeason[] | undefined;
 }
+
+export interface ConfigType {
+  [key: string]: string;
+}
+
+export interface ItemsPage {
+  page: number;
+  results: Item[];
+  total_results: number;
+  total_pages: number;
+}
+
+export interface getRecommendGenres2Type {
+  movieGenres: { id: number; name: string }[];
+  tvGenres: { id: number; name: string }[];
+}

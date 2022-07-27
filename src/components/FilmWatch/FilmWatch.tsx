@@ -4,19 +4,18 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import {
   DetailMovie,
-  DetailSeason,
   DetailTV,
   Episode,
   getWatchReturnedType,
 } from "../../shared/types";
 import { embedMovie, embedTV } from "../../shared/utils";
+import ReadMore from "../Common/ReadMore";
 import RightbarFilms from "../Common/RightbarFilms";
 import SearchBox from "../Common/SearchBox";
 import SidebarMini from "../Common/SidebarMini";
-import Title from "../Common/Title";
-import ReadMore from "../Common/ReadMore";
-import SeasonSelection from "./SeasonSelection";
 import Skeleton from "../Common/Skeleton";
+import Title from "../Common/Title";
+import SeasonSelection from "./SeasonSelection";
 
 interface FilmWatchProps {
   media_type: "movie" | "tv";
