@@ -82,7 +82,9 @@ const SortBy: FunctionComponent<SortByProps> = () => {
           <Select
             options={options}
             styles={customStyles}
-            defaultValue={options.find((option) => option.value === sortType)}
+            // defaultValue={}
+            defaultValue={options[0]}
+            value={options.find((option) => option.value === sortType)}
             // @ts-ignore
             // onChange={(e) => onChangeConfig("sort_by", e?.value)}
             // onChange={(e) => setSearchParams({ sort_by: e?.value })}
