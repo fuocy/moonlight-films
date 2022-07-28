@@ -5,11 +5,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { getExploreMovie, getExploreTV } from "../../services/explore";
 import { ConfigType, ItemsPage } from "../../shared/types";
 import FilmItem from "../Common/FilmItem";
+import Skeleton from "../Common/Skeleton";
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 interface ExploreMovieResultProps {
-  pages: ItemsPage[];
+  pages?: ItemsPage[];
 }
 
 const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
@@ -23,13 +24,20 @@ const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
       ref={parent}
       className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2"
     >
-      {pages.map((page) =>
-        page.results.map((item) => (
-          <li key={item.id}>
-            <FilmItem item={item} />
+      {pages &&
+        pages.map((page) =>
+          page.results.map((item) => (
+            <li key={item.id}>
+              <FilmItem item={item} />
+            </li>
+          ))
+        )}
+      {!pages &&
+        [...new Array(15)].map((_, index) => (
+          <li key={index}>
+            <Skeleton className="h-0 pb-[160%]" />
           </li>
-        ))
-      )}
+        ))}
     </ul>
   );
 };
@@ -38,7 +46,7 @@ const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
 ////////////////////////////////////////////////////////////////////////////
 
 interface ExploreTVResultProps {
-  pages: ItemsPage[];
+  pages?: ItemsPage[];
 }
 
 const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
@@ -52,13 +60,20 @@ const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
       ref={list}
       className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10"
     >
-      {pages.map((page) =>
-        page.results.map((item) => (
-          <li key={item.id}>
-            <FilmItem item={item} />
+      {pages &&
+        pages.map((page) =>
+          page.results.map((item) => (
+            <li key={item.id}>
+              <FilmItem item={item} />
+            </li>
+          ))
+        )}
+      {!pages &&
+        [...new Array(15)].map((_, index) => (
+          <li key={index}>
+            <Skeleton className="h-0 pb-[160%]" />
           </li>
-        ))
-      )}
+        ))}
     </ul>
   );
 };
@@ -111,32 +126,32 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
   if (errorMovies) return <div>ERROR: {errorMovies.message}</div>;
   if (errorTvs) return <div>ERROR: {errorTvs.message}</div>;
 
-  if (!movies) return <div>Loading...</div>;
-  if (!tvs) return <div>Loading...</div>;
+  // if (!movies) return <div>Loading...</div>;
+  // if (!tvs) return <div>Loading...</div>;
 
   return (
     <>
       {currentTab === "movie" && (
         <InfiniteScroll
-          dataLength={movies.pages.length}
+          dataLength={movies?.pages.length || 0}
           next={() => fetchNextPageMovie()}
           hasMore={Boolean(hasNextPageMovie)}
           loader={<div>Loading...</div>}
           endMessage={<div>No more results</div>}
         >
-          <ExploreMovieResult pages={movies.pages} />
+          <ExploreMovieResult pages={movies?.pages} />
         </InfiniteScroll>
       )}
 
       {currentTab === "tv" && (
         <InfiniteScroll
-          dataLength={tvs.pages.length}
+          dataLength={tvs?.pages.length || 0}
           next={() => fetchNextPageTv()}
           hasMore={Boolean(hasNextPageTv)}
           loader={<div>Loading...</div>}
           endMessage={<div>No more results</div>}
         >
-          <ExploreTVResult pages={tvs.pages} />
+          <ExploreTVResult pages={tvs?.pages} />
         </InfiniteScroll>
       )}
     </>

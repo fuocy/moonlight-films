@@ -36,7 +36,11 @@ const FilterByGenres: FunctionComponent<FilterByGenresProps> = ({
   const [currentSearchParams] = useCurrentParams();
 
   if (isError) return <div>ERROR: {error.message}</div>;
-  if (isLoading) return <div>Loading...</div>;
+
+  if (isLoading)
+    return (
+      <div className="mt-20 mb-20 mx-auto h-10 w-10 rounded-full border-[5px] border-dark-darken border-t-transparent animate-spin"></div>
+    );
 
   const chooseGenre = (genreId: string) => {
     const existingGenres = searchParam.getAll("genre");
