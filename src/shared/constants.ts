@@ -7,4 +7,6 @@ export const SUPPORTED_QUERY = {
   sort_by: [],
   minRuntime: [],
   maxRuntime: [],
+  from: [],
+  to: [],
 };

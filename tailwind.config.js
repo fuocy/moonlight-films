@@ -14,6 +14,7 @@ module.exports = {
         dark: "#1C1C1E",
         "dark-darken": "#19191b",
         "dark-lighten": "#333335",
+        "dark-lighten-2": "#49494b",
       },
       fontFamily: {
         roboto: ["Roboto", ...defaultTheme.fontFamily.sans],

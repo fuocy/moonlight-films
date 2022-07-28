@@ -76,9 +76,16 @@ const Explore: FunctionComponent<ExploreProps> = () => {
     changeConfig("with_runtime.gte", minRuntime);
     changeConfig("with_runtime.lte", maxRuntime);
 
+    const releaseFrom = searchParams.get("from") || "2002-11-04";
+    const releaseTo = searchParams.get("to") || "2022-07-28";
+    changeConfig("primary_release_date.gte", releaseFrom);
+    changeConfig("primary_release_date.lte", releaseTo);
+    changeConfig("air_date.gte", releaseFrom);
+    changeConfig("air_date.lte", releaseTo);
+
     // eslint-disable-next-line
   }, [location.search]);
-
+  console.log(config);
   return (
     <>
       <Title value={"Explore | Moonlight"} />
@@ -139,7 +146,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
 
           <ExploreResult currentTab={currentTab} config={config} />
         </div>
-        <div className="shrink-0 max-w-[310px] w-full py-6 px-3">
+        <div className="shrink-0 max-w-[310px] w-full py-12 px-3">
           <ExploreFilter currentTab={currentTab} />
         </div>
       </div>

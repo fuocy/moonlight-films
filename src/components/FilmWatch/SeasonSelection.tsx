@@ -53,7 +53,7 @@ const Season: FunctionComponent<SeasonProps> = ({
         <div className="flex-grow text-left">
           <p
             className={`text-white text-lg mb-2 transition duration-300 ${
-              season.season_number === seasonId && "text-primary"
+              season.season_number === seasonId && "!text-primary"
             }`}
           >
             {season.name}
@@ -84,7 +84,7 @@ const Season: FunctionComponent<SeasonProps> = ({
                     className={`text-white font-medium transition duration-300 ${
                       episode.episode_number === episodeId &&
                       season.season_number === seasonId &&
-                      "text-primary"
+                      "!text-primary"
                     }`}
                   >
                     {episode.episode_number}
