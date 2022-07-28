@@ -2,8 +2,8 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useCurrentParams } from "../../hooks/useCurrentParams";
 import { getRecommendGenres2 } from "../../services/search";
-import { SUPPORTED_QUERY } from "../../shared/constants";
 import { getRecommendGenres2Type } from "../../shared/types";
 
 interface FilterByGenresProps {
@@ -33,20 +33,12 @@ const FilterByGenres: FunctionComponent<FilterByGenresProps> = ({
   //   currentSearchParams[key] = value;
   // });
 
+  const [currentSearchParams] = useCurrentParams();
+
   if (isError) return <div>ERROR: {error.message}</div>;
   if (isLoading) return <div>Loading...</div>;
 
   const chooseGenre = (genreId: string) => {
-    // STEP 1
-    const currentSearchParams = JSON.parse(JSON.stringify(SUPPORTED_QUERY)) as {
-      [key: string]: string[];
-    };
-
-    searchParam.forEach((value, key) => {
-      currentSearchParams[key].push(value);
-    });
-
-    // STEP 2
     const existingGenres = searchParam.getAll("genre");
 
     if (existingGenres.includes(genreId)) {

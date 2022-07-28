@@ -6,6 +6,7 @@ import SidebarMini from "../components/Common/SidebarMini";
 import Title from "../components/Common/Title";
 import ExploreFilter from "../components/Explore/ExploreFilter";
 import ExploreResult from "../components/Explore/ExploreResult";
+import { ConfigType } from "../shared/types";
 interface ExploreProps {}
 
 const Explore: FunctionComponent<ExploreProps> = () => {
@@ -42,7 +43,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
 
   // queryParams.forEach((value, key) => (initialConfig[key] = value));
 
-  const [config, setConfig] = useState<{ [key: string]: string }>({});
+  const [config, setConfig] = useState<ConfigType>({});
 
   useEffect(() => {
     // const changeConfig = (key: string, value: string) => {
@@ -51,7 +52,13 @@ const Explore: FunctionComponent<ExploreProps> = () => {
     //   setConfig(clone);
     // };
 
-    const changeConfig = (key: string, value: string) => {
+    // setConfig((prevConfig) => ({
+    //   ...prevConfig,
+    //   sort_by: sortType,
+    //   with_genres: genreType.toString(),
+    // }));
+
+    const changeConfig = (key: string, value: string | number) => {
       setConfig((prevConfig) => ({
         ...prevConfig,
         [key]: value,
@@ -62,12 +69,12 @@ const Explore: FunctionComponent<ExploreProps> = () => {
     changeConfig("sort_by", sortType);
 
     const genreType = searchParams.getAll("genre") || [];
-    // setConfig((prevConfig) => ({
-    //   ...prevConfig,
-    //   sort_by: sortType,
-    //   with_genres: genreType.toString(),
-    // }));
     changeConfig("with_genres", genreType.toString());
+
+    const minRuntime = Number(searchParams.get("minRuntime")) || 0;
+    const maxRuntime = Number(searchParams.get("maxRuntime")) || 200;
+    changeConfig("with_runtime.gte", minRuntime);
+    changeConfig("with_runtime.lte", maxRuntime);
 
     // eslint-disable-next-line
   }, [location.search]);

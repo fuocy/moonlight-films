@@ -91,3 +91,8 @@ body {
 select:focus {
   outline: none !important;
 }
+
+/* CUSTOM SLIDER RANGE */
+.tw-slider-range::-webkit-slider-thumb {
+  @apply appearance-none h-4 w-4 rounded-full bg-primary pointer-events-auto;
+}

@@ -3,7 +3,7 @@ import { FunctionComponent, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import { useSearchParams } from "react-router-dom";
 import Select from "react-select";
-import { SUPPORTED_QUERY } from "../../shared/constants";
+import { useCurrentParams } from "../../hooks/useCurrentParams";
 
 interface SortByProps {}
 
@@ -44,17 +44,10 @@ const SortBy: FunctionComponent<SortByProps> = () => {
     }),
   };
 
+  const [currentSearchParams] = useCurrentParams();
+
   const chooseSort = (option: any) => {
     const sortValue = option?.value || "";
-    // STEP 1
-    const currentSearchParams = JSON.parse(JSON.stringify(SUPPORTED_QUERY)) as {
-      [key: string]: string[];
-    };
-
-    searchParams.forEach((value, key) => {
-      currentSearchParams[key].push(value);
-    });
-    // STEP 2
 
     setSearchParams({
       ...currentSearchParams,
@@ -78,7 +71,7 @@ const SortBy: FunctionComponent<SortByProps> = () => {
       </div>
       {openSort && (
         <div className="py-3 border-t border-dark-darken">
-          <p className="text-lg mb-2">Sort results by </p>
+          <p className="text-lg mb-2 text-white/80">Sort results by </p>
           <Select
             options={options}
             styles={customStyles}

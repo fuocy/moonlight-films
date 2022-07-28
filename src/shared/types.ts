@@ -255,7 +255,7 @@ export interface getWatchReturnedType {
 }
 
 export interface ConfigType {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 export interface ItemsPage {

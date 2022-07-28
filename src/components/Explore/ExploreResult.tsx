@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getExploreMovie, getExploreTV } from "../../services/explore";
-import { ItemsPage } from "../../shared/types";
+import { ConfigType, ItemsPage } from "../../shared/types";
 import FilmItem from "../Common/FilmItem";
 
 ////////////////////////////////////////////////////////////////////////////
@@ -68,7 +68,7 @@ const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
 
 interface ExploreResultProps {
   currentTab: string;
-  config: { [key: string]: string };
+  config: ConfigType;
 }
 
 const ExploreResult: FunctionComponent<ExploreResultProps> = ({
