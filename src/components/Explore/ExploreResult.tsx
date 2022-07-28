@@ -1,9 +1,71 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getExploreMovie, getExploreTV } from "../../services/explore";
 import { ItemsPage } from "../../shared/types";
 import FilmItem from "../Common/FilmItem";
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+interface ExploreMovieResultProps {
+  pages: ItemsPage[];
+}
+
+const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
+  pages,
+}) => {
+  const [parent] = useAutoAnimate();
+
+  return (
+    <ul
+      // @ts-ignore
+      ref={parent}
+      className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2"
+    >
+      {pages.map((page) =>
+        page.results.map((item) => (
+          <li key={item.id}>
+            <FilmItem item={item} />
+          </li>
+        ))
+      )}
+    </ul>
+  );
+};
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+interface ExploreTVResultProps {
+  pages: ItemsPage[];
+}
+
+const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
+  pages,
+}) => {
+  const [list] = useAutoAnimate();
+
+  return (
+    <ul
+      // @ts-ignore
+      ref={list}
+      className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10"
+    >
+      {pages.map((page) =>
+        page.results.map((item) => (
+          <li key={item.id}>
+            <FilmItem item={item} />
+          </li>
+        ))
+      )}
+    </ul>
+  );
+};
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
 interface ExploreResultProps {
   currentTab: string;
   config: { [key: string]: string };
@@ -62,15 +124,7 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
           loader={<div>Loading...</div>}
           endMessage={<div>No more results</div>}
         >
-          <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10">
-            {movies.pages.map((page) =>
-              page.results.map((item) => (
-                <li key={item.id}>
-                  <FilmItem item={item} />
-                </li>
-              ))
-            )}
-          </ul>
+          <ExploreMovieResult pages={movies.pages} />
         </InfiniteScroll>
       )}
 
@@ -82,15 +136,7 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
           loader={<div>Loading...</div>}
           endMessage={<div>No more results</div>}
         >
-          <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10">
-            {tvs.pages.map((page) =>
-              page.results.map((item) => (
-                <li key={item.id}>
-                  <FilmItem item={item} />
-                </li>
-              ))
-            )}
-          </ul>
+          <ExploreTVResult pages={tvs.pages} />
         </InfiniteScroll>
       )}
     </>

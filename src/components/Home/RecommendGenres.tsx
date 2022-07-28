@@ -17,7 +17,11 @@ const getRandomGenres = (genres: { id: number; name: string }[]) => {
   return myChoiceGenresIndex.map((arrIndex) => genres[arrIndex]);
 };
 
-const RecommendGenres: FC = () => {
+interface RecommendGenresProps {
+  currentTab: string;
+}
+
+const RecommendGenres: FC<RecommendGenresProps> = ({ currentTab }) => {
   const { isLoading, data, isError, error } = useQuery<
     getRecommendGenres2Type,
     Error
@@ -31,14 +35,16 @@ const RecommendGenres: FC = () => {
     );
 
   //  as { id: number; name: string }[]
-  const randomGenres = getRandomGenres(data.movieGenres);
+  const randomGenres = getRandomGenres(
+    currentTab === "movie" ? data.movieGenres : data.tvGenres
+  );
 
   return (
     <ul className="mt-28 flex gap-3 flex-wrap ">
       {randomGenres.map((genre) => (
         <li key={genre.id} className="mb-2">
           <Link
-            to={`/explore?genre=${encodeURIComponent(genre.name)}`}
+            to={`/explore?genre=${String(genre.id)}`}
             className="px-4 py-2 bg-dark-lighten rounded-full hover:brightness-75 transition duration-300"
           >
             {genre.name}

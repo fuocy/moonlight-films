@@ -1,11 +1,11 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
+import { useSearchParams } from "react-router-dom";
 import SearchBox from "../components/Common/SearchBox";
 import SidebarMini from "../components/Common/SidebarMini";
 import Title from "../components/Common/Title";
 import ExploreFilter from "../components/Explore/ExploreFilter";
 import ExploreResult from "../components/Explore/ExploreResult";
-import { useQueryParams } from "../hooks/useQueryParams";
 interface ExploreProps {}
 
 const Explore: FunctionComponent<ExploreProps> = () => {
@@ -37,38 +37,38 @@ const Explore: FunctionComponent<ExploreProps> = () => {
     });
   };
 
-  // const [config, setConfig] = useState<{ [key: string]: string }>(
-  //   JSON.parse(localStorage.getItem("config") || "{}")
-  // );
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const initialConfig = {} as { [key: string]: string };
 
-  // const changeConfig = (key: string, value: string) => {
-  //   const clone = JSON.parse(JSON.stringify(config));
-  //   clone[key] = value;
-  //   setConfig(clone);
-  // };
+  // queryParams.forEach((value, key) => (initialConfig[key] = value));
 
-  // useEffect(() => {
-  //   localStorage.setItem("config", JSON.stringify(config));
-  // }, [config]);
-  const queryParam = useQueryParams();
-  const initialConfig = {} as { [key: string]: string };
-
-  queryParam.forEach((value, key) => (initialConfig[key] = value));
-
-  const [config, setConfig] = useState<{ [key: string]: string }>(
-    initialConfig
-  );
+  const [config, setConfig] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
-    const sortType = queryParam.get("sort_by") || "popularity.desc";
+    // const changeConfig = (key: string, value: string) => {
+    //   const clone = JSON.parse(JSON.stringify(config));
+    //   clone[key] = value;
+    //   setConfig(clone);
+    // };
 
     const changeConfig = (key: string, value: string) => {
-      const clone = JSON.parse(JSON.stringify(config));
-      clone[key] = value;
-      setConfig(clone);
+      setConfig((prevConfig) => ({
+        ...prevConfig,
+        [key]: value,
+      }));
     };
 
+    const sortType = searchParams.get("sort_by") || "popularity.desc";
     changeConfig("sort_by", sortType);
+
+    const genreType = searchParams.getAll("genre") || [];
+    // setConfig((prevConfig) => ({
+    //   ...prevConfig,
+    //   sort_by: sortType,
+    //   with_genres: genreType.toString(),
+    // }));
+    changeConfig("with_genres", genreType.toString());
+
     // eslint-disable-next-line
   }, [location.search]);
 
@@ -106,6 +106,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
               onClick={() => {
                 setCurrentTab("tv");
                 localStorage.setItem("currentTab", "tv");
+                setSearchParams({});
               }}
               className={`${
                 currentTab === "tv" &&
@@ -118,6 +119,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
               onClick={() => {
                 setCurrentTab("movie");
                 localStorage.setItem("currentTab", "movie");
+                setSearchParams({});
               }}
               className={`${
                 currentTab === "movie" &&
@@ -131,7 +133,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
           <ExploreResult currentTab={currentTab} config={config} />
         </div>
         <div className="shrink-0 max-w-[310px] w-full py-6 px-3">
-          <ExploreFilter config={config} currentTab={currentTab} />
+          <ExploreFilter currentTab={currentTab} />
         </div>
       </div>
     </>
@@ -139,3 +141,17 @@ const Explore: FunctionComponent<ExploreProps> = () => {
 };
 
 export default Explore;
+
+// const [config, setConfig] = useState<{ [key: string]: string }>(
+//   JSON.parse(localStorage.getItem("config") || "{}")
+// );
+
+// const changeConfig = (key: string, value: string) => {
+//   const clone = JSON.parse(JSON.stringify(config));
+//   clone[key] = value;
+//   setConfig(clone);
+// };
+
+// useEffect(() => {
+//   localStorage.setItem("config", JSON.stringify(config));
+// }, [config]);

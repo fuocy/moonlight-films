@@ -1,25 +1,23 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FunctionComponent, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Select from "react-select";
+import { SUPPORTED_QUERY } from "../../shared/constants";
 
-interface SortByProps {
-  config: { [key: string]: string };
-}
+interface SortByProps {}
 
-const SortBy: FunctionComponent<SortByProps> = ({ config }) => {
-  const navigate = useNavigate();
+const SortBy: FunctionComponent<SortByProps> = () => {
   const [openSort, setOpenSort] = useState(true);
   const [parent] = useAutoAnimate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const options = [
     { value: "popularity.desc", label: "Most popular" },
     { value: "vote_average.desc", label: "Most rating" },
     { value: "release_date.desc", label: "Most recent" },
   ];
-
-  if (Object.keys(config).length === 0) return <div>wait</div>;
 
   const customStyles = {
     control: (styles: any) => ({
@@ -46,6 +44,25 @@ const SortBy: FunctionComponent<SortByProps> = ({ config }) => {
     }),
   };
 
+  const chooseSort = (option: any) => {
+    const sortValue = option?.value || "";
+    // STEP 1
+    const currentSearchParams = JSON.parse(JSON.stringify(SUPPORTED_QUERY)) as {
+      [key: string]: string[];
+    };
+
+    searchParams.forEach((value, key) => {
+      currentSearchParams[key].push(value);
+    });
+    // STEP 2
+
+    setSearchParams({
+      ...currentSearchParams,
+      sort_by: sortValue,
+    });
+  };
+
+  const sortType = searchParams.get("sort_by") || "popularity.desc";
   return (
     <div
       // @ts-ignore
@@ -65,17 +82,11 @@ const SortBy: FunctionComponent<SortByProps> = ({ config }) => {
           <Select
             options={options}
             styles={customStyles}
-            defaultValue={options.find(
-              (option) => option.value === config.sort_by
-            )}
+            defaultValue={options.find((option) => option.value === sortType)}
             // @ts-ignore
             // onChange={(e) => onChangeConfig("sort_by", e?.value)}
-            onChange={(e) =>
-              navigate({
-                pathname: "",
-                search: `?sort_by=${encodeURIComponent(e?.value || "")}`,
-              })
-            }
+            // onChange={(e) => setSearchParams({ sort_by: e?.value })}
+            onChange={chooseSort}
           />
         </div>
       )}
