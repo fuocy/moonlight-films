@@ -12,7 +12,7 @@ export interface Item {
   vote_average: number;
 
   // Additional props
-  media_type: "movie" | "tv";
+  media_type: "movie" | "tv" | "person";
 
   // Movie items
   release_date?: string;
@@ -26,6 +26,9 @@ export interface Item {
   original_name?: string;
   origin_country?: string[];
   name?: string;
+
+  // Person
+  profile_path?: string;
 }
 
 export interface DetailMovie {

@@ -1,4 +1,3 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -16,14 +15,8 @@ interface ExploreMovieResultProps {
 const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
   pages,
 }) => {
-  const [parent] = useAutoAnimate();
-
   return (
-    <ul
-      // @ts-ignore
-      ref={parent}
-      className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2"
-    >
+    <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2">
       {pages &&
         pages.map((page) =>
           page.results.map((item) => (
@@ -52,14 +45,8 @@ interface ExploreTVResultProps {
 const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
   pages,
 }) => {
-  const [list] = useAutoAnimate();
-
   return (
-    <ul
-      // @ts-ignore
-      ref={list}
-      className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10"
-    >
+    <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10">
       {pages &&
         pages.map((page) =>
           page.results.map((item) => (

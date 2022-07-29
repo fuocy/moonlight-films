@@ -37,6 +37,14 @@ const SidebarMini: FunctionComponent = () => {
           <MdOutlineExplore size={25} />
         </Link>
         <Link
+          to="/search"
+          className={`hover:text-primary transition duration-300 ${
+            location.pathname === "/search" && "text-primary"
+          }`}
+        >
+          <BiSearch size={25} />
+        </Link>
+        <Link
           to="/bookmarked"
           className={`hover:text-primary transition duration-300 ${
             location.pathname === "/bookmarked" && "text-primary"
@@ -51,15 +59,6 @@ const SidebarMini: FunctionComponent = () => {
           }`}
         >
           <AiOutlineHistory size={25} />
-        </Link>
-
-        <Link
-          to="/search"
-          className={`hover:text-primary transition duration-300 ${
-            location.pathname === "/search" && "text-primary"
-          }`}
-        >
-          <BiSearch size={25} />
         </Link>
       </div>
       <LazyLoadImage

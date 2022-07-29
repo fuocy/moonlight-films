@@ -9,6 +9,10 @@ body {
 }
 
 /* CUSTOM UTILITIES */
+.tw-pagination-btn {
+  @apply inline-block h-8 w-8 bg-dark-lighten rounded-full tw-flex-center hover:bg-dark-lighten-2 transition duration-300;
+}
+
 .tw-flex-center {
   @apply flex justify-center items-center;
 }

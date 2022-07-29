@@ -92,8 +92,8 @@ const Explore: FunctionComponent<ExploreProps> = () => {
       {isShowScrollUpBtn && (
         <button
           onClick={scrollToTop}
-          className={`fixed bottom-[30px] right-[30px] z-10 transition duration-300 ${
-            isShowScrollUpBtn ? "opacity-100 visible" : "opacity-0 invisible"
+          className={`fixed bottom-[30px] right-[30px] z-10 transition duration-500 ${
+            isShowScrollUpBtn ? "opacity-100" : "opacity-0"
           }`}
         >
           <BsFillArrowUpCircleFill

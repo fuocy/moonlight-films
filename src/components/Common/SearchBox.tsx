@@ -1,14 +1,20 @@
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getSearchKeyword } from "../../services/search";
 
 interface SearchBoxProps {
   autoFocus?: boolean;
 }
 
+let isInitial = true;
+
 const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const [searchInput, setSearchInput] = useState(
+    searchParams.get("query") || ""
+  );
   const timeoutRef = useRef<any>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const navigate = useNavigate();
@@ -25,7 +31,13 @@ const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
     timeoutRef.current = setTimeout(async () => {
       const keywords = await getSearchKeyword(searchInput.trim());
       setSuggestions(keywords);
-    }, 500);
+
+      if (isInitial) {
+        // When user search for "doctor strange", the search params change to "query=doctor+strange". If user now reload the page, the searchBox still hold value "doctor strange". That's good. But I don't like the fact that the suggestion also showing up on first mount/page-reload, so I put this check here to stop it
+        isInitial = false;
+        setSuggestions([]);
+      }
+    }, 300);
 
     return () => clearTimeout(timeoutRef.current);
   }, [searchInput]);
@@ -36,7 +48,14 @@ const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
     if (!searchInput.trim()) return;
 
     navigate(`/search?query=${encodeURIComponent(searchInput.trim())}`);
+    clearTimeout(timeoutRef.current);
+    setSuggestions([]);
   };
+
+  useEffect(() => {
+    setSuggestions([]);
+    clearTimeout(timeoutRef.current);
+  }, [location.search]);
 
   return (
     <div
@@ -62,16 +81,23 @@ const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
       </form>
 
       {suggestions.length > 0 && (
-        <ul className="hidden group-focus-within:flex flex-col gap-3 py-3 relative after:absolute after:top-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-[200px] after:bg-gray-darken">
+        <ul className="hidden group-focus-within:flex flex-col gap-3 py-3 relative after:absolute after:top-0 after:h-[2px]  after:bg-gray-darken after:left-[5%] after:right-[5%]">
           {suggestions.map((suggestion, index) => (
-            <li key={index}>
-              <Link
-                to={`/search?query=${encodeURIComponent(suggestion)}`}
+            <li
+              key={index}
+              className="focus:bg-red-500 outline-none"
+              tabIndex={index - 1}
+            >
+              <button
+                onClick={() => {
+                  navigate(`/search?query=${encodeURIComponent(suggestion)}`);
+                  setSuggestions([]);
+                }}
                 className="flex items-center gap-3 ml-5 hover:text-white transition duration-300"
               >
                 <BiSearch size={25} />
                 <span>{suggestion}</span>
-              </Link>
+              </button>
             </li>
           ))}
         </ul>

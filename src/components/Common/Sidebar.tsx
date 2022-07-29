@@ -65,7 +65,7 @@ const Sidebar: FC = () => {
 
         <Link
           to="/search"
-          className={`flex lg:hidden gap-6 items-center  ${
+          className={`flex gap-6 items-center  ${
             location.pathname === "/search" &&
             "!text-primary border-r-4 border-primary font-medium"
           } hover:text-white transition duration-300`}

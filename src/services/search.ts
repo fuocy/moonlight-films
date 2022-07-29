@@ -1,5 +1,5 @@
 import axios from "../shared/axios";
-import { getRecommendGenres2Type } from "../shared/types";
+import { getRecommendGenres2Type, Item, ItemsPage } from "../shared/types";
 
 export const getSearchKeyword = async (query: string): Promise<string[]> => {
   return (
@@ -32,3 +32,30 @@ export const getRecommendGenres2 =
       tvGenres,
     };
   };
+
+export const getSearchResult: (
+  typeSearch: string,
+  query: string,
+  page: number
+) => Promise<ItemsPage> = async (typeSearch, query, page) => {
+  const data = (
+    await axios.get(`/search/${typeSearch}`, {
+      params: {
+        query,
+        page,
+      },
+    })
+  ).data;
+
+  const results = data.results
+    .map((item: Item) => ({
+      ...item,
+      ...(typeSearch !== "multi" && { media_type: typeSearch }),
+    }))
+    .filter((item: Item) => item.poster_path || item.profile_path);
+
+  return {
+    ...data,
+    results,
+  };
+};

@@ -4,6 +4,7 @@ import Explore from "./pages/Explore";
 import Home from "./pages/Home";
 import MovieInfo from "./pages/Movie/MovieInfo";
 import MovieWatch from "./pages/Movie/MovieWatch";
+import Search from "./pages/Search";
 import TVInfo from "./pages/TV/TVInfo";
 import TVWatch from "./pages/TV/TVWatch";
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="movie/:id/watch" element={<MovieWatch />} />
       <Route path="tv/:id/watch" element={<TVWatch />} />
       <Route path="explore" element={<Explore />} />
+      <Route path="search" element={<Search />} />
     </Routes>
   );
 }
