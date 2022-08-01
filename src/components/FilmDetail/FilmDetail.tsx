@@ -194,7 +194,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
           <SearchBox />
           {/* <RecommendGenres /> */}
           <RightbarFilms
-            name="Recommendations"
+            name="Similar"
             films={similar}
             limitNumber={4}
             isLoading={!similar}

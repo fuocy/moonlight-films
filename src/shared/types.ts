@@ -228,6 +228,14 @@ export interface DetailSeason {
   season_number: number;
 }
 
+export interface User {
+  displayName: string | null;
+  email: string | null;
+  emailVerified: boolean;
+  photoURL: string | null;
+  uid: string;
+}
+
 // export interface SeasonsSummary {
 //   air_date: string;
 //   episode_count: number;

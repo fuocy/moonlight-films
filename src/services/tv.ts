@@ -3,6 +3,7 @@ import {
   DetailSeason,
   FilmInfo,
   getWatchReturnedType,
+  Item,
   Reviews,
   Video,
 } from "../shared/types";
@@ -12,7 +13,7 @@ export const getTVFullDetail = async (id: number): Promise<FilmInfo> => {
     axios.get(`/tv/${id}`),
     axios.get(`/tv/${id}/credits`),
     axios.get(`/tv/${id}/reviews`),
-    axios.get(`/tv/${id}/recommendations`),
+    axios.get(`/tv/${id}/similar`),
     axios.get(`/tv/${id}/videos`),
   ]);
 
@@ -33,7 +34,10 @@ export const getTVFullDetail = async (id: number): Promise<FilmInfo> => {
         break;
 
       case 3:
-        final.similar = current.data.results;
+        final.similar = current.data.results.map((item: Item) => ({
+          ...item,
+          media_type: "tv",
+        }));
         break;
 
       case 4:

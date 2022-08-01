@@ -12,7 +12,13 @@ interface FilmItemProps {
 const FilmItem: FunctionComponent<FilmItemProps> = ({ item }) => {
   return (
     <Link
-      to={item.media_type === "movie" ? `/movie/${item.id}` : `/tv/${item.id}`}
+      to={
+        item.media_type === "movie"
+          ? `/movie/${item.id}`
+          : item.media_type === "tv"
+          ? `/tv/${item.id}`
+          : `/`
+      }
     >
       <div className="shadow-sm bg-dark-darken pb-2 rounded-md overflow-hidden hover:scale-105 hover:brightness-110 transition duration-300 relative group">
         <LazyLoadImage

@@ -10,13 +10,12 @@ import SearchResult from "../components/Search/SearchResult";
 interface SearchProps {}
 // https://raw.githubusercontent.com/fuocy/video/master/Studio%20Project%20%E2%80%94%20Kapwing.mp4
 const Search: FunctionComponent<SearchProps> = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [openSearchFilter, setOpenSearchFilter] = useState(true);
   const [parent] = useAutoAnimate();
   const query = searchParams.get("query");
   const page = searchParams.get("page") || 1;
   const [currentTab, setCurrentTab] = useState("multi");
-
   return (
     <>
       {!query && <Title value="Search | Moonlight" />}
@@ -77,7 +76,10 @@ const Search: FunctionComponent<SearchProps> = () => {
               {openSearchFilter && (
                 <div className="py-6 border-t border-dark-darken text-white text-lg flex flex-col gap-3">
                   <button
-                    onClick={() => setCurrentTab("multi")}
+                    onClick={() => {
+                      setSearchParams({ query: query || "", page: "1" });
+                      setCurrentTab("multi");
+                    }}
                     className={`w-full flex justify-between hover:bg-dark-lighten-2 px-3 py-1 rounded-md transition duration-300 ${
                       currentTab === "multi" && "bg-dark-lighten-2"
                     }`}
@@ -85,7 +87,10 @@ const Search: FunctionComponent<SearchProps> = () => {
                     <span>All</span>
                   </button>
                   <button
-                    onClick={() => setCurrentTab("movie")}
+                    onClick={() => {
+                      setSearchParams({ query: query || "", page: "1" });
+                      setCurrentTab("movie");
+                    }}
                     className={`w-full flex justify-between hover:bg-dark-lighten-2 px-3 py-1 rounded-md transition duration-300 ${
                       currentTab === "movie" && "bg-dark-lighten-2"
                     }`}
@@ -93,7 +98,10 @@ const Search: FunctionComponent<SearchProps> = () => {
                     <span>Movie</span>
                   </button>
                   <button
-                    onClick={() => setCurrentTab("tv")}
+                    onClick={() => {
+                      setSearchParams({ query: query || "", page: "1" });
+                      setCurrentTab("tv");
+                    }}
                     className={`w-full flex justify-between hover:bg-dark-lighten-2 px-3 py-1 rounded-md transition duration-300 ${
                       currentTab === "tv" && "bg-dark-lighten-2"
                     }`}
@@ -101,7 +109,10 @@ const Search: FunctionComponent<SearchProps> = () => {
                     <span>TV Show</span>
                   </button>
                   <button
-                    onClick={() => setCurrentTab("person")}
+                    onClick={() => {
+                      setSearchParams({ query: query || "", page: "1" });
+                      setCurrentTab("person");
+                    }}
                     className={`w-full flex justify-between hover:bg-dark-lighten-2 px-3 py-1 rounded-md transition duration-300 ${
                       currentTab === "person" && "bg-dark-lighten-2"
                     }`}

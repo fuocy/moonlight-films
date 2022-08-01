@@ -17,6 +17,10 @@ body {
   @apply flex justify-center items-center;
 }
 
+.tw-absolute-center {
+  @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
 .tw-black-backdrop {
   background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.85) 65%);
 }
@@ -29,6 +33,10 @@ body {
     rgba(107, 107, 115, 0) 93%,
     rgba(0, 0, 0, 0.6) 100%
   );
+}
+
+.tw-black-backdrop-3 {
+  background: linear-gradient(65deg, rgba(39, 42, 55, 1) 70%, transparent 140%);
 }
 
 .tw-multiline-ellipsis {
@@ -49,6 +57,9 @@ body {
   display: -webkit-box !important;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.tw-floating-label {
 }
 
 /* CUSTOM SLIDER */

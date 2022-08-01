@@ -1,21 +1,23 @@
-import { FC, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  getMovieBannerInfo,
-  getTVBannerInfo,
-  getHomeMovies,
-  getHomeTVs,
-} from "../services/home";
-import { HomeFilms, Item } from "../shared/types";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { FC, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import Title from "../components/Common/Title";
-import Sidebar from "../components/Common/Sidebar";
 import SearchBox from "../components/Common/SearchBox";
+import Sidebar from "../components/Common/Sidebar";
+import Title from "../components/Common/Title";
+import MainHomeFilms from "../components/Home/MainHomeFilm";
 import RecommendGenres from "../components/Home/RecommendGenres";
 import TrendingNow from "../components/Home/TrendingNow";
-import MainHomeFilms from "../components/Home/MainHomeFilm";
+import {
+  getHomeMovies,
+  getHomeTVs,
+  getMovieBannerInfo,
+  getTVBannerInfo,
+} from "../services/home";
+import { HomeFilms, Item } from "../shared/types";
+import { useAppSelector } from "../store/hooks";
 const Home: FC = () => {
+  const currentUser = useAppSelector((state) => state.auth.user);
+  console.log(currentUser);
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "tv"
   );
@@ -99,11 +101,16 @@ const Home: FC = () => {
               </button>
             </div>
             <div className="flex gap-6 items-center">
-              <div className="w-6 h-6 rounded-full border border-gray-lighten tw-flex-center cursor-pointer">
+              {/* <div className="w-6 h-6 rounded-full border border-gray-lighten tw-flex-center cursor-pointer">
                 <IoMdNotificationsOutline size={17} />
-              </div>
+              </div> */}
+              <p>{currentUser?.displayName || "Anonymous"}</p>
               <LazyLoadImage
-                src="/avatarTest.jpg"
+                src={
+                  currentUser
+                    ? (currentUser.photoURL as string)
+                    : "./defaultAvatar.jpg"
+                }
                 alt="User avatar"
                 className="w-7 h-7 rounded-full object-cover"
                 effect="opacity"
