@@ -85,7 +85,6 @@ const Explore: FunctionComponent<ExploreProps> = () => {
 
     // eslint-disable-next-line
   }, [location.search]);
-  console.log(config);
   return (
     <>
       <Title value={"Explore | Moonlight"} />

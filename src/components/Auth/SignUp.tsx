@@ -4,7 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FunctionComponent, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
@@ -17,6 +17,7 @@ import { auth, db } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 import ModalNotification from "./ModalNotification";
+import { signInWithProvider } from "./signInWithProvider";
 interface SignUpProps {
   setIsSignIn: any;
   isSignIn: boolean;
@@ -50,27 +51,6 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
     }
 
     setIsLoading(false);
-  };
-
-  const signInWithProvider = (provider: any, type: string) => {
-    signInWithPopup(auth, provider).then((result) => {
-      const user = result.user;
-
-      let token;
-      if (type === "facebook") {
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        token = credential?.accessToken;
-      }
-
-      setDoc(doc(db, "users", user.uid), {
-        firstName: user.displayName,
-        lastName: "already have",
-        photoUrl: "already have",
-        bookmarks: [],
-        recentlyWatch: [],
-        ...(type === "facebook" && { token }),
-      });
-    });
   };
 
   return (

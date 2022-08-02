@@ -33,10 +33,9 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
     }
 
     onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-      setIsBookmarked(doc.data()?.bookmarks.includes(detail?.id) || false);
+      setIsBookmarked(doc.data()?.bookmarks.includes(detail?.id));
     });
-    // eslint-disable-next-line
-  }, [currentUser]);
+  }, [currentUser, detail?.id]);
 
   const bookmarkedHandler = () => {
     if (!currentUser) {

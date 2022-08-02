@@ -20,7 +20,7 @@ const Sidebar: FC = () => {
       .then(() => {
         window.location.reload();
       })
-      .catch((error) => console.log(error.message))
+      .catch((error) => alert(error.message))
       .finally(() => setIsLoading(false));
   };
 

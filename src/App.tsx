@@ -25,8 +25,6 @@ function App() {
       return;
     }
 
-    console.log(user);
-
     if (user.providerData[0].providerId === "google.com") {
       dispatch(
         setCurrentUser({

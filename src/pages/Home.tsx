@@ -17,7 +17,6 @@ import { HomeFilms, Item } from "../shared/types";
 import { useAppSelector } from "../store/hooks";
 const Home: FC = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
-  console.log(currentUser);
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "tv"
   );
