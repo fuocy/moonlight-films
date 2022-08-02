@@ -2,15 +2,13 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup,
 } from "firebase/auth";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { FormEvent, FunctionComponent, useRef, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { auth, db } from "../../shared/firebase";
+import { auth } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 import ModalNotification from "./ModalNotification";

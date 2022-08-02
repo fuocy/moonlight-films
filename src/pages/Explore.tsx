@@ -104,7 +104,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
 
       <div className="flex">
         <SidebarMini />
-        <div className="flex-grow px-8 pt-6">
+        <div className="flex-grow px-[2vw] pt-6">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-white text-3xl font-medium uppercase ">
               Find films that best fit you

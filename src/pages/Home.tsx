@@ -57,13 +57,13 @@ const Home: FC = () => {
     { enabled: !!dataTV?.Trending }
   );
 
-  if (isErrorMovie) return <p>ERROR: ${errorMovie.message}</p>;
+  if (isErrorMovie) return <p>ERROR: {errorMovie.message}</p>;
 
-  if (isErrorMovieDetail) return <p>ERROR: ${errorMovieDetail.message}</p>;
+  if (isErrorMovieDetail) return <p>ERROR: {errorMovieDetail.message}</p>;
 
-  if (isErrorTV) return <p>ERROR: ${errorTV.message}</p>;
+  if (isErrorTV) return <p>ERROR: {errorTV.message}</p>;
 
-  if (isErrorTVDetail) return <p>ERROR: ${errorTVDetail.message}</p>;
+  if (isErrorTVDetail) return <p>ERROR: {errorTVDetail.message}</p>;
 
   return (
     <>
@@ -108,7 +108,7 @@ const Home: FC = () => {
                 src={
                   currentUser
                     ? (currentUser.photoURL as string)
-                    : "./defaultAvatar.jpg"
+                    : "/defaultAvatar.jpg"
                 }
                 alt="User avatar"
                 className="w-7 h-7 rounded-full object-cover"

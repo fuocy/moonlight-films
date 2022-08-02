@@ -46,7 +46,7 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
       <div
         style={{
           backgroundImage: `${
-            type === "success" ? "url('./success.jpg')" : "url('./fail.jpg')"
+            type === "success" ? "url('/success.jpg')" : "url('/fail.jpg')"
           } `,
         }}
         className="bg-cover bg-no-repeat bg-center min-h-[450px] max-w-[350px] w-full fixed z-30 tw-absolute-center rounded-xl"

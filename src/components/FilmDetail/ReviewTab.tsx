@@ -30,7 +30,7 @@ const ReviewContent: FC<ReviewContentProps> = ({ reviews, type }) => {
         <li key={review.id} className="flex gap-7">
           <div className="shrink-0 max-w-[60px] w-full h-[60px]">
             <LazyLoadImage
-              src="/cat.png"
+              src="/me.jpg"
               alt="reviewer"
               effect="opacity"
               className="w-[60px] h-[60px] rounded-full object-cover"

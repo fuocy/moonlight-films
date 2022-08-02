@@ -7,30 +7,66 @@ import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
 import { MdOutlineExplore } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../../shared/firebase";
 import { useAppSelector } from "../../store/hooks";
+import { ToastContainer, toast } from "react-toastify";
 const Sidebar: FC = () => {
   const location = useLocation();
   const currentUser = useAppSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
   const signOutHandler = () => {
     setIsLoading(true);
     signOut(auth)
       .then(() => {
-        window.location.reload();
+        toast.success("Sign out successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => alert(error.message))
       .finally(() => setIsLoading(false));
   };
 
+  const personalPageHandler = (destinationUrl: string) => {
+    if (!currentUser) {
+      toast.info("You need to login to use this feature", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return;
+    }
+
+    navigate(destinationUrl);
+  };
+
   return (
     <>
+      <ToastContainer />
+
       {isLoading && (
         <div className="z-10 tw-flex-center fixed top-0 left-0 w-full h-full">
           <div className="w-28 h-28 border-[10px] rounded-full border-primary border-t-transparent animate-spin "></div>
         </div>
       )}
+
       <div className="shrink-0 max-w-[260px] w-[90vw] mt-4 pl-8 sticky top-4">
         <Link to="/" className="flex items-center gap-3">
           <LazyLoadImage
@@ -94,8 +130,8 @@ const Sidebar: FC = () => {
 
         <div className="text-white text-lg font-medium mt-12">PERSONAL</div>
         <div className="mt-8 ml-4 flex flex-col gap-6">
-          <Link
-            to="/bookmarked"
+          <button
+            onClick={() => personalPageHandler("/bookmarked")}
             className={`flex gap-6 items-center  ${
               location.pathname === "/bookmarked" &&
               "!text-primary border-r-4 border-primary font-medium"
@@ -103,10 +139,10 @@ const Sidebar: FC = () => {
           >
             <BsBookmarkHeart size={25} />
             <p>Bookmarked</p>
-          </Link>
+          </button>
 
-          <Link
-            to="/history"
+          <button
+            onClick={() => personalPageHandler("/history")}
             className={`flex gap-6 items-center  ${
               location.pathname === "/history" &&
               "!text-primary border-r-4 border-primary font-medium"
@@ -114,7 +150,7 @@ const Sidebar: FC = () => {
           >
             <AiOutlineHistory size={25} />
             <p>History</p>
-          </Link>
+          </button>
         </div>
 
         <div className="text-white text-lg font-medium mt-12">GENERAL</div>

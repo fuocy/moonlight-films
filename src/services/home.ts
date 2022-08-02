@@ -114,7 +114,7 @@ export const getTVBannerInfo = async (tvs: Item[]): Promise<any> => {
         }
         return [...acc, element];
       }, [] as any)
-      .map((translation: any) => translation.data.title)
+      .map((translation: any) => translation.data.name)
   );
 
   const genres = detailRes.map((item: any) =>

@@ -11,6 +11,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { BsFillPlayFill, BsShareFill, BsThreeDots } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import YouTube from "react-youtube";
 import { db } from "../../shared/firebase";
 import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";
@@ -22,7 +23,6 @@ import SidebarMini from "../Common/SidebarMini";
 import Skeleton from "../Common/Skeleton";
 import Title from "../Common/Title";
 import FilmTabInfo from "./FilmTabInfo";
-
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -32,22 +32,66 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
       return;
     }
 
-    onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-      setIsBookmarked(doc.data()?.bookmarks.includes(detail?.id));
+    const unsubDoc = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+      setIsBookmarked(
+        doc.data()?.bookmarks.some((item: any) => item.id === detail?.id)
+      );
     });
+
+    return () => unsubDoc();
   }, [currentUser, detail?.id]);
 
   const bookmarkedHandler = () => {
     if (!currentUser) {
-      alert("You need to sign in to bookmark films");
+      toast.error("You need to sign in to bookmark films", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       return;
     }
 
     updateDoc(doc(db, "users", currentUser.uid), {
       bookmarks: !isBookmarked
-        ? arrayUnion(detail?.id)
-        : arrayRemove(detail?.id),
+        ? arrayUnion({
+            poster_path: detail?.poster_path,
+            id: detail?.id,
+            vote_average: detail?.vote_average,
+            media_type: detail?.media_type,
+            ...(detail?.media_type === "movie" && { title: detail?.title }),
+            ...(detail?.media_type === "tv" && { name: detail?.name }),
+          })
+        : arrayRemove({
+            poster_path: detail?.poster_path,
+            id: detail?.id,
+            vote_average: detail?.vote_average,
+            media_type: detail?.media_type,
+            ...(detail?.media_type === "movie" && { title: detail?.title }),
+            ...(detail?.media_type === "tv" && { name: detail?.name }),
+          }),
     });
+
+    toast.success(
+      `${
+        !isBookmarked
+          ? "This film is now bookmarked"
+          : "This film is removed from your bookmarks"
+      }`,
+      {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
   };
 
   return (
@@ -59,6 +103,8 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
           } | Moonlight`}
         />
       )}
+
+      <ToastContainer />
 
       <div className="flex">
         <SidebarMini />

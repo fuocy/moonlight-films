@@ -20,8 +20,8 @@ module.exports = {
         roboto: ["Roboto", ...defaultTheme.fontFamily.sans],
       },
       gridTemplateColumns: {
-        sm: "repeat(auto-fit, minmax(130px, 1fr))",
-        lg: "repeat(auto-fit, minmax(160px, 1fr))",
+        sm: "repeat(auto-fill, minmax(130px, 1fr))",
+        lg: "repeat(auto-fill, minmax(160px, 1fr))",
       },
     },
   },

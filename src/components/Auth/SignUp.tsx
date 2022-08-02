@@ -2,9 +2,8 @@ import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
   GoogleAuthProvider,
-  signInWithPopup,
 } from "firebase/auth";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FunctionComponent, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
