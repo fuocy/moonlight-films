@@ -1,10 +1,16 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { FormEvent, FunctionComponent, useRef, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { auth } from "../../shared/firebase";
+import { auth, db } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 import ModalNotification from "./ModalNotification";
@@ -44,6 +50,28 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
   //   // return <Navigate to={searchParams.get("redirect") || "/"} />;
   // }
 
+  const signInWithProvider = (provider: any, type: string) => {
+    signInWithPopup(auth, provider).then((result) => {
+      const user = result.user;
+
+      let token;
+      if (type === "facebook") {
+        // If logined with facebook, I need to store additional info about "token" because I can only get profile picture "photoURL" from FB API when I add "?access_token={someToken}", so I store that "someToken" is my FireStore
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        token = credential?.accessToken;
+      }
+
+      setDoc(doc(db, "users", user.uid), {
+        firstName: user.displayName,
+        lastName: "already have",
+        photoUrl: "already have",
+        bookmarks: [],
+        recentlyWatch: [],
+        ...(type === "facebook" && { token }),
+      });
+    });
+  };
+
   return (
     <>
       {currentUser && (
@@ -66,10 +94,21 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
             </div>
           </div>
           <div className="flex gap-4 mb-8">
-            <button className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300">
+            <button
+              onClick={() =>
+                signInWithProvider(new GoogleAuthProvider(), "google")
+              }
+              // onClick={() => signInWithPopup(auth, new GoogleAuthProvider())}
+              className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300"
+            >
               <FcGoogle size={25} className="text-primary" />
             </button>
-            <button className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300">
+            <button
+              onClick={() =>
+                signInWithProvider(new FacebookAuthProvider(), "facebook")
+              }
+              className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300"
+            >
               <FaFacebookF size={25} className="text-primary" />
             </button>
           </div>

@@ -1,4 +1,9 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FunctionComponent, useState } from "react";
@@ -37,6 +42,8 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
         firstName: values.firstName,
         lastName: values.lastName,
         photoUrl: "https://i.ibb.co/StzXrVH/catface.jpg",
+        bookmarks: [],
+        recentlyWatch: [],
       });
     } catch (error: any) {
       setError(convertErrorCodeToMessage(error.code));
@@ -45,12 +52,26 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
     setIsLoading(false);
   };
 
-  // if (currentUser) {
-  //   setTimeout(() => {
-  //     navigate(`${searchParams.get("redirect") || "/"}`);
-  //   }, 2000);
-  //   // return <Navigate to={searchParams.get("redirect") || "/"} />;
-  // }
+  const signInWithProvider = (provider: any, type: string) => {
+    signInWithPopup(auth, provider).then((result) => {
+      const user = result.user;
+
+      let token;
+      if (type === "facebook") {
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        token = credential?.accessToken;
+      }
+
+      setDoc(doc(db, "users", user.uid), {
+        firstName: user.displayName,
+        lastName: "already have",
+        photoUrl: "already have",
+        bookmarks: [],
+        recentlyWatch: [],
+        ...(type === "facebook" && { token }),
+      });
+    });
+  };
 
   return (
     <>
@@ -76,10 +97,20 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
             </div>
           </div>
           <div className="flex gap-4 mb-8">
-            <button className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300">
+            <button
+              onClick={() =>
+                signInWithProvider(new GoogleAuthProvider(), "google")
+              }
+              className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300"
+            >
               <FcGoogle size={25} className="text-primary" />
             </button>
-            <button className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300">
+            <button
+              onClick={() =>
+                signInWithProvider(new FacebookAuthProvider(), "facebook")
+              }
+              className="h-12 w-12 rounded-full bg-white tw-flex-center hover:brightness-75 transition duration-300"
+            >
               <FaFacebookF size={25} className="text-primary" />
             </button>
           </div>

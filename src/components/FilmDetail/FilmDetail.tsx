@@ -1,12 +1,21 @@
-import { FC } from "react";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
+import { FC, useEffect, useState } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPlayFill, BsShareFill, BsThreeDots } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import YouTube from "react-youtube";
+import { db } from "../../shared/firebase";
 import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";
 import { resizeImage } from "../../shared/utils";
+import { useAppSelector } from "../../store/hooks";
 import RightbarFilms from "../Common/RightbarFilms";
 import SearchBox from "../Common/SearchBox";
 import SidebarMini from "../Common/SidebarMini";
@@ -15,6 +24,33 @@ import Title from "../Common/Title";
 import FilmTabInfo from "./FilmTabInfo";
 
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
+  const currentUser = useAppSelector((state) => state.auth.user);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+      setIsBookmarked(doc.data()?.bookmarks.includes(detail?.id) || false);
+    });
+    // eslint-disable-next-line
+  }, [currentUser]);
+
+  const bookmarkedHandler = () => {
+    if (!currentUser) {
+      alert("You need to sign in to bookmark films");
+      return;
+    }
+
+    updateDoc(doc(db, "users", currentUser.uid), {
+      bookmarks: !isBookmarked
+        ? arrayUnion(detail?.id)
+        : arrayRemove(detail?.id),
+    });
+  };
+
   return (
     <>
       {detail && (
@@ -79,10 +115,17 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                   </Link>
                 </div>
                 <div className="flex gap-3 absolute top-[5%] right-[3%]">
-                  <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
+                  <button
+                    onClick={bookmarkedHandler}
+                    className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
+                      isBookmarked && "!border-primary"
+                    }`}
+                  >
                     <AiFillHeart
                       size={20}
-                      className="text-white group-hover:text-primary transition duration-300"
+                      className={`text-white group-hover:text-primary transition duration-300 ${
+                        isBookmarked && "!text-primary"
+                      }`}
                     />
                   </button>
                   <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">

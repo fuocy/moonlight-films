@@ -114,6 +114,7 @@ const Home: FC = () => {
                 alt="User avatar"
                 className="w-7 h-7 rounded-full object-cover"
                 effect="opacity"
+                referrerPolicy="no-referrer"
               />
             </div>
           </div>

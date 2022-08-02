@@ -20,13 +20,18 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
   const [searchParams] = useSearchParams();
 
   const isCloseModalAutomatically = timeLeft === 0;
-  if (isCloseModalAutomatically) {
-    if (type === "success") {
-      navigate(`${searchParams.get("redirect") || "/"}`);
-    } else {
-      setError("");
+
+  useEffect(() => {
+    if (isCloseModalAutomatically) {
+      if (type === "success") {
+        navigate(`${searchParams.get("redirect") || "/"}`);
+      } else {
+        setError("");
+      }
     }
-  }
+    // eslint-disable-next-line
+  }, [isCloseModalAutomatically]);
+
   useEffect(() => {
     const timeout = setInterval(() => {
       setTimeLeft((prev) => prev - 1);

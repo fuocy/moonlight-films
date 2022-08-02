@@ -13,6 +13,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./shared/firebase";
 import { setCurrentUser } from "./store/slice/authSlice";
 import { doc, onSnapshot } from "firebase/firestore";
+import Bookmarked from "./pages/Bookmarked";
 
 function App() {
   const location = useLocation();
@@ -24,10 +25,9 @@ function App() {
       return;
     }
 
-    if (
-      user.providerId === "google.com" ||
-      user.providerId === "facebook.com"
-    ) {
+    console.log(user);
+
+    if (user.providerData[0].providerId === "google.com") {
       dispatch(
         setCurrentUser({
           displayName: user.displayName,
@@ -37,9 +37,21 @@ function App() {
           uid: user.uid,
         })
       );
+    } else if (user.providerData[0].providerId === "facebook.com") {
+      onSnapshot(doc(db, "users", user.uid), (doc) => {
+        dispatch(
+          setCurrentUser({
+            displayName: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            photoURL:
+              user.photoURL + "?access_token=" + doc.data()?.token || "",
+            uid: user.uid,
+          })
+        );
+      });
     } else {
       onSnapshot(doc(db, "users", user.uid), (doc) => {
-        console.log(doc.data());
         dispatch(
           setCurrentUser({
             displayName:
@@ -68,6 +80,7 @@ function App() {
       <Route path="explore" element={<Explore />} />
       <Route path="search" element={<Search />} />
       <Route path="auth" element={<Auth />} />
+      <Route path="bookmarked" element={<Bookmarked />} />
     </Routes>
   );
 }

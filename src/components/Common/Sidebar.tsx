@@ -6,7 +6,6 @@ import { BsBookmarkHeart } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
 import { MdOutlineExplore } from "react-icons/md";
-import { TbBrandTiktok } from "react-icons/tb";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useLocation } from "react-router-dom";
 import { auth } from "../../shared/firebase";
@@ -70,7 +69,7 @@ const Sidebar: FC = () => {
             <p>Explore</p>
           </Link>
 
-          <Link
+          {/* <Link
             to="/shorts"
             className={`flex gap-5 items-center  ${
               location.pathname === "/shorts" &&
@@ -79,7 +78,7 @@ const Sidebar: FC = () => {
           >
             <TbBrandTiktok size={30} />
             <p>Shorts</p>
-          </Link>
+          </Link> */}
 
           <Link
             to="/search"
