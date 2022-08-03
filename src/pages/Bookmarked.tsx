@@ -1,3 +1,4 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { FunctionComponent, useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
@@ -20,11 +21,15 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSelectAll, setIsSelectAll] = useState(false);
   const [selections, setSelections] = useState<number[]>([]);
+  const [isShowPrompt, setIsShowPrompt] = useState(false);
   const [isLoading, setIsLoading] = useState(!Boolean(bookmarkedFilms.length));
   const [isError, setIsError] = useState(false);
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("bookmarkCurrentTab") || "all"
   );
+  const [parent] = useAutoAnimate();
+  const [action] = useAutoAnimate();
+  const [show] = useAutoAnimate();
 
   useEffect(() => {
     if (!currentUser) return;
@@ -79,11 +84,12 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
     );
 
     updateDoc(doc(db, "users", currentUser?.uid), {
-      bookmarks: editedBookmarks,
+      bookmarks: editedBookmarks.reverse(),
     });
 
     setSelections([]);
     setIsSelectAll(false);
+    setIsShowPrompt(false);
   };
 
   if (isError) return <div>ERROR</div>;
@@ -91,6 +97,39 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
   return (
     <>
       <Title value="Bookmark | Moonlight" />
+
+      <div
+        // @ts-ignore
+        ref={show}
+      >
+        {isShowPrompt && (
+          <>
+            <div className="fixed top-[40%] left-[40%]  max-w-[330px] w-full z-40 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-2">
+              <p className="text-white text-lg text-center">
+                Do you really want to remove these movies from your bookmarks?
+              </p>
+              <div className="flex gap-5 mt-8 justify-end">
+                <button
+                  onClick={clearSelection}
+                  className="px-3 py-1 rounded-full bg-dark-lighten-2 hover:bg-red-500 hover:text-white transition duration-300"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setIsShowPrompt(false)}
+                  className="px-3 py-1 rounded-full bg-dark-lighten-2 hover:bg-primary hover:text-white transition duration-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+            <div
+              onClick={() => setIsShowPrompt(false)}
+              className="fixed top-0 left-0 w-full h-full z-30 bg-black/60"
+            ></div>
+          </>
+        )}
+      </div>
 
       <div className="flex gap-6 items-center absolute top-4 right-5">
         {/* <div className="w-6 h-6 rounded-full border border-gray-lighten tw-flex-center cursor-pointer">
@@ -110,14 +149,18 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
         />
       </div>
 
-      <div className="flex">
+      <div className="flex ">
         <SidebarMini />
         <div className="flex-grow px-[2vw] pb-16">
           <h1 className="uppercase text-white font-semibold text-[35px] mb-4 mt-5">
             My favourite films
           </h1>
 
-          <div className="flex justify-between items-end mb-8">
+          <div
+            // @ts-ignore
+            ref={action}
+            className="flex justify-between items-end mb-8"
+          >
             <div className="inline-flex gap-[30px] pb-[14px] border-b border-gray-darken relative">
               <button
                 onClick={() => {
@@ -156,6 +199,7 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
                 Movie
               </button>
             </div>
+
             {!isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
@@ -165,6 +209,7 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
                 <p>Edit</p>
               </button>
             )}
+
             {isEditing && (
               <div className="flex gap-5">
                 <button
@@ -177,7 +222,7 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
                   <p>Select all</p>
                 </button>
                 <button
-                  onClick={() => clearSelection()}
+                  onClick={() => setIsShowPrompt(true)}
                   disabled={selections.length === 0}
                   className="disabled:text-gray-700 text-lg hover:text-red-500 transition duration-300 flex gap-2 items-center"
                 >
@@ -196,6 +241,8 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
           </div>
 
           <ul
+            // @ts-ignore
+            ref={parent}
             className={`grid grid-cols-sm md:grid-cols-lg gap-x-8 gap-y-10 ${
               isEditing && "!gap-y-16"
             }`}

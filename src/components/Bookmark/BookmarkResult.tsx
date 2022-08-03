@@ -30,6 +30,7 @@ const BookmarkResult: FunctionComponent<BookmarkResultProps> = ({
         films.map((item) => (
           <li key={item.id} className="relative">
             <FilmItem item={item} />
+
             {isEditing && (
               <button
                 onClick={() =>
