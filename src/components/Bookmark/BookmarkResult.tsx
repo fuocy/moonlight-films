@@ -9,6 +9,7 @@ interface BookmarkResultProps {
   selections: number[];
   setSelections: any;
   isLoading: boolean;
+  pageType: string;
 }
 
 const BookmarkResult: FunctionComponent<BookmarkResultProps> = ({
@@ -17,12 +18,15 @@ const BookmarkResult: FunctionComponent<BookmarkResultProps> = ({
   selections,
   setSelections,
   isLoading,
+  pageType,
 }) => {
   return (
     <>
       {films.length === 0 && !isLoading && (
         <div className="text-white text-2xl text-center col-span-full mt-10">
-          Your bookmark list is empty. Let's bookmark some!
+          {pageType === "bookmark"
+            ? "Your bookmark list for this type is empty. Let's bookmark some!"
+            : "Your recently watched films for this type is empty. Let's watch some! "}
           <br></br> Add a 404 good image later
         </div>
       )}

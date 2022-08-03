@@ -65,6 +65,8 @@ export const getWatchMovie = async (
 
   return {
     detail: res[0].data,
-    recommendations: res[1].data.results,
+    recommendations: res[1].data.results.filter(
+      (item: Item) => item.poster_path
+    ),
   };
 };

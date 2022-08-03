@@ -41,7 +41,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
     return () => unsubDoc();
   }, [currentUser, detail?.id]);
 
-  const bookmarkedHandler = () => {
+  const bookmarkedHandler = async () => {
     if (!currentUser) {
       toast.error("You need to sign in to bookmark films", {
         position: "top-right",
@@ -56,7 +56,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
       return;
     }
 
-    updateDoc(doc(db, "users", currentUser.uid), {
+    await updateDoc(doc(db, "users", currentUser.uid), {
       bookmarks: !isBookmarked
         ? arrayUnion({
             poster_path: detail?.poster_path,

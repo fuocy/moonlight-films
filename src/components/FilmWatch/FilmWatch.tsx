@@ -1,14 +1,18 @@
-import { FunctionComponent } from "react";
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { FunctionComponent, useEffect } from "react";
 import { AiFillStar, AiTwotoneCalendar } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { db } from "../../shared/firebase";
 import {
   DetailMovie,
   DetailTV,
   Episode,
   getWatchReturnedType,
+  Item,
 } from "../../shared/types";
 import { embedMovie, embedTV } from "../../shared/utils";
+import { useAppSelector } from "../../store/hooks";
 import ReadMore from "../Common/ReadMore";
 import RightbarFilms from "../Common/RightbarFilms";
 import SearchBox from "../Common/SearchBox";
@@ -33,6 +37,51 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
   episodeId,
   currentEpisode,
 }) => {
+  const currentUser = useAppSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    getDoc(doc(db, "users", currentUser.uid)).then((docSnap) => {
+      const isAlreadyStored = docSnap
+        .data()
+        ?.recentlyWatch.some((film: Item) => film.id === detail?.id);
+
+      if (!isAlreadyStored) {
+        updateDoc(doc(db, "users", currentUser.uid), {
+          recentlyWatch: arrayUnion({
+            poster_path: detail?.poster_path,
+            id: detail?.id,
+            vote_average: detail?.vote_average,
+            media_type: media_type,
+            ...(media_type === "movie" && {
+              title: (detail as DetailMovie)?.title,
+            }),
+            ...(media_type === "tv" && { name: (detail as DetailTV)?.name }),
+          }),
+        });
+      } else {
+        const updatedRecentlyWatch = docSnap
+          .data()
+          ?.recentlyWatch.filter((film: Item) => film.id !== detail?.id)
+          .push({
+            poster_path: detail?.poster_path,
+            id: detail?.id,
+            vote_average: detail?.vote_average,
+            media_type: media_type,
+            ...(media_type === "movie" && {
+              title: (detail as DetailMovie)?.title,
+            }),
+            ...(media_type === "tv" && { name: (detail as DetailTV)?.name }),
+          });
+
+        updateDoc(doc(db, "users", currentUser.uid), {
+          recentlyWatch: updatedRecentlyWatch,
+        });
+      }
+    });
+  }, [currentUser, detail, media_type]);
+
   return (
     <>
       {detail && (

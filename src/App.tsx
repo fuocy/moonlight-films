@@ -2,10 +2,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+
 import Protected from "./components/Common/Protected";
 import Auth from "./pages/Auth";
 import Bookmarked from "./pages/Bookmarked";
 import Explore from "./pages/Explore";
+import History from "./pages/History";
 import Home from "./pages/Home";
 import MovieInfo from "./pages/Movie/MovieInfo";
 import MovieWatch from "./pages/Movie/MovieWatch";
@@ -98,12 +100,10 @@ function App() {
           </Protected>
         }
       />
-      {/* <Route
+      <Route
         path="history"
-        element={
-          <Protected isSignedIn={!!currentUser}>{<History />}</Protected>
-        }
-      /> */}
+        element={<Protected isSignedIn={isSignedIn}>{<History />}</Protected>}
+      />
     </Routes>
   );
 }

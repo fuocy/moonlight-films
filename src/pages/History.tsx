@@ -6,13 +6,14 @@ import { db } from "../shared/firebase";
 import { Item } from "../shared/types";
 import { useAppSelector } from "../store/hooks";
 
-interface BookmarkedProps {}
+interface HistoryProps {}
 
-const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
+const History: FunctionComponent<HistoryProps> = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
-  const [bookmarkedFilms, setBookmarkedFilms] = useState<Item[]>([]);
-
-  const [isLoading, setIsLoading] = useState(!Boolean(bookmarkedFilms.length));
+  const [recentlyWatchFilms, setRecentlyWatchFilms] = useState<Item[]>([]);
+  const [isLoading, setIsLoading] = useState(
+    !Boolean(recentlyWatchFilms.length)
+  );
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
@@ -21,12 +22,12 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
     const unsubDoc = onSnapshot(
       doc(db, "users", currentUser?.uid),
       (doc) => {
-        setBookmarkedFilms(doc.data()?.bookmarks.slice().reverse());
+        setRecentlyWatchFilms(doc.data()?.recentlyWatch.slice().reverse());
         setIsLoading(false);
       },
       (error) => {
         alert(error);
-        setBookmarkedFilms([]);
+        setRecentlyWatchFilms([]);
         setIsLoading(false);
         setIsError(true);
       }
@@ -39,15 +40,14 @@ const Bookmarked: FunctionComponent<BookmarkedProps> = () => {
 
   return (
     <>
-      <Title value="Bookmark | Moonlight" />
-
+      <Title value="History | Moonlight" />
       <FilmListViewForBookmarkAndHistory
-        films={bookmarkedFilms}
+        films={recentlyWatchFilms}
         isLoading={isLoading}
-        pageType="bookmark"
+        pageType="history"
       />
     </>
   );
 };
 
-export default Bookmarked;
+export default History;
