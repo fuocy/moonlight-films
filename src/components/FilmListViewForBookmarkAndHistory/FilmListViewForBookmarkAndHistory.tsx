@@ -85,7 +85,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
       >
         {isShowPrompt && (
           <>
-            <div className="fixed top-[30%] left-[40%]  max-w-[380px] w-full z-40 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
+            <div className="fixed top-[30%] left-[40%]  max-w-[390px] w-full z-40 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
               <div className="mx-auto mb-7 h-16 w-16 rounded-full border-[3px] border-red-500 tw-flex-center">
                 <AiOutlineDelete size={40} className="text-red-500 " />
               </div>
@@ -94,7 +94,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
                 {selections.length === 1 ? " this film." : " these films."}
               </p>
               <p className="text-center mb-[2px]">
-                This will remove your films from this {pageType} list
+                This will remove your films from this {pageType} list.
               </p>
               <p className="text-center ">Are you sure?</p>
               <div className="flex mt-8 justify-end">

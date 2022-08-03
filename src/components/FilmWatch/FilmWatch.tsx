@@ -49,17 +49,6 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
         .data()
         ?.recentlyWatch.some((film: Item) => film.id === detail?.id);
 
-      console.log({
-        poster_path: detail?.poster_path,
-        id: detail?.id,
-        vote_average: detail?.vote_average,
-        media_type: media_type,
-        ...(media_type === "movie" && {
-          title: (detail as DetailMovie)?.title,
-        }),
-        ...(media_type === "tv" && { name: (detail as DetailTV)?.name }),
-      });
-
       if (!isAlreadyStored) {
         updateDoc(doc(db, "users", currentUser.uid), {
           recentlyWatch: arrayUnion({
@@ -77,7 +66,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
         const updatedRecentlyWatch = docSnap
           .data()
           ?.recentlyWatch.filter((film: Item) => film.id !== detail?.id)
-          .push({
+          .concat({
             poster_path: detail?.poster_path,
             id: detail?.id,
             vote_average: detail?.vote_average,
