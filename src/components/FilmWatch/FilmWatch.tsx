@@ -19,6 +19,7 @@ import SearchBox from "../Common/SearchBox";
 import SidebarMini from "../Common/SidebarMini";
 import Skeleton from "../Common/Skeleton";
 import Title from "../Common/Title";
+import Comment from "./Comment";
 import SeasonSelection from "./SeasonSelection";
 
 interface FilmWatchProps {
@@ -41,11 +42,23 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
 
   useEffect(() => {
     if (!currentUser) return;
+    if (!detail) return; // prevent this code from storing undefined value to Firestore (which cause error)
 
     getDoc(doc(db, "users", currentUser.uid)).then((docSnap) => {
       const isAlreadyStored = docSnap
         .data()
         ?.recentlyWatch.some((film: Item) => film.id === detail?.id);
+
+      console.log({
+        poster_path: detail?.poster_path,
+        id: detail?.id,
+        vote_average: detail?.vote_average,
+        media_type: media_type,
+        ...(media_type === "movie" && {
+          title: (detail as DetailMovie)?.title,
+        }),
+        ...(media_type === "tv" && { name: (detail as DetailTV)?.name }),
+      });
 
       if (!isAlreadyStored) {
         updateDoc(doc(db, "users", currentUser.uid), {
@@ -202,13 +215,14 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
               </ReadMore>
             )}
           </div>
+          <Comment />
         </div>
         <div className="shrink-0 max-w-[400px] w-full relative px-6">
           <SearchBox />
           {media_type === "movie" && (
             <RightbarFilms
               name="Recommendations"
-              films={recommendations}
+              films={recommendations?.filter((item) => item.id !== detail?.id)}
               limitNumber={4}
               isLoading={!recommendations}
               className="mt-24"

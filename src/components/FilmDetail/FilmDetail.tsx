@@ -42,6 +42,8 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
   }, [currentUser, detail?.id]);
 
   const bookmarkedHandler = async () => {
+    if (!detail) return;
+
     if (!currentUser) {
       toast.error("You need to sign in to bookmark films", {
         position: "top-right",
@@ -283,7 +285,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
           {/* <RecommendGenres /> */}
           <RightbarFilms
             name="Similar"
-            films={similar}
+            films={similar?.filter((item) => item.id !== detail?.id)}
             limitNumber={4}
             isLoading={!similar}
             className="mt-24"
