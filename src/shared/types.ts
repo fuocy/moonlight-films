@@ -236,6 +236,17 @@ export interface User {
   uid: string;
 }
 
+export interface CommentDataType {
+  user: User;
+  value: string;
+  reactions: { [key: string]: string };
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  isEdited: boolean;
+}
+
 // export interface SeasonsSummary {
 //   air_date: string;
 //   episode_count: number;

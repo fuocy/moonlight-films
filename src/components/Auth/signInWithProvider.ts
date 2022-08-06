@@ -26,8 +26,11 @@ export const signInWithProvider = (provider: any, type: string) => {
 
     setDoc(doc(db, "users", user.uid), {
       firstName: user.displayName,
-      lastName: "already have",
-      photoUrl: "already have",
+      lastName: "",
+      ...(type === "google" && { photoUrl: user.photoURL }),
+      ...(type === "facebook" && {
+        photoUrl: user.photoURL + "?access_token=" + token,
+      }),
       bookmarks: [],
       recentlyWatch: [],
       ...(type === "facebook" && { token }),

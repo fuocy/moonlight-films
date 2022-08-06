@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import FilmWatch from "../../components/FilmWatch/FilmWatch";
-import { useQueryParams } from "../../hooks/useQueryParams";
 import { getWatchTV } from "../../services/tv";
-import { DetailSeason, getWatchReturnedType } from "../../shared/types";
+import { getWatchReturnedType } from "../../shared/types";
 
 const TVWatch: FC = () => {
   const { id } = useParams();
@@ -13,7 +12,7 @@ const TVWatch: FC = () => {
     () => getWatchTV(Number(id as string))
   );
 
-  const queryParams = useQueryParams();
+  const [queryParams] = useSearchParams();
 
   const seasonId = Number(queryParams.get("season")) || 1;
   const episodeId = Number(queryParams.get("episode")) || 1;

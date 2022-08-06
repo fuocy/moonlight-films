@@ -19,7 +19,7 @@ import SearchBox from "../Common/SearchBox";
 import SidebarMini from "../Common/SidebarMini";
 import Skeleton from "../Common/Skeleton";
 import Title from "../Common/Title";
-import Comment from "./Comment";
+import Comment from "./Comment/Comment";
 import SeasonSelection from "./SeasonSelection";
 
 interface FilmWatchProps {
@@ -91,7 +91,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
           value={`Watch: ${
             (detail as DetailMovie).title || (detail as DetailTV).name
           } ${
-            media_type === "tv" && `- Season ${seasonId} - Ep ${episodeId}`
+            media_type === "tv" ? `- Season ${seasonId} - Ep ${episodeId}` : ""
           } | Moonlight`}
         />
       )}
@@ -189,7 +189,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
                     {currentEpisode.name}
                   </h2>
                   <p className="text-right text-lg mt-2">
-                    Season: {seasonId} &#8212; Episode {episodeId}
+                    Season {seasonId} &#8212; Episode {episodeId}
                   </p>
                 </div>
               )}
@@ -204,7 +204,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
               </ReadMore>
             )}
           </div>
-          <Comment />
+          <Comment media_type={media_type} id={detail?.id} />
         </div>
         <div className="shrink-0 max-w-[400px] w-full relative px-6">
           <SearchBox />

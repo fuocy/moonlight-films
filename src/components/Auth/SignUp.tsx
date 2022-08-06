@@ -13,7 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import { RiLockPasswordLine } from "react-icons/ri";
 import * as Yup from "yup";
 import { auth, db } from "../../shared/firebase";
-import { convertErrorCodeToMessage } from "../../shared/utils";
+import { convertErrorCodeToMessage, getRandomAvatar } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 import ModalNotification from "./ModalNotification";
 import { signInWithProvider } from "./signInWithProvider";
@@ -41,7 +41,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
       setDoc(doc(db, "users", user.uid), {
         firstName: values.firstName,
         lastName: values.lastName,
-        photoUrl: "https://i.ibb.co/StzXrVH/catface.jpg",
+        photoUrl: getRandomAvatar(),
         bookmarks: [],
         recentlyWatch: [],
       });
