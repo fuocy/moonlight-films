@@ -1,8 +1,13 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FunctionComponent, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
+import {
+  LazyLoadComponent,
+  LazyLoadImage,
+} from "react-lazy-load-image-component";
 import { useSearchParams } from "react-router-dom";
 import SearchBox from "../components/Common/SearchBox";
+import Sidebar from "../components/Common/Sidebar";
 import SidebarMini from "../components/Common/SidebarMini";
 import Title from "../components/Common/Title";
 import SearchResult from "../components/Search/SearchResult";
@@ -36,10 +41,11 @@ const Search: FunctionComponent<SearchProps> = () => {
 
       {/* <div className="bg-black/90 z-10 pb-5"> */}
       <div className="flex min-h-screen">
-        <SidebarMini />
+        {/* <SidebarMini /> */}
+        <Sidebar />
         <div className="flex-grow">
           <div
-            className={`relative z-30 max-w-[50vw] mx-auto translate-y-[200px] transition duration-300 text-xl ${
+            className={`relative z-30 max-w-[50vw] mx-auto translate-y-[100px] transition duration-300 text-xl ${
               query && "!translate-y-0"
             }`}
           >
@@ -52,6 +58,16 @@ const Search: FunctionComponent<SearchProps> = () => {
             </h1>
             <SearchBox autoFocus />
           </div>
+          {!query && (
+            <div className="mt-[250px] flex justify-center">
+              <LazyLoadImage
+                src="/girl.png"
+                alt=""
+                effect="opacity"
+                className="w-[700px] h-[400px] object-cover rounded-xl "
+              />
+            </div>
+          )}
           {query && (
             <SearchResult
               currentTab={currentTab}

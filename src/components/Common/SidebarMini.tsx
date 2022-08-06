@@ -1,12 +1,12 @@
 import { FunctionComponent } from "react";
 import { AiOutlineHistory, AiOutlineHome } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiUserCircle } from "react-icons/bi";
 import { BsBookmarkHeart } from "react-icons/bs";
 import { MdOutlineExplore } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { useAppSelector } from "../../store/hooks";
-import { ToastContainer, toast } from "react-toastify";
 
 const SidebarMini: FunctionComponent = () => {
   const location = useLocation();
@@ -85,6 +85,14 @@ const SidebarMini: FunctionComponent = () => {
           >
             <AiOutlineHistory size={25} />
           </button>
+          <Link
+            to="/profile"
+            className={`hover:text-primary transition duration-300 ${
+              location.pathname === "/profile" && "text-primary"
+            }`}
+          >
+            <BiUserCircle size={25} />
+          </Link>
         </div>
         <LazyLoadImage
           src={

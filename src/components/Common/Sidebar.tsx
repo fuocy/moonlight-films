@@ -1,16 +1,15 @@
 import { signOut } from "firebase/auth";
 import { FC, useState } from "react";
 import { AiOutlineHistory, AiOutlineHome } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiUserCircle } from "react-icons/bi";
 import { BsBookmarkHeart } from "react-icons/bs";
-import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
 import { MdOutlineExplore } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { auth } from "../../shared/firebase";
 import { useAppSelector } from "../../store/hooks";
-import { ToastContainer, toast } from "react-toastify";
 const Sidebar: FC = () => {
   const location = useLocation();
   const currentUser = useAppSelector((state) => state.auth.user);
@@ -67,7 +66,7 @@ const Sidebar: FC = () => {
         </div>
       )}
 
-      <div className="shrink-0 max-w-[260px] w-[90vw] mt-4 pl-8 sticky top-4">
+      <div className="shrink-0 max-w-[260px] w-[90vw] pl-8 sticky top-0 pt-10">
         <Link to="/" className="flex items-center gap-3">
           <LazyLoadImage
             alt="Logo"
@@ -156,14 +155,14 @@ const Sidebar: FC = () => {
         <div className="text-white text-lg font-medium mt-12">GENERAL</div>
         <div className="mt-8 ml-4 flex flex-col gap-6">
           <Link
-            to="/settings"
+            to="/profile"
             className={`flex gap-6 items-center  ${
-              location.pathname === "/settings" &&
+              location.pathname === "/profile" &&
               "!text-primary border-r-4 border-primary font-medium"
             } hover:text-white transition duration-300`}
           >
-            <FiSettings size={25} />
-            <p>Settings</p>
+            <BiUserCircle size={25} />
+            <p>Profile</p>
           </Link>
 
           {!currentUser && (

@@ -11,6 +11,7 @@ import History from "./pages/History";
 import Home from "./pages/Home";
 import MovieInfo from "./pages/Movie/MovieInfo";
 import MovieWatch from "./pages/Movie/MovieWatch";
+import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import TVInfo from "./pages/TV/TVInfo";
 import TVWatch from "./pages/TV/TVWatch";
@@ -28,6 +29,7 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log(user);
       if (!user) {
         dispatch(setCurrentUser(null));
         setIsSignedIn(false);
@@ -92,6 +94,7 @@ function App() {
       <Route path="explore" element={<Explore />} />
       <Route path="search" element={<Search />} />
       <Route path="auth" element={<Auth />} />
+      <Route path="profile" element={<Profile />} />
       <Route
         path="bookmarked"
         element={

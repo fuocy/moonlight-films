@@ -9,7 +9,7 @@ import { db } from "../../shared/firebase";
 import { Item } from "../../shared/types";
 import { useAppSelector } from "../../store/hooks";
 import BookmarkResult from "../Bookmark/BookmarkResult";
-import SidebarMini from "../Common/SidebarMini";
+import Sidebar from "../Common/Sidebar";
 import Skeleton from "../Common/Skeleton";
 
 interface FilmListViewForBookmarkAndHistoryProps {
@@ -139,9 +139,10 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
       </div>
 
       <div className="flex ">
-        <SidebarMini />
-        <div className="flex-grow px-[2vw] pb-16">
-          <h1 className="uppercase text-white font-semibold text-[35px] mb-4 mt-5">
+        {/* <SidebarMini /> */}
+        <Sidebar />
+        <div className="flex-grow px-[2vw] pb-16 pt-7">
+          <h1 className="uppercase text-white font-semibold text-[35px] mb-4 ">
             {pageType === "bookmark" ? "My favourite films" : "Films I Watched"}
           </h1>
 
