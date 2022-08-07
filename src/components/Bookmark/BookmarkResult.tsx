@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { HiCheck } from "react-icons/hi";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Item } from "../../shared/types";
 import FilmItem from "../Common/FilmItem";
 
@@ -24,10 +25,18 @@ const BookmarkResult: FunctionComponent<BookmarkResultProps> = ({
     <>
       {films.length === 0 && !isLoading && (
         <div className="text-white text-2xl text-center col-span-full mt-10">
-          {pageType === "bookmark"
-            ? "Your bookmark list for this type is empty. Let's bookmark some!"
-            : "Your recently watched films for this type is empty. Let's watch some! "}
-          <br></br> Add a 404 good image later
+          <div className="flex justify-center ">
+            <LazyLoadImage
+              src="/error.png"
+              alt=""
+              className="w-[600px] object-cover"
+            />
+          </div>
+          <p className="mt-5">
+            {pageType === "bookmark"
+              ? "Your bookmark list for this type is empty. Let's bookmark some!"
+              : "Your recently watched films for this type is empty. Let's watch some! "}
+          </p>
         </div>
       )}
       {films.length > 0 &&

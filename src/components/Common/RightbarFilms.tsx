@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Item } from "../../shared/types";
 import { resizeImage } from "../../shared/utils";
 import Skeleton from "./Skeleton";
@@ -22,6 +22,8 @@ const RightbarFilms: FunctionComponent<RightbarFilmsProps> = ({
   isLoading,
   className = "",
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className={className}>
       <p className="mb-6 text-xl font-medium flex justify-between items-center">
@@ -70,7 +72,10 @@ const RightbarFilms: FunctionComponent<RightbarFilmsProps> = ({
               </li>
             ))}
       </ul>
-      <button className="bg-dark-lighten py-2 w-full rounded-full mt-7 hover:brightness-75 transition duration-300">
+      <button
+        onClick={() => navigate("/explore")}
+        className="bg-dark-lighten py-2 w-full rounded-full mt-7 hover:brightness-75 transition duration-300 "
+      >
         See more
       </button>
     </div>

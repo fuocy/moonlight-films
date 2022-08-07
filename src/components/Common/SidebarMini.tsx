@@ -94,16 +94,18 @@ const SidebarMini: FunctionComponent = () => {
             <BiUserCircle size={25} />
           </button>
         </div>
-        <LazyLoadImage
-          src={
-            currentUser
-              ? (currentUser.photoURL as string)
-              : "/defaultAvatar.jpg"
-          }
-          alt="Avatar"
-          effect="opacity"
-          className="w-10 h-10 rounded-full"
-        />
+        <button onClick={() => personalPageHandler("/profile")}>
+          <LazyLoadImage
+            src={
+              currentUser
+                ? (currentUser.photoURL as string)
+                : "/defaultAvatar.jpg"
+            }
+            alt="Avatar"
+            effect="opacity"
+            className="w-10 h-10 rounded-full"
+          />
+        </button>
       </div>
     </>
   );

@@ -140,7 +140,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
               type="password"
               autoFocus
               className="bg-dark-lighten-2 py-3 mt-3 rounded-md  outline-none px-5 text-white mb-4 w-full"
-              placeholder="Old password"
+              placeholder="Type your password..."
             />
             <button className="px-6 py-4 bg-dark-lighten-2 rounded-xl hover:brightness-125 transition duration-300 text-white top-[130px] tw-absolute-center-horizontal">
               Continue

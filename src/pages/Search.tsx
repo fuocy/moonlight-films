@@ -1,14 +1,10 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FunctionComponent, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import {
-  LazyLoadComponent,
-  LazyLoadImage,
-} from "react-lazy-load-image-component";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSearchParams } from "react-router-dom";
 import SearchBox from "../components/Common/SearchBox";
 import Sidebar from "../components/Common/Sidebar";
-import SidebarMini from "../components/Common/SidebarMini";
 import Title from "../components/Common/Title";
 import SearchResult from "../components/Search/SearchResult";
 
@@ -25,19 +21,6 @@ const Search: FunctionComponent<SearchProps> = () => {
     <>
       {!query && <Title value="Search | Moonlight" />}
       {query && <Title value={`Search: ${query} | Moonlight`} />}
-
-      {/* <video
-        autoPlay
-        muted
-        loop
-        id="myVideo"
-        className="fixed top-0 left-0 min-h-screen min-w-full -z-10"
-      >
-        <source
-          src="https://raw.githubusercontent.com/fuocy/video/master/Studio%20Project%20%E2%80%94%20Kapwing.mp4"
-          type="video/mp4"
-        />
-      </video> */}
 
       {/* <div className="bg-black/90 z-10 pb-5"> */}
       <div className="flex min-h-screen">

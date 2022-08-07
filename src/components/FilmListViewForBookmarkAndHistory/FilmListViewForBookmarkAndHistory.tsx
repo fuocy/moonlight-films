@@ -125,6 +125,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
                 <IoMdNotificationsOutline size={17} />
               </div> */}
         <p>{currentUser?.displayName || "Anonymous"}</p>
+
         <LazyLoadImage
           src={
             currentUser
@@ -238,7 +239,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
             }`}
           >
             {isLoading &&
-              [...new Array(7)].map((_, index) => (
+              [...new Array(6)].map((_, index) => (
                 <li key={index}>
                   <Skeleton className="h-0 pb-[160%]" />
                 </li>
