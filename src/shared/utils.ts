@@ -49,6 +49,9 @@ export const convertErrorCodeToMessage = (errorCode: string) => {
     return "Your email may be incorrect.";
   else if (errorCode === "auth/wrong-password")
     return "Your password is incorrect.";
+  else if (errorCode === "auth/invalid-email") return "Your email is invalid";
+  else if (errorCode === "auth/too-many-requests")
+    return "You request too many times!";
   else return "Something weird happened.";
 };
 

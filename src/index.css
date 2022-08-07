@@ -119,3 +119,11 @@ select:focus {
 .tw-slider-range::-webkit-slider-thumb {
   @apply appearance-none h-4 w-4 rounded-full bg-primary pointer-events-auto;
 }
+
+/* CUSTOM INPUT BACKGROUND WHEN AUTOFILL FORM */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #49494b inset !important;
+}

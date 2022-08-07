@@ -1,56 +1,165 @@
-import axios from "axios";
-import { doc, updateDoc } from "firebase/firestore";
-import { ChangeEvent, FunctionComponent, useEffect, useState } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-import { HiOutlineUpload } from "react-icons/hi";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import {
+  deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updateEmail,
+  updatePassword,
+} from "firebase/auth";
+import { FunctionComponent, useRef, useState } from "react";
 import Sidebar from "../components/Common/Sidebar";
 import Title from "../components/Common/Title";
-import { db } from "../shared/firebase";
-import { useAppSelector } from "../store/hooks";
+import DeleteAccount from "../components/Profile/DeleteAcount";
+import Email from "../components/Profile/Email";
+import EmailVerification from "../components/Profile/EmailVerification";
+import Name from "../components/Profile/Name";
+import Password from "../components/Profile/Password";
+import ProfileImage from "../components/Profile/ProfileImage";
+import { auth } from "../shared/firebase";
+import { convertErrorCodeToMessage } from "../shared/utils";
 
 interface ProfileProps {}
 
 const Profile: FunctionComponent<ProfileProps> = () => {
-  const currentUser = useAppSelector((state) => state.auth.user);
-  const [isUpdatingImg, setIsUpdatingImg] = useState(false);
+  const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
+  const emailValueRef = useRef<HTMLInputElement>(null!);
 
-  const changeProfileImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    try {
-      setIsUpdatingImg(true);
-      if (!currentUser) return;
+  const [isUpdatedPassword, setIsUpdatedPassword] = useState(false);
+  const oldPasswordValueRef = useRef<HTMLInputElement>(null!);
+  const newPasswordValueRef = useRef<HTMLInputElement>(null!);
 
-      const form = new FormData();
-      // @ts-ignore
-      form.append("image", e.target.files[0]);
-      const res = await axios({
-        method: "post",
-        url: `https://api.imgbb.com/1/upload?key=02efec2c3808e9fdeb329eaca6ba30e0`,
-        data: form,
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isShowPromptReAuthFor, setIsShowPromptReAuthFor] = useState<
+    string | undefined
+  >();
+  const firebaseUser = auth.currentUser;
 
-      updateDoc(doc(db, "users", currentUser.uid), {
-        photoUrl: res.data.data.display_url,
-      }).finally(() => setIsUpdatingImg(false));
-    } catch (error) {
-      console.log(error);
+  const reAuthentication = async (type: string) => {
+    const oldPassword = oldPasswordValueRef.current.value;
+
+    if (!oldPassword.trim().length) {
+      alert("You gotta type something");
+      return;
     }
+
+    const credential = EmailAuthProvider.credential(
+      // @ts-ignore
+      firebaseUser.email,
+      oldPassword
+    );
+
+    reauthenticateWithCredential(
+      // @ts-ignore
+      firebaseUser,
+      credential
+    )
+      .then(() => {
+        if (type === "password") {
+          changePassword();
+        } else if (type === "email") {
+          changeEmail();
+        } else if (type === "delete") {
+          deleteAccount();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(convertErrorCodeToMessage(error.code));
+      })
+      .finally(() => setIsShowPromptReAuthFor(undefined));
   };
 
-  const [quote, setQuote] = useState("");
+  const changeEmail = () => {
+    const emailValue = emailValueRef.current.value;
 
-  useEffect(() => {
-    axios
-      .get("https://api.quotable.io/random")
-      .then((res) => setQuote(res.data.content));
-  }, []);
+    if (!emailValue.trim().length) {
+      alert("You gotta type something");
+      return;
+    }
+    setIsUpdating(true);
+    // @ts-ignore
+    updateEmail(firebaseUser, emailValue)
+      .then(() => {
+        setIsUpdatingEmail(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(convertErrorCodeToMessage(error.code));
+      })
+      .finally(() => setIsUpdating(false));
+  };
+
+  const changePassword = () => {
+    const newPassword = newPasswordValueRef.current.value;
+    if (!newPassword.trim().length) {
+      alert("You gotta type something");
+      return;
+    }
+    setIsUpdating(true);
+    // @ts-ignore
+    updatePassword(firebaseUser, newPassword)
+      .then(() => {
+        setIsUpdatedPassword(true);
+        newPasswordValueRef.current.value = "";
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(convertErrorCodeToMessage(error.code));
+      })
+      .finally(() => setIsUpdating(false));
+  };
+
+  const deleteAccount = () => {
+    setIsUpdating(true);
+    // @ts-ignore
+    deleteUser(firebaseUser)
+      .then(() => {})
+      .finally(() => {
+        setIsUpdating(false);
+      });
+  };
 
   return (
     <>
       <Title value="Profile | Moonlight" />
+
+      {isShowPromptReAuthFor && (
+        <>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              reAuthentication(isShowPromptReAuthFor);
+            }}
+            className="z-10 absolute max-w-[500px] min-h-[200px] w-full top-[40%] left-[35%] bg-dark-lighten rounded-md px-3 py-2"
+          >
+            <p className="text-white font-medium mb-3 text-lg text-center">
+              Type your password again to reauthenticate
+            </p>
+            <input
+              ref={oldPasswordValueRef}
+              type="password"
+              autoFocus
+              className="bg-dark-lighten-2 py-3 mt-3 rounded-md  outline-none px-5 text-white mb-4 w-full"
+              placeholder="Old password"
+            />
+            <button className="px-6 py-4 bg-dark-lighten-2 rounded-xl hover:brightness-125 transition duration-300 text-white top-[130px] tw-absolute-center-horizontal">
+              Continue
+            </button>
+          </form>
+          <div
+            onClick={() => setIsShowPromptReAuthFor(undefined)}
+            className="fixed top-0 left-0 w-full h-full z-[5] bg-black/60"
+          ></div>
+        </>
+      )}
+
+      {isUpdating && (
+        <>
+          <div className="border-[8px] border-primary border-t-transparent h-32 w-32 rounded-full animate-spin absolute top-[40%] left-[40%] z-10"></div>
+          <div className="fixed top-0 left-0 w-full h-full z-[5]"></div>
+        </>
+      )}
+
       <div className="flex">
         <Sidebar />
         <div className="flex-grow pt-7 pl-10">
@@ -66,105 +175,34 @@ const Profile: FunctionComponent<ProfileProps> = () => {
               </p>
               <p>Here you can edit public information about yourself.</p>
               <p>
-                The changes will be displayed for other users within 5 minutes .
+                If you signed in with Google or Facebook, you can't change your
+                email and password.
               </p>
 
               <div className="mt-7 max-w-[600px] w-full flex flex-col gap-3">
-                <div>
-                  <p className="text-white text-lg">Email</p>
-                  <div className="flex justify-between mt-1">
-                    <p>{currentUser?.email}</p>
-                    <button className="hover:text-primary transition duration-300">
-                      <AiOutlineEdit size={25} />
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-white text-lg">Name</p>
-                  <div className="flex justify-between mt-1">
-                    <p>{currentUser?.displayName}</p>
-                    <button className="hover:text-primary transition duration-300">
-                      <AiOutlineEdit size={25} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-10 flex justify-between max-w-[600px]">
-                <p className="text-white text-lg">
-                  Your email is not verified yet.
-                </p>
-                <button className="text-primary underline text-lg">
-                  Send me verification email
-                </button>
-              </div>
-
-              <div className="mt-10 max-w-[600px]">
-                <p className="text-white text-lg font-medium mb-3">
-                  Change password
-                </p>
-                <div className="flex justify-between gap-32 items-center">
-                  <div className="flex-1">
-                    <input
-                      type="text"
-                      className="bg-dark-lighten py-3 rounded-md  outline-none px-5 text-white mb-4 w-full"
-                      placeholder="Old password..."
-                    />
-                    <input
-                      type="text"
-                      className="bg-dark-lighten py-3 rounded-md  outline-none px-5 text-white w-full"
-                      placeholder="Type new password..."
-                    />
-                  </div>
-                  <button className="px-6 py-4 bg-dark-lighten-2 rounded-xl hover:bg-dark-lighten transition duration-300 text-white">
-                    Update
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex justify-center mt-12">
-                <button className="px-5 py-2  border rounded-full text-red-500 border-dark-lighten-2 bg-dark-lighten hover:bg-red-500 hover:text-white transition duration-300">
-                  Delete account
-                </button>
-              </div>
-            </div>
-            <div className="shrink-0 max-w-[500px] w-full px-4">
-              <p className="text-white mt-5 text-xl font-medium">
-                Profile photo
-              </p>
-              <div className="flex flex-col gap-8 items-center mt-4 ">
-                <div className="w-[250px] h-[250px] relative">
-                  <LazyLoadImage
-                    src={currentUser?.photoURL || "/defaultAvatar.jpg"}
-                    alt="profile picture"
-                    className="w-[250px] h-[250px] rounded-full object-cover"
-                  />
-                  {isUpdatingImg && (
-                    <div className="border-[4px] border-dark border-t-transparent h-12 w-12 rounded-full animate-spin absolute top-[40%] left-[40%] z-10"></div>
-                  )}
-                </div>
-
-                <label
-                  htmlFor="upload-img"
-                  className="px-5 py-3 rounded-full bg-dark-lighten flex items-center gap-3 hover:brightness-75 transition duration-300 cursor-pointer"
-                >
-                  <HiOutlineUpload size={25} className="text-primary" />
-                  <p className="text-white">Upload new photo</p>
-                </label>
-                <input
-                  id="upload-img"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={changeProfileImage}
+                <Email
+                  setIsShowPromptReAuthFor={setIsShowPromptReAuthFor}
+                  isUpdatingEmail={isUpdatingEmail}
+                  setIsUpdatingEmail={setIsUpdatingEmail}
+                  emailValueRef={emailValueRef}
                 />
-
-                <div className="text-center">
-                  <p className="text-white text-xl mt-6">Bio</p>
-                  {quote && <p className="text-lg">{quote}</p>}
-                </div>
+                <Name setIsUpdating={setIsUpdating} />
               </div>
+
+              <EmailVerification setIsUpdating={setIsUpdating} />
+
+              <Password
+                setIsShowPromptReAuthFor={setIsShowPromptReAuthFor}
+                isUpdatedPassword={isUpdatedPassword}
+                setIsUpdatedPassword={setIsUpdatedPassword}
+                newPasswordValueRef={newPasswordValueRef}
+              />
+
+              <DeleteAccount
+                setIsShowPromptReAuthFor={setIsShowPromptReAuthFor}
+              />
             </div>
+            <ProfileImage />
           </div>
         </div>
       </div>

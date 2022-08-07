@@ -29,7 +29,6 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (!user) {
         dispatch(setCurrentUser(null));
         setIsSignedIn(false);
@@ -41,20 +40,24 @@ function App() {
       localStorage.setItem("isSignedIn", "1");
 
       if (user.providerData[0].providerId === "google.com") {
-        dispatch(
-          setCurrentUser({
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            photoURL: user.photoURL,
-            uid: user.uid,
-          })
-        );
+        onSnapshot(doc(db, "users", user.uid), (doc) => {
+          dispatch(
+            setCurrentUser({
+              displayName:
+                doc.data()?.lastName + " " + doc.data()?.firstName || "",
+              email: user.email,
+              emailVerified: user.emailVerified,
+              photoURL: doc.data()?.photoUrl || "",
+              uid: user.uid,
+            })
+          );
+        });
       } else if (user.providerData[0].providerId === "facebook.com") {
         onSnapshot(doc(db, "users", user.uid), (doc) => {
           dispatch(
             setCurrentUser({
-              displayName: user.displayName,
+              displayName:
+                doc.data()?.lastName + " " + doc.data()?.firstName || "",
               email: user.email,
               emailVerified: user.emailVerified,
               photoURL:
@@ -94,7 +97,6 @@ function App() {
       <Route path="explore" element={<Explore />} />
       <Route path="search" element={<Search />} />
       <Route path="auth" element={<Auth />} />
-      <Route path="profile" element={<Profile />} />
       <Route
         path="bookmarked"
         element={
@@ -106,6 +108,14 @@ function App() {
       <Route
         path="history"
         element={<Protected isSignedIn={isSignedIn}>{<History />}</Protected>}
+      />
+      <Route
+        path="profile"
+        element={
+          <Protected isSignedIn={isSignedIn}>
+            <Profile />
+          </Protected>
+        }
       />
     </Routes>
   );

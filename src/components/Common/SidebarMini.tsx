@@ -85,14 +85,14 @@ const SidebarMini: FunctionComponent = () => {
           >
             <AiOutlineHistory size={25} />
           </button>
-          <Link
-            to="/profile"
+          <button
+            onClick={() => personalPageHandler("/profile")}
             className={`hover:text-primary transition duration-300 ${
               location.pathname === "/profile" && "text-primary"
             }`}
           >
             <BiUserCircle size={25} />
-          </Link>
+          </button>
         </div>
         <LazyLoadImage
           src={

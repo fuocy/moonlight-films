@@ -154,8 +154,8 @@ const Sidebar: FC = () => {
 
         <div className="text-white text-lg font-medium mt-12">GENERAL</div>
         <div className="mt-8 ml-4 flex flex-col gap-6">
-          <Link
-            to="/profile"
+          <button
+            onClick={() => personalPageHandler("/profile")}
             className={`flex gap-6 items-center  ${
               location.pathname === "/profile" &&
               "!text-primary border-r-4 border-primary font-medium"
@@ -163,7 +163,7 @@ const Sidebar: FC = () => {
           >
             <BiUserCircle size={25} />
             <p>Profile</p>
-          </Link>
+          </button>
 
           {!currentUser && (
             <Link
