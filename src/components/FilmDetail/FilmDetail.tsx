@@ -350,7 +350,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
             </div>
 
             {isMobile && (
-              <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20  md:border-r border-dark-lighten md:pt-16 pt-0 md:mt-20 mt-5">
+              <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20  md:border-r border-dark-lighten md:pt-16 pt-0 md:mt-20 mt-8">
                 <div className="flex flex-col gap-6 items-center">
                   <p className="text-white font-medium text-lg">RATING</p>
                   {!isMobile && (
@@ -426,7 +426,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
             films={similar?.filter((item) => item.id !== detail?.id)}
             limitNumber={4}
             isLoading={!similar}
-            className="md:mt-24 mt-5"
+            className="md:mt-24 mt-12"
           />
         </div>
       </div>

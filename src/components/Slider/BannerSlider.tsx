@@ -79,7 +79,7 @@ const BannerSlider: FC<BannerSliderProps> = ({
                       {film.release_date &&
                         `Release date: ${film.release_date}`}
                       {film.first_air_date &&
-                        `Last episode date: ${film.first_air_date}`}
+                        `First air date: ${film.first_air_date}`}
                     </p>
                     {!isMobile && (
                       <>

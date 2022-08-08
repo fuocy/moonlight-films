@@ -28,7 +28,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
             rel="noreferrer"
             className="hover:text-primary transition duration-300"
           >
-            <BsFacebook size={25} />
+            <BsFacebook size={22} />
           </a>
         </div>
       </div>
