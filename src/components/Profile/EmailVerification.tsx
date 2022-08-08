@@ -4,6 +4,7 @@ import { auth } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 
+import { ToastContainer, toast } from "react-toastify";
 interface EmailVerificationProps {
   setIsUpdating: any;
 }
@@ -24,14 +25,25 @@ const EmailVerification: FunctionComponent<EmailVerificationProps> = ({
         setIsVerificationEmailSent(true);
         setIsShowSentButton(false);
       })
-      .catch((error) => alert(convertErrorCodeToMessage(error.code)))
+      .catch((error) =>
+        toast.error(convertErrorCodeToMessage(error.code), {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+      )
       .finally(() => setIsUpdating(false));
   };
   return (
     <>
+      <ToastContainer />
       {isVerificationEmailSent && (
         <>
-          <div className="px-5 py-3 rounded-md z-10 bg-dark-lighten-2 max-w-[500px] w-full absolute top-[35%] left-[35%] min-h-[150px]">
+          <div className="px-5 py-3 rounded-md z-10 bg-dark-lighten-2 md:w-[500px] fixed top-[35%] md:left-[35%] left-[5%] right-[5%] min-h-[150px]">
             <p className="text-white text-lg text-center">
               We've sent a email of verification to your email,
               <span className="text-primary"> {currentUser?.email}</span>. Check

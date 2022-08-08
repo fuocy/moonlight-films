@@ -8,13 +8,21 @@ import { MdOutlineExplore } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 import { auth } from "../../shared/firebase";
 import { useAppSelector } from "../../store/hooks";
-const Sidebar: FC = () => {
+
+interface SidebarProps {
+  isSidebarActive: boolean;
+  setIsSidebarActive: any;
+}
+
+const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
   const location = useLocation();
   const currentUser = useAppSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { isMobile } = useCurrentViewportView();
 
   const signOutHandler = () => {
     setIsLoading(true);
@@ -66,21 +74,36 @@ const Sidebar: FC = () => {
         </div>
       )}
 
-      <div className="shrink-0 max-w-[260px] w-[90vw] pl-8 sticky top-0 pt-10">
-        <Link to="/" className="flex items-center gap-3">
-          <LazyLoadImage
-            alt="Logo"
-            src="/logo.png"
-            effect="opacity"
-            className="w-10 h-10"
-          />
-          <h1 className="text-xl text-white tracking-widest font-semibold uppercase">
-            <span>Moon</span>
-            <span className="text-primary">light</span>
-          </h1>
-        </Link>
+      <div
+        className={`shrink-0 md:max-w-[260px] w-[70vw] pl-8 top-0 pt-10  
+        md:sticky md:translate-x-0 md:bg-transparent md:shadow-none
+    
+      -translate-x-full fixed h-screen shadow-md transition duration-300 bg-dark-lighten z-50 ${
+        isSidebarActive && "translate-x-0"
+      }`}
+      >
+        {!isMobile && (
+          <Link to="/" className="flex items-center gap-3">
+            <LazyLoadImage
+              alt="Logo"
+              src="/logo.png"
+              effect="opacity"
+              className="w-10 h-10"
+            />
+            <h1 className="text-xl text-white tracking-widest font-semibold uppercase">
+              <span>Moon</span>
+              <span className="text-primary">light</span>
+            </h1>
+          </Link>
+        )}
 
-        <div className="text-white text-lg font-medium mt-12">MENU</div>
+        <div
+          className={`text-white text-lg font-medium ${
+            isSidebarActive ? "-mt-6" : "mt-12"
+          }`}
+        >
+          MENU
+        </div>
         <div className="mt-8 ml-4 flex flex-col gap-6">
           <Link
             to="/"
@@ -186,6 +209,12 @@ const Sidebar: FC = () => {
           )}
         </div>
       </div>
+      <div
+        onClick={() => setIsSidebarActive(false)}
+        className={`bg-black/60 z-[5] fixed top-0 left-0 w-full h-full md:opacity-100 transition duration-300 ${
+          isSidebarActive ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      ></div>
     </>
   );
 };

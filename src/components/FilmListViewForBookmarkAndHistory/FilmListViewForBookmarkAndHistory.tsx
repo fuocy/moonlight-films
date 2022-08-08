@@ -3,8 +3,10 @@ import { doc, updateDoc } from "firebase/firestore";
 import { FunctionComponent, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BiSelectMultiple } from "react-icons/bi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineCancel } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link } from "react-router-dom";
 import { db } from "../../shared/firebase";
 import { Item } from "../../shared/types";
 import { useAppSelector } from "../../store/hooks";
@@ -22,6 +24,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
   FilmListViewForBookmarkAndHistoryProps
 > = ({ films, isLoading, pageType }) => {
   const currentUser = useAppSelector((state) => state.auth.user);
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
   const [isSelectAll, setIsSelectAll] = useState(false);
@@ -85,7 +88,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
       >
         {isShowPrompt && (
           <>
-            <div className="fixed top-[30%] left-[40%]  max-w-[390px] w-full z-40 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
+            <div className="fixed top-[30%] md:left-[40%] left-[5%] right-[5%] md:w-[400px] z-40 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
               <div className="mx-auto mb-7 h-16 w-16 rounded-full border-[3px] border-red-500 tw-flex-center">
                 <AiOutlineDelete size={40} className="text-red-500 " />
               </div>
@@ -120,7 +123,22 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
         )}
       </div>
 
-      <div className="flex gap-6 items-center absolute top-4 right-5">
+      <div className="flex md:hidden justify-between items-center px-5 my-5">
+        <Link to="/" className="flex gap-2 items-center">
+          <LazyLoadImage
+            src="/logo.png"
+            className="h-10 w-10 rounded-full object-cover"
+          />
+          <p className="text-xl text-white font-medium tracking-wider uppercase">
+            Moon<span className="text-primary">light</span>
+          </p>
+        </Link>
+        <button onClick={() => setIsSidebarActive((prev) => !prev)}>
+          <GiHamburgerMenu size={25} />
+        </button>
+      </div>
+
+      <div className="md:flex hidden gap-6 items-center absolute top-4 right-5">
         {/* <div className="w-6 h-6 rounded-full border border-gray-lighten tw-flex-center cursor-pointer">
                 <IoMdNotificationsOutline size={17} />
               </div> */}
@@ -139,10 +157,13 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
         />
       </div>
 
-      <div className="flex ">
+      <div className="flex">
         {/* <SidebarMini /> */}
-        <Sidebar />
-        <div className="flex-grow px-[2vw] pb-16 pt-7">
+        <Sidebar
+          setIsSidebarActive={setIsSidebarActive}
+          isSidebarActive={isSidebarActive}
+        />
+        <div className="flex-grow px-[2vw] pb-16 pt-7 min-h-screen">
           <h1 className="uppercase text-white font-semibold text-[35px] mb-4 ">
             {pageType === "bookmark" ? "My favourite films" : "Films I Watched"}
           </h1>
@@ -150,7 +171,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
           <div
             // @ts-ignore
             ref={action}
-            className="flex justify-between items-end mb-8"
+            className="flex flex-col md:flex-row items-start md:items-end gap-5 md:justify-between m mb-8"
           >
             <div className="inline-flex gap-[30px] pb-[14px] border-b border-gray-darken relative">
               <button
@@ -194,7 +215,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
             {!isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
-                className=" text-lg hover:text-primary transition duration-300 flex gap-2 items-center"
+                className="self-end text-lg hover:text-primary transition duration-300 flex gap-2 items-center"
               >
                 <AiOutlineEdit size={25} />
                 <p>Edit</p>
@@ -202,11 +223,11 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
             )}
 
             {isEditing && (
-              <div className="flex gap-5">
+              <div className="flex gap-5 self-end">
                 <button
                   onClick={selectAllHandler}
                   className={`text-lg hover:text-primary transition duration-300 flex gap-2 items-center ${
-                    isSelectAll && "text-primary"
+                    isSelectAll ? "text-primary" : "!text-gray-lighten"
                   }`}
                 >
                   <BiSelectMultiple size={25} />

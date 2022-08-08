@@ -16,7 +16,7 @@ const FilmTabInfo: FC<FilmTabInfoProps> = ({ detail, credits, reviews }) => {
 
   return (
     <>
-      <div className="flex gap-10 text-gray-400 text-lg ml-24">
+      <div className="flex gap-10 text-gray-400 text-lg justify-center">
         <button
           className={`hover:text-white transition duration-300 pb-1  ${
             currentTab === "overall" &&

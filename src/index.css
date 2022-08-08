@@ -5,7 +5,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
 
 body {
-  @apply bg-dark text-gray-lighten font-roboto;
+  @apply bg-dark text-gray-lighten font-roboto overflow-x-hidden;
+}
+
+html {
+  @apply overflow-x-hidden;
 }
 
 /* CUSTOM UTILITIES */
@@ -77,11 +81,11 @@ body {
 }
 
 .tw-banner-slider .swiper-button-prev {
-  @apply !top-[6%] !left-[2%] !z-20;
+  @apply !top-[6%] !left-[2%] !z-20 hidden sm:block;
 }
 
 .tw-banner-slider .swiper-button-next {
-  @apply !top-[6%] !left-[5%] !z-20;
+  @apply !top-[6%] !left-[5%] !z-20 hidden sm:block;
 }
 
 .tw-section-slider .swiper-button-prev {

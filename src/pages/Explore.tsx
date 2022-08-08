@@ -1,11 +1,15 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link, useSearchParams } from "react-router-dom";
 import SearchBox from "../components/Common/SearchBox";
+import Sidebar from "../components/Common/Sidebar";
 import SidebarMini from "../components/Common/SidebarMini";
 import Title from "../components/Common/Title";
 import ExploreFilter from "../components/Explore/ExploreFilter";
 import ExploreResult from "../components/Explore/ExploreResult";
+import { useCurrentViewportView } from "../hooks/useCurrentViewportView";
 import { ConfigType } from "../shared/types";
 interface ExploreProps {}
 
@@ -13,8 +17,10 @@ const Explore: FunctionComponent<ExploreProps> = () => {
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "tv"
   );
+  const { isMobile } = useCurrentViewportView();
 
   const [isShowScrollUpBtn, setIsShowScrollUpBtn] = useState(false);
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   useEffect(() => {
     const checkIfShowScrollUpBtn = () => {
@@ -102,17 +108,41 @@ const Explore: FunctionComponent<ExploreProps> = () => {
         </button>
       )}
 
-      <div className="flex">
-        <SidebarMini />
+      <div className="flex md:hidden justify-between items-center px-5 my-5">
+        <Link to="/" className="flex gap-2 items-center">
+          <LazyLoadImage
+            src="/logo.png"
+            className="h-10 w-10 rounded-full object-cover"
+          />
+          <p className="text-xl text-white font-medium tracking-wider uppercase">
+            Moon<span className="text-primary">light</span>
+          </p>
+        </Link>
+        <button onClick={() => setIsSidebarActive((prev) => !prev)}>
+          <GiHamburgerMenu size={25} />
+        </button>
+      </div>
+
+      <div className="flex flex-col-reverse md:flex-row">
+        {!isMobile && <SidebarMini />}
+        {isMobile && (
+          <Sidebar
+            setIsSidebarActive={setIsSidebarActive}
+            isSidebarActive={isSidebarActive}
+          />
+        )}
+
         <div className="flex-grow px-[2vw] pt-6">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-white text-3xl font-medium uppercase ">
-              Find films that best fit you
-            </h2>
-            <div className="relative max-w-[350px] w-full -mt-24 -mr-7">
-              <SearchBox />
+          {!isMobile && (
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-white text-3xl font-medium uppercase ">
+                Find films that best fit you
+              </h2>
+              <div className="relative max-w-[350px] w-full -mt-24 -mr-7">
+                <SearchBox />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="inline-flex gap-[40px] pb-[14px] border-b border-gray-darken relative mb-6">
             <button
@@ -145,9 +175,16 @@ const Explore: FunctionComponent<ExploreProps> = () => {
 
           <ExploreResult currentTab={currentTab} config={config} />
         </div>
-        <div className="shrink-0 max-w-[310px] w-full py-12 px-3">
+
+        <div className="shrink-0 md:max-w-[310px] w-full md:py-12 pt-4 px-3">
           <ExploreFilter currentTab={currentTab} />
         </div>
+
+        {isMobile && (
+          <h2 className="text-white text-3xl font-medium uppercase ml-3 mt-3">
+            Find films that best fit you
+          </h2>
+        )}
       </div>
     </>
   );

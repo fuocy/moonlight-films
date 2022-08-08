@@ -91,7 +91,7 @@ const EditComment: FunctionComponent<EditCommentProps> = ({
       >
         {isShowPrompt && (
           <>
-            <div className="fixed top-[30%] left-[40%]  max-w-[390px] w-full z-50 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
+            <div className="fixed top-[30%] md:left-[40%] md:right-auto left-[5%] right-[5%] md:w-[400px] z-50 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
               <div className="mx-auto mb-7 h-16 w-16 rounded-full border-[3px] border-red-500 tw-flex-center">
                 <AiOutlineDelete size={40} className="text-red-500 " />
               </div>

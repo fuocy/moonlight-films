@@ -45,7 +45,7 @@ const ProfileImage: FunctionComponent<ProfileImageProps> = () => {
   };
 
   return (
-    <div className="shrink-0 max-w-[500px] w-full px-4">
+    <div className="shrink-0 md:max-w-[500px] w-full px-4">
       <p className="text-white mt-5 text-xl font-medium">Profile photo</p>
       <div className="flex flex-col items-center mt-4 ">
         <div className="w-[250px] h-[250px] relative">
@@ -74,7 +74,7 @@ const ProfileImage: FunctionComponent<ProfileImageProps> = () => {
           onChange={changeProfileImage}
         />
 
-        <div className="text-center mt-16">
+        <div className="text-center md:mt-16 mt-8">
           <p className="text-white text-xl ">{currentUser?.displayName}</p>
           {quote && <p className="text-lg mt-2">{quote}</p>}
         </div>

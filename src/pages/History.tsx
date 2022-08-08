@@ -2,6 +2,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { FunctionComponent, useEffect, useState } from "react";
 import Title from "../components/Common/Title";
 import FilmListViewForBookmarkAndHistory from "../components/FilmListViewForBookmarkAndHistory/FilmListViewForBookmarkAndHistory";
+import Footer from "../components/Footer/Footer";
 import { db } from "../shared/firebase";
 import { Item } from "../shared/types";
 import { useAppSelector } from "../store/hooks";
@@ -46,6 +47,8 @@ const History: FunctionComponent<HistoryProps> = () => {
         isLoading={isLoading}
         pageType="history"
       />
+
+      <Footer />
     </>
   );
 };

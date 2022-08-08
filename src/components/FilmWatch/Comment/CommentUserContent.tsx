@@ -134,7 +134,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
           return (
             <Fragment key={doc.id}>
               {!commentHiden.includes(doc.id) && (
-                <li className="mb-6 flex gap-4 items-start last:mb-0">
+                <li className="mb-6 flex md:gap-4 gap-2 items-start last:mb-0">
                   <div className="w-[44px] h-[44px] shrink-0">
                     <LazyLoadImage
                       src={docData.user.photoURL as string}
@@ -166,7 +166,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                       {editingCommentFor !== doc.id && (
                         <p
                           style={{ wordWrap: "break-word" }}
-                          className="text-lg mt-1"
+                          className="text-lg mt-1 max-w-[63vw] md:max-w-none"
                         >
                           {docData.value}
                         </p>

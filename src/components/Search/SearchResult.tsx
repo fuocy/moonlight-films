@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { getSearchResult } from "../../services/search";
 import { ItemsPage } from "../../shared/types";
@@ -34,10 +35,21 @@ const SearchResult: FunctionComponent<SearchResultProps> = ({
   };
 
   return (
-    <div className="mt-32 px-[2vw]">
-      <p className="text-white text-xl mb-6">
+    <div className="md:mt-32 mt-7 px-[2vw]">
+      <p className="text-white md:text-xl text-lg mb-6">
         Search results for "{query}" ({data?.total_results} results found)
       </p>
+      {data && data.results.length === 0 && (
+        <div className="flex flex-col items-center mb-12">
+          <LazyLoadImage
+            src="/error.png"
+            alt=""
+            effect="opacity"
+            className="w-[600px]"
+          />
+          <p className="text-white text-3xl mt-5">There is no such films</p>
+        </div>
+      )}
       <ul className="grid grid-cols-sm md:grid-cols-lg gap-x-8 gap-y-10">
         {data &&
           data.results.map((item) => (

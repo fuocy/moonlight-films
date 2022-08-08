@@ -59,7 +59,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
       <div className="px-4 py-2 rounded-xl max-w-xl w-full min-h-[500px] text-white/70 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
         <div className="flex flex-col items-center mb-5">
           <div className="text-[50px] font-semibold mb-1 mx-auto">
-            <div className="text-primary leading-none mb-4">
+            <div className="text-primary leading-none mb-4 text-center">
               Sign In To Moonlight
             </div>
           </div>

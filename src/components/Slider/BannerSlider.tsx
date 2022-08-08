@@ -8,6 +8,7 @@ import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { BsFillPlayFill } from "react-icons/bs";
 import Skeleton from "../Common/Skeleton";
+import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 interface BannerSliderProps {
   films: Item[] | undefined;
   dataDetail: {
@@ -22,8 +23,10 @@ const BannerSlider: FC<BannerSliderProps> = ({
   dataDetail,
   isLoadingBanner,
 }) => {
+  const { isMobile } = useCurrentViewportView();
+
   return (
-    <div className="mt-6 relative h-0 pb-[45%] tw-banner-slider">
+    <div className="mt-6 relative h-0 md:pb-[45%] pb-[55%]  tw-banner-slider">
       {isLoadingBanner ? (
         <Skeleton className="absolute top-0 left-0 w-full h-full rounded-lg" />
       ) : (
@@ -51,7 +54,7 @@ const BannerSlider: FC<BannerSliderProps> = ({
                 />
 
                 <div className="absolute top-0 left-0 w-full h-full rounded-lg pointer-events-none tw-black-backdrop group-hover:bg-[#00000026] transition duration-7000"></div>
-                <div className="absolute top-[5%] right-[3%] bg-primary px-3 py-1 rounded-full text-white flex items-center gap-1">
+                <div className="hidden md:flex absolute top-[5%] right-[3%] bg-primary px-3 py-1 rounded-full text-white  items-center gap-1">
                   <span>{film.vote_average.toFixed(1)}</span>
                   <AiFillStar size={15} />
                 </div>
@@ -59,36 +62,43 @@ const BannerSlider: FC<BannerSliderProps> = ({
                   <BsFillPlayFill size={35} className="text-white" />
                 </div>
 
-                <div className="absolute top-[50%] -translate-y-1/2 left-[5%] max-w-md ">
-                  <h2 className="text-5xl text-primary font-black tracking-wide tw-multiline-ellipsis-2">
+                <div className="absolute top-[50%] -translate-y-1/2 left-[5%] md:max-w-md max-w-[200px]">
+                  <h2 className="md:text-5xl text-xl  text-primary font-black tracking-wide md:tw-multiline-ellipsis-2 tw-multiline-ellipsis-3">
                     {film.title || film.name}
                   </h2>
-                  <p className="text-white font-semibold text-2xl mt-6">
-                    {dataDetail[index].translation[0] ||
-                      dataDetail[index].translation[1] ||
-                      dataDetail[index].translation[2] ||
-                      dataDetail[index].translation[3] ||
-                      dataDetail[index].translation[4] ||
-                      dataDetail[index].translation[5]}
-                  </p>
-                  <p className="mt-1">
-                    {film.release_date && `Release date: ${film.release_date}`}
-                    {film.first_air_date &&
-                      `Last episode date: ${film.first_air_date}`}
-                  </p>
-                  <div className="flex gap-2 flex-wrap mt-5">
-                    {dataDetail[index].genre.map((genre) => (
-                      <div
-                        className="px-3 py-1 border rounded-full "
-                        key={genre.id}
-                      >
-                        {genre.name}
-                      </div>
-                    ))}
+                  <div className="">
+                    <p className="text-white font-semibold md:text-2xl text-base mt-6">
+                      {dataDetail[index].translation[0] ||
+                        dataDetail[index].translation[1] ||
+                        dataDetail[index].translation[2] ||
+                        dataDetail[index].translation[3] ||
+                        dataDetail[index].translation[4] ||
+                        dataDetail[index].translation[5]}
+                    </p>
+                    <p className="mt-1">
+                      {film.release_date &&
+                        `Release date: ${film.release_date}`}
+                      {film.first_air_date &&
+                        `Last episode date: ${film.first_air_date}`}
+                    </p>
+                    {!isMobile && (
+                      <>
+                        <div className="flex gap-2 flex-wrap mt-5">
+                          {dataDetail[index].genre.map((genre) => (
+                            <div
+                              className="px-3 py-1 border rounded-full "
+                              key={genre.id}
+                            >
+                              {genre.name}
+                            </div>
+                          ))}
+                        </div>
+                        <p className=" mt-3 text-base  tw-multiline-ellipsis">
+                          {film.overview}
+                        </p>
+                      </>
+                    )}
                   </div>
-                  <p className="mt-3 text-base  tw-multiline-ellipsis">
-                    {film.overview}
-                  </p>
                 </div>
               </Link>
             </SwiperSlide>

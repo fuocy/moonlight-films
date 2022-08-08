@@ -14,7 +14,7 @@ const DeleteAccount: FunctionComponent<DeleteAccountProps> = ({
     <>
       {isShowPrompt && (
         <>
-          <div className="fixed top-[30%] left-[40%]  max-w-[390px] w-full z-50 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
+          <div className="fixed top-[30%] md:left-[40%] left-[5%] right-[5%] md:w-[390px] z-50 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
             <div className="mx-auto mb-7 h-16 w-16 rounded-full border-[3px] border-red-500 tw-flex-center">
               <AiOutlineDelete size={40} className="text-red-500 " />
             </div>
@@ -49,7 +49,7 @@ const DeleteAccount: FunctionComponent<DeleteAccountProps> = ({
           ></div>
         </>
       )}
-      <div className="flex justify-center mt-12">
+      <div className="flex justify-center mt-12 mb-6">
         <button
           onClick={() => setIsShowPrompt(true)}
           className="px-5 py-2  border rounded-full text-red-500 border-dark-lighten-2 bg-dark-lighten hover:bg-red-500 hover:text-white transition duration-300"

@@ -78,7 +78,7 @@ const Comment: FunctionComponent<CommentProps> = ({ id, media_type }) => {
               uid: "CZGmXpePYsd1YryQR3C8xA5YOzb2",
             },
             value:
-              "Ngoài bình luận, trang web còn có chức năng thả cảm xúc, xem thông tin những người thả cảm xúc, (cảm xúc được nhiều người thả sẽ được ưu tiên hiện đầu), trả lời bình luận, chỉnh sửa, xóa, ẩn bình luận, sắp xếp bình luận, tải thêm bình luận. Hãy thử nghiệm :3",
+              "Ngoài bình luận, trang web còn có chức năng thả cảm xúc, xem thông tin những người thả cảm xúc, (cảm xúc được nhiều người thả sẽ được ưu tiên hiện đầu), trả lời bình luận, chỉnh sửa, xóa, ẩn bình luận, sắp xếp bình luận, tải thêm bình luận.",
             reactions: {
               "3RkuRS4zSqadAkKDqSfTjCzwzF92": "haha",
               GMaGmpy8ZaRBEhtaoZJdd9pNNXz1: "love",
@@ -102,9 +102,9 @@ const Comment: FunctionComponent<CommentProps> = ({ id, media_type }) => {
     <div className="mb-16">
       <div className="flex items-center justify-between mb-6">
         <div className="relative w-[140px]">
-          <p className="text-2xl text-white font-medium">Comments</p>
+          <p className="md:text-2xl text-xl text-white font-medium">Comments</p>
           {commentData && commentData.size > 0 && (
-            <p className="absolute -top-1 -right-1 bg-dark-lighten w-6 h-6 text-sm rounded-full tw-flex-center">
+            <p className="absolute md:-top-1 md:-right-1 -top-2 right-5 bg-dark-lighten w-6 h-6 text-sm rounded-full tw-flex-center">
               {commentData.size}
             </p>
           )}
@@ -129,7 +129,7 @@ const Comment: FunctionComponent<CommentProps> = ({ id, media_type }) => {
         </div>
       </div>
 
-      <div className="px-4">
+      <div className="md:px-4 px-1">
         <div className="mb-12">
           {!currentUser && (
             <p className="text-lg text-center">

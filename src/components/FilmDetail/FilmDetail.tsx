@@ -9,24 +9,29 @@ import { FC, useEffect, useState } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPlayFill, BsShareFill, BsThreeDots } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import YouTube from "react-youtube";
+import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 import { db } from "../../shared/firebase";
 import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";
 import { resizeImage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 import RightbarFilms from "../Common/RightbarFilms";
 import SearchBox from "../Common/SearchBox";
+import Sidebar from "../Common/Sidebar";
 import SidebarMini from "../Common/SidebarMini";
 import Skeleton from "../Common/Skeleton";
 import Title from "../Common/Title";
+import Footer from "../Footer/Footer";
 import FilmTabInfo from "./FilmTabInfo";
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
+  const { isMobile } = useCurrentViewportView();
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -106,10 +111,31 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
         />
       )}
 
+      <div className="flex md:hidden justify-between items-center px-5 my-3">
+        <Link to="/" className="flex gap-2 items-center">
+          <LazyLoadImage
+            src="/logo.png"
+            className="h-10 w-10 rounded-full object-cover"
+          />
+          <p className="text-xl text-white font-medium tracking-wider uppercase">
+            Moon<span className="text-primary">light</span>
+          </p>
+        </Link>
+        <button onClick={() => setIsSidebarActive((prev) => !prev)}>
+          <GiHamburgerMenu size={25} />
+        </button>
+      </div>
+
       <ToastContainer />
 
-      <div className="flex">
-        <SidebarMini />
+      <div className="flex flex-col md:flex-row ">
+        {!isMobile && <SidebarMini />}
+        {isMobile && (
+          <Sidebar
+            setIsSidebarActive={setIsSidebarActive}
+            isSidebarActive={isSidebarActive}
+          />
+        )}
 
         <div className="flex-grow min-h-screen">
           {!detail && (
@@ -120,31 +146,43 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
               style={{
                 backgroundImage: `url(${resizeImage(detail.backdrop_path)})`,
               }}
-              className="bg-cover bg-center bg-no-repeat h-[400px] rounded-bl-2xl relative"
+              className="bg-cover bg-center bg-no-repeat md:h-[400px] h-[300px] rounded-bl-2xl relative"
             >
               <div className="bg-gradient-to-br from-transparent to-black/70 h-full rounded-bl-2xl">
-                <div className="flex items-start absolute left-1/2 -translate-x-1/2  w-full max-w-[1000px] bottom-[-20%]">
-                  <div className="shrink-0 max-w-[185px] w-full ">
-                    <LazyLoadImage
-                      src={resizeImage(detail.poster_path, "w185")}
-                      effect="opacity"
-                      className="w-full h-full object-cover rounded-md"
-                      alt="Poster"
-                    />
+                <div className="flex flex-col md:flex-row bottom-[-85%] md:bottom-[-20%]  items-start absolute left-1/2 -translate-x-1/2  w-full max-w-[1000px] ">
+                  <div className="flex gap-5 items-center">
+                    <div className="shrink-0 max-w-[185px] w-full ml-3 md:ml-0">
+                      <LazyLoadImage
+                        src={resizeImage(detail.poster_path, "w185")}
+                        effect="opacity"
+                        className="w-full h-full object-cover rounded-md"
+                        alt="Poster"
+                      />
+                    </div>
+                    {isMobile && (
+                      <Link
+                        to="watch"
+                        className="flex gap-6 items-center pl-6 pr-12 py-3 rounded-full bg-primary text-white hover:bg-blue-600 transition duration-300 mt-24 "
+                      >
+                        <BsFillPlayFill size={25} />
+                        <span className="text-lg font-medium">WATCH</span>
+                      </Link>
+                    )}
                   </div>
-                  <div className="flex-grow ml-14">
-                    <div className="h-28 flex items-end">
-                      <h1 className=" text-white text-[45px] font-bold leading-tight ">
+
+                  <div className="flex-grow md:ml-14 ml-6 mt-6 md:mt-0">
+                    <div className="md:h-28 flex items-end">
+                      <h1 className=" text-white md:text-[45px] text-[35px] font-bold leading-tight ">
                         {(detail as DetailMovie).title ||
                           (detail as DetailTV).name}
                       </h1>
                     </div>
-                    <ul className="flex gap-3 flex-wrap mt-7">
+                    <ul className="flex gap-3 flex-wrap md:mt-7 mt-3">
                       {detail.genres.slice(0, 3).map((genre) => (
                         <li key={genre.id} className="mb-3">
                           <Link
                             to={`/explore?genre=${genre.id}`}
-                            className="px-5 py-2 rounded-full uppercase font-medium border border-gray-300 text-white hover:brightness-75 transition duration-300"
+                            className="md:px-5 px-3 md:py-2 py-1 rounded-full uppercase font-medium border border-gray-300 md:text-white hover:brightness-75 transition duration-300"
                           >
                             {genre.name}
                           </Link>
@@ -153,13 +191,15 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                     </ul>
                   </div>
 
-                  <Link
-                    to="watch"
-                    className="flex gap-6 items-center pl-6 pr-12 py-3 rounded-full bg-primary text-white hover:bg-blue-600 transition duration-300 mt-24"
-                  >
-                    <BsFillPlayFill size={25} />
-                    <span className="text-lg font-medium">WATCH</span>
-                  </Link>
+                  {!isMobile && (
+                    <Link
+                      to="watch"
+                      className="flex gap-6 items-center pl-6 pr-12 py-3 rounded-full bg-primary text-white hover:bg-blue-600 transition duration-300 mt-24 "
+                    >
+                      <BsFillPlayFill size={25} />
+                      <span className="text-lg font-medium">WATCH</span>
+                    </Link>
+                  )}
                 </div>
                 <div className="flex gap-3 absolute top-[5%] right-[3%]">
                   <button
@@ -175,46 +215,57 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                       }`}
                     />
                   </button>
-                  <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
-                    <BsShareFill
-                      size={20}
-                      className="text-white group-hover:text-primary transition duration-300"
-                    />
-                  </button>
-                  <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
-                    <BsThreeDots
-                      size={20}
-                      className="text-white group-hover:text-primary transition duration-300"
-                    />
-                  </button>
+                  {!isMobile && (
+                    <>
+                      <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
+                        <BsShareFill
+                          size={20}
+                          className="text-white group-hover:text-primary transition duration-300"
+                        />
+                      </button>
+                      <button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
+                        <BsThreeDots
+                          size={20}
+                          className="text-white group-hover:text-primary transition duration-300"
+                        />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
           )}
 
-          <div className="flex z-20 relative">
-            <div className="shrink-0 max-w-[150px] w-full flex items-center flex-col gap-20 mt-20 border-r border-dark-lighten">
-              <div className="flex flex-col gap-6 items-center mt-16">
+          <div className="flex z-20 relative flex-col md:flex-row mt-40 md:mt-0">
+            <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20 mt-20 md:border-r border-dark-lighten pt-16">
+              <div className="flex flex-col gap-6 items-center">
                 <p className="text-white font-medium text-lg">RATING</p>
-                <div className="w-16">
-                  {detail && (
-                    <CircularProgressbar
-                      value={detail.vote_average}
-                      maxValue={10}
-                      text={`${detail.vote_average.toFixed(1)}`}
-                      styles={buildStyles({
-                        textSize: "25px",
-                        pathColor: `rgba(81, 121, 255, ${
-                          (detail.vote_average * 10) / 100
-                        })`,
-                        textColor: "#fff",
-                        trailColor: "transparent",
-                        backgroundColor: "#5179ff",
-                      })}
-                    />
-                  )}
-                  {!detail && <Skeleton className="w-16 h-16 rounded-full" />}
-                </div>
+                {!isMobile && (
+                  <div className="w-16">
+                    {detail && (
+                      <CircularProgressbar
+                        value={detail.vote_average}
+                        maxValue={10}
+                        text={`${detail.vote_average.toFixed(1)}`}
+                        styles={buildStyles({
+                          textSize: "25px",
+                          pathColor: `rgba(81, 121, 255, ${
+                            (detail.vote_average * 10) / 100
+                          })`,
+                          textColor: "#fff",
+                          trailColor: "transparent",
+                          backgroundColor: "#5179ff",
+                        })}
+                      />
+                    )}
+                    {!detail && <Skeleton className="w-16 h-16 rounded-full" />}
+                  </div>
+                )}
+                {isMobile && detail && (
+                  <p className="text-2xl -mt-3">
+                    {detail.vote_average.toFixed(1)}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-3 items-center">
@@ -247,21 +298,34 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
               </div>
             </div>
 
-            <div className="flex-grow min-h-[500px] border-r border-dark-lighten px-16 py-7">
+            <div className="flex-grow min-h-[500px] md:border-r border-dark-lighten md:px-16 px-5 md:py-7 pt-14">
               {/* {!detail && <Skeleton className="w-full h-[500px]" />} */}
               <FilmTabInfo detail={detail} {...others} />
             </div>
 
-            <div className="shrink-0 max-w-[300px] w-full px-6 pt-6">
+            <div className="shrink-0 md:max-w-[300px] w-full px-6 pt-6">
               <p className="text-white font-medium text-lg mb-5">MEDIA</p>
-              <ul className="flex flex-col gap-[75px]">
+              <ul className="flex flex-col md:gap-[30px] gap-6">
                 {videos &&
                   videos.slice(0, 2).map((video) => (
-                    <li key={video.id} className="relative h-0 pb-[56.25%]">
-                      <YouTube
-                        videoId={video.key}
-                        opts={{ height: "100%", width: "100%" }}
-                      />
+                    <li key={video.id}>
+                      <div className="relative h-0 pb-[56.25%]">
+                        {/* <YouTube
+                          videoId={video.key}
+                          opts={{ height: "100%", width: "100%" }}
+                        /> */}
+                        <iframe
+                          frameBorder="0"
+                          allowFullScreen
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          title="Video trailer"
+                          width="100%"
+                          height="100%"
+                          src={`https://www.youtube.com/embed/${video.key}?enablejsapi=1&amp;origin=http%3A%2F%2Flocalhost%3A3000&amp;widgetid=1`}
+                          id="widget2"
+                          className="absolute top-0 left-0 !w-full !h-full"
+                        ></iframe>
+                      </div>
                       <p className="mt-3 text-lg whitespace-nowrap overflow-hidden text-ellipsis">
                         {video.name}
                       </p>
@@ -280,77 +344,20 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
             </div>
           </div>
         </div>
-        <div className="shrink-0 max-w-[310px] w-full relative px-6">
-          <SearchBox />
+
+        <div className="shrink-0 md:max-w-[310px] w-full relative px-6">
+          {!isMobile && <SearchBox />}
           {/* <RecommendGenres /> */}
           <RightbarFilms
             name="Similar"
             films={similar?.filter((item) => item.id !== detail?.id)}
             limitNumber={4}
             isLoading={!similar}
-            className="mt-24"
+            className="md:mt-24 mt-5"
           />
-          {/* <>
-            
-            <p className="mt-24 mb-6 text-xl font-medium flex justify-between items-center">
-              <span className="text-white">Recommendations</span>
-              <BsThreeDotsVertical size={20} />
-            </p>
-            <ul className="flex flex-col gap-5">
-              {!similar && (
-                <>
-                  {[...new Array(4)].map((_, index) => (
-                    <li
-                      key={index}
-                      className="flex gap-5 items-center h-[156px]"
-                    >
-                      <Skeleton className="shrink-0 max-w-[100px] w-full h-full rounded-md" />
-                      <Skeleton className="flex-grow h-[85%] rounded-md" />
-                    </li>
-                  ))}
-                </>
-              )}
-              {similar &&
-                similar.slice(0, 4).map((item) => (
-                  <li key={item.id}>
-                    <Link
-                      to={
-                        item.media_type === "movie"
-                          ? `/movie/${item.id}`
-                          : `/tv/${item.id}`
-                      }
-                      className="hover:brightness-75 transiton duration-300 flex gap-5 items-center"
-                    >
-                      <div className="shrink-0 max-w-[100px] w-full">
-                        <LazyLoadImage
-                          src={resizeImage(item.poster_path, "w154")}
-                          className="w-full h-full object-cover rounded-md"
-                          alt="poster"
-                          effect="blur"
-                        />
-                      </div>
-                      <div className="flex-grow">
-                        <p className="text-white mb-3 text-lg">
-                          {item.title || item.name}
-                        </p>
-                        <p className="mb-8">
-                          {item.release_date || item.first_air_date}
-                        </p>
-                        <div className="inline-flex gap-2 items-center px-3 py-[2px] rounded-full text-primary border border-primary text-sm">
-                          <span>{item.vote_average.toFixed(1)}</span>
-                          <AiFillStar size={15} />
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-            </ul>
-            <button className="bg-dark-lighten py-2 w-full rounded-full mt-7 hover:brightness-75 transition duration-300 mb-3">
-              See more
-            </button>
-          </> */}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

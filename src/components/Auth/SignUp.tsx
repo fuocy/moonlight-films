@@ -67,12 +67,12 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
       )}
       <div className="px-4 py-2 rounded-xl max-w-xl w-full min-h-[500px] text-white/70 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
         <div className="flex flex-col items-center mb-5">
-          <div className="text-[50px] font-semibold mb-1 mx-auto">
+          <div className="text-[50px] font-semibold mb-1 mx-auto text-center md:text-left">
             <div className="uppercase tracking-wider text-xl font-medium mb-2">
               Start for free
             </div>
-            <div className="text-primary leading-none mb-4">
-              Create new account
+            <div className="text-primary leading-none mb-4 ">
+              Create Account
             </div>
           </div>
           <div className="flex gap-4 mb-8">
@@ -120,7 +120,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
           onSubmit={signUpHandler}
         >
           <Form>
-            <div className="flex justify-between mb-6">
+            <div className="flex md:justify-between gap-8 md:gap-0 mb-6">
               <div className="relative">
                 <Field
                   name="firstName"

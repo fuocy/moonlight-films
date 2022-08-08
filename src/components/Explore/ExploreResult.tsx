@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getExploreMovie, getExploreTV } from "../../services/explore";
 import { ConfigType, ItemsPage } from "../../shared/types";
 import FilmItem from "../Common/FilmItem";
@@ -136,7 +137,17 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
           next={() => fetchNextPageTv()}
           hasMore={Boolean(hasNextPageTv)}
           loader={<div>Loading...</div>}
-          endMessage={<div>No more results</div>}
+          endMessage={
+            <div className="flex flex-col items-center mb-12">
+              <LazyLoadImage
+                src="/error.png"
+                alt=""
+                effect="opacity"
+                className="w-[600px]"
+              />
+              <p className="text-white text-3xl mt-5">There is no such films</p>
+            </div>
+          }
         >
           <ExploreTVResult pages={tvs?.pages} />
         </InfiniteScroll>

@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link } from "react-router-dom";
 import SearchBox from "../components/Common/SearchBox";
 import Sidebar from "../components/Common/Sidebar";
 import Title from "../components/Common/Title";
+import Footer from "../components/Footer/Footer";
 import MainHomeFilms from "../components/Home/MainHomeFilm";
 import RecommendGenres from "../components/Home/RecommendGenres";
 import TrendingNow from "../components/Home/TrendingNow";
@@ -20,6 +23,7 @@ const Home: FC = () => {
   const [currentTab, setCurrentTab] = useState(
     localStorage.getItem("currentTab") || "tv"
   );
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   const {
     data: dataMovie,
@@ -68,10 +72,29 @@ const Home: FC = () => {
   return (
     <>
       <Title value="Moonlight | Watching Website" />
-      <div className="flex items-start">
-        <Sidebar />
 
-        <div className="flex-grow py-7 border-x px-[2vw] border-gray-darken min-h-screen">
+      <div className="flex md:hidden justify-between items-center px-5 my-5">
+        <Link to="/" className="flex gap-2 items-center">
+          <LazyLoadImage
+            src="/logo.png"
+            className="h-10 w-10 rounded-full object-cover"
+          />
+          <p className="text-xl text-white font-medium tracking-wider uppercase">
+            Moon<span className="text-primary">light</span>
+          </p>
+        </Link>
+        <button onClick={() => setIsSidebarActive((prev) => !prev)}>
+          <GiHamburgerMenu size={25} />
+        </button>
+      </div>
+
+      <div className="flex items-start">
+        <Sidebar
+          setIsSidebarActive={setIsSidebarActive}
+          isSidebarActive={isSidebarActive}
+        />
+
+        <div className="flex-grow md:pt-7 pt-0 pb-7 border-x md:px-[2vw] px-[4vw] border-gray-darken min-h-screen">
           <div className="flex justify-between items-end">
             <div className="inline-flex gap-[40px] pb-[14px] border-b border-gray-darken relative">
               <button
@@ -142,6 +165,8 @@ const Home: FC = () => {
           <TrendingNow />
         </div>
       </div>
+
+      <Footer />
     </>
   );
 };

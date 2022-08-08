@@ -16,7 +16,7 @@ const Auth: FunctionComponent<AuthProps> = () => {
         muted
         loop
         id="myVideo"
-        className="fixed -top-[135px] object-cover left-0 h-[135vh] w-full -z-10"
+        className="fixed md:-top-[130px] -top-[155px] object-cover left-0 h-[135vh] w-full -z-10"
       >
         <source
           src="https://raw.githubusercontent.com/fuocy/video/master/endgame.mp4"
