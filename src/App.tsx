@@ -61,8 +61,9 @@ function App() {
                 doc.data()?.lastName + " " + doc.data()?.firstName || "",
               email: user.email,
               emailVerified: user.emailVerified,
-              photoURL:
-                user.photoURL + "?access_token=" + doc.data()?.token || "",
+              photoURL: doc.data()?.photoUrl || "",
+              // user.photoURL + "?access_token=" + doc.data()?.token || "",
+              // doc.data()?.photoUrl.startsWith("https://i.ibb.co") ?
               uid: user.uid,
             })
           );
