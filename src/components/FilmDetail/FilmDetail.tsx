@@ -172,7 +172,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 
                   <div className="flex-grow md:ml-14 ml-6 mt-6 md:mt-0">
                     <div className="md:h-28 flex items-end">
-                      <h1 className=" text-white md:text-[45px] text-[35px] font-bold leading-tight ">
+                      <h1 className=" text-white text-[45px] font-bold leading-tight ">
                         {(detail as DetailMovie).title ||
                           (detail as DetailTV).name}
                       </h1>
@@ -236,69 +236,75 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
             </div>
           )}
 
-          <div className="flex z-20 relative flex-col md:flex-row mt-40 md:mt-0">
-            <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20 mt-20 md:border-r border-dark-lighten pt-16">
-              <div className="flex flex-col gap-6 items-center">
-                <p className="text-white font-medium text-lg">RATING</p>
-                {!isMobile && (
-                  <div className="w-16">
-                    {detail && (
-                      <CircularProgressbar
-                        value={detail.vote_average}
-                        maxValue={10}
-                        text={`${detail.vote_average.toFixed(1)}`}
-                        styles={buildStyles({
-                          textSize: "25px",
-                          pathColor: `rgba(81, 121, 255, ${
-                            (detail.vote_average * 10) / 100
-                          })`,
-                          textColor: "#fff",
-                          trailColor: "transparent",
-                          backgroundColor: "#5179ff",
-                        })}
-                      />
-                    )}
-                    {!detail && <Skeleton className="w-16 h-16 rounded-full" />}
-                  </div>
-                )}
-                {isMobile && detail && (
-                  <p className="text-2xl -mt-3">
-                    {detail.vote_average.toFixed(1)}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-3 items-center">
-                {detail && (
-                  <>
-                    <p className="text-white font-medium text-lg">
-                      {detail.media_type === "movie" ? "RUNTIME" : "EP LENGTH"}
-                    </p>
-                    <div className="flex gap-2 items-center">
-                      {detail.media_type === "movie" && (
-                        <p className="text-2xl">
-                          {(detail as DetailMovie).runtime}
-                        </p>
+          <div className="flex z-20 relative flex-col md:flex-row mt-32 md:mt-0">
+            {!isMobile && (
+              <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20 mt-20 md:border-r border-dark-lighten pt-16">
+                <div className="flex flex-col gap-6 items-center">
+                  <p className="text-white font-medium text-lg">RATING</p>
+                  {!isMobile && (
+                    <div className="w-16">
+                      {detail && (
+                        <CircularProgressbar
+                          value={detail.vote_average}
+                          maxValue={10}
+                          text={`${detail.vote_average.toFixed(1)}`}
+                          styles={buildStyles({
+                            textSize: "25px",
+                            pathColor: `rgba(81, 121, 255, ${
+                              (detail.vote_average * 10) / 100
+                            })`,
+                            textColor: "#fff",
+                            trailColor: "transparent",
+                            backgroundColor: "#5179ff",
+                          })}
+                        />
                       )}
-                      {detail.media_type === "tv" && (
-                        <p className="text-2xl">
-                          {(detail as DetailTV).episode_run_time[0]}
-                        </p>
+                      {!detail && (
+                        <Skeleton className="w-16 h-16 rounded-full" />
                       )}
-                      <span>min</span>
                     </div>
-                  </>
-                )}
-                {!detail && (
-                  <>
-                    <p className="text-white font-medium text-lg">RUNTIME</p>
-                    <Skeleton className="w-14 h-6" />
-                  </>
-                )}
-              </div>
-            </div>
+                  )}
+                  {isMobile && detail && (
+                    <p className="text-2xl -mt-3">
+                      {detail.vote_average.toFixed(1)}
+                    </p>
+                  )}
+                </div>
 
-            <div className="flex-grow min-h-[500px] md:border-r border-dark-lighten md:px-16 px-5 md:py-7 pt-14">
+                <div className="flex flex-col gap-3 items-center">
+                  {detail && (
+                    <>
+                      <p className="text-white font-medium text-lg">
+                        {detail.media_type === "movie"
+                          ? "RUNTIME"
+                          : "EP LENGTH"}
+                      </p>
+                      <div className="flex gap-2 items-center">
+                        {detail.media_type === "movie" && (
+                          <p className="text-2xl">
+                            {(detail as DetailMovie).runtime}
+                          </p>
+                        )}
+                        {detail.media_type === "tv" && (
+                          <p className="text-2xl">
+                            {(detail as DetailTV).episode_run_time[0]}
+                          </p>
+                        )}
+                        <span>min</span>
+                      </div>
+                    </>
+                  )}
+                  {!detail && (
+                    <>
+                      <p className="text-white font-medium text-lg">RUNTIME</p>
+                      <Skeleton className="w-14 h-6" />
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="flex-grow min-h-[500px] md:border-r border-dark-lighten md:px-16 px-5 md:py-7 pt-40">
               {/* {!detail && <Skeleton className="w-full h-[500px]" />} */}
               <FilmTabInfo detail={detail} {...others} />
             </div>
@@ -342,6 +348,73 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                   ))}
               </ul>
             </div>
+
+            {isMobile && (
+              <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20  md:border-r border-dark-lighten md:pt-16 pt-0 md:mt-20 mt-5">
+                <div className="flex flex-col gap-6 items-center">
+                  <p className="text-white font-medium text-lg">RATING</p>
+                  {!isMobile && (
+                    <div className="w-16">
+                      {detail && (
+                        <CircularProgressbar
+                          value={detail.vote_average}
+                          maxValue={10}
+                          text={`${detail.vote_average.toFixed(1)}`}
+                          styles={buildStyles({
+                            textSize: "25px",
+                            pathColor: `rgba(81, 121, 255, ${
+                              (detail.vote_average * 10) / 100
+                            })`,
+                            textColor: "#fff",
+                            trailColor: "transparent",
+                            backgroundColor: "#5179ff",
+                          })}
+                        />
+                      )}
+                      {!detail && (
+                        <Skeleton className="w-16 h-16 rounded-full" />
+                      )}
+                    </div>
+                  )}
+                  {isMobile && detail && (
+                    <p className="text-2xl -mt-3">
+                      {detail.vote_average.toFixed(1)}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-3 items-center">
+                  {detail && (
+                    <>
+                      <p className="text-white font-medium text-lg">
+                        {detail.media_type === "movie"
+                          ? "RUNTIME"
+                          : "EP LENGTH"}
+                      </p>
+                      <div className="flex gap-2 items-center">
+                        {detail.media_type === "movie" && (
+                          <p className="text-2xl">
+                            {(detail as DetailMovie).runtime}
+                          </p>
+                        )}
+                        {detail.media_type === "tv" && (
+                          <p className="text-2xl">
+                            {(detail as DetailTV).episode_run_time[0]}
+                          </p>
+                        )}
+                        <span>min</span>
+                      </div>
+                    </>
+                  )}
+                  {!detail && (
+                    <>
+                      <p className="text-white font-medium text-lg">RUNTIME</p>
+                      <Skeleton className="w-14 h-6" />
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

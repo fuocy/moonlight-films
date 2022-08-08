@@ -209,6 +209,7 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
           )}
         </div>
       </div>
+
       <div
         onClick={() => setIsSidebarActive(false)}
         className={`bg-black/60 z-[5] fixed top-0 left-0 w-full h-full md:opacity-100 transition duration-300 ${
