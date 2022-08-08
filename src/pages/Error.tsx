@@ -1,23 +1,27 @@
 import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { useCurrentViewportView } from "../hooks/useCurrentViewportView";
 
 interface ErrorProps {}
 
 const Error: FunctionComponent<ErrorProps> = () => {
+  const { isMobile } = useCurrentViewportView();
   return (
     <>
-      <video
-        autoPlay
-        muted
-        loop
-        id="myVideo"
-        className="fixed top-0 left-0 min-h-screen min-w-full -z-10"
-      >
-        <source
-          src="https://raw.githubusercontent.com/fuocy/video/master/Studio%20Project%20%E2%80%94%20Kapwing.mp4"
-          type="video/mp4"
-        />
-      </video>
+      {!isMobile && (
+        <video
+          autoPlay
+          muted
+          loop
+          id="myVideo"
+          className="fixed top-0 left-0 min-h-screen min-w-full -z-10 object-cover"
+        >
+          <source
+            src="https://raw.githubusercontent.com/fuocy/video/master/Studio%20Project%20%E2%80%94%20Kapwing.mp4"
+            type="video/mp4"
+          />
+        </video>
+      )}
 
       <div className="bg-black/60 min-h-screen tw-flex-center">
         <div>
