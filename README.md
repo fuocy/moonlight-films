@@ -12,9 +12,9 @@ The Movie Database API
 
 ## Main technology used
 
-- React, Typescript, Tailwind
-- Redux Toolkit
-- React Query, Axios
+- React, Typescript, TailwindCSS
+- Redux-Toolkit
+- React-Query, Axios
 - Firebase
 - Swiper
 - React-AutoAnimate, React-Select, React-Toastify, React-Circular-Progressbar, React-Infinite-Scroll-Component, React-Lazy-Load-Image-Component, React-Icons, React-Router-Dom
@@ -50,6 +50,8 @@ The Movie Database API
 ![Screenshot 8](https://i.ibb.co/HzWYzVB/comment.png)
 
 ![Screenshot 9](https://i.ibb.co/5BhLp4x/auth.png)
+
+![Screenshot 10](https://i.ibb.co/LrYHgCF/mobile.png)
 
 ## Start
 
