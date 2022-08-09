@@ -128,7 +128,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 
       <ToastContainer />
 
-      <div className="flex flex-col md:flex-row ">
+      <div className="flex flex-col md:flex-row">
         {!isMobile && <SidebarMini />}
         {isMobile && (
           <Sidebar
