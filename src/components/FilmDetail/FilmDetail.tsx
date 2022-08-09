@@ -150,7 +150,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
               <div className="bg-gradient-to-br from-transparent to-black/70 h-full rounded-bl-2xl">
                 <div className="flex flex-col md:flex-row bottom-[-85%] md:bottom-[-20%]  items-start absolute left-1/2 -translate-x-1/2  w-full max-w-[1000px] ">
                   <div className="flex gap-5 items-center">
-                    <div className="shrink-0 max-w-[185px] w-full ml-3 md:ml-0">
+                    <div className="shrink-0 w-[185px] ml-3 md:ml-0">
                       <LazyLoadImage
                         src={resizeImage(detail.poster_path, "w185")}
                         effect="opacity"
