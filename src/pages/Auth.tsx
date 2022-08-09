@@ -28,7 +28,7 @@ const Auth: FunctionComponent<AuthProps> = () => {
         </video>
       )}
 
-      <div className="bg-black/80 min-h-screen">
+      <div className="md:bg-black/80 bg-dark min-h-screen">
         {!isSignIn && <SignUp setIsSignIn={setIsSignIn} isSignIn={isSignIn} />}
         {isSignIn && <SignIn setIsSignIn={setIsSignIn} isSignIn={isSignIn} />}
       </div>

@@ -13,7 +13,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import YouTube from "react-youtube";
 import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 import { db } from "../../shared/firebase";
 import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";

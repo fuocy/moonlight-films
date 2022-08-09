@@ -23,7 +23,7 @@ const Error: FunctionComponent<ErrorProps> = () => {
         </video>
       )}
 
-      <div className="bg-black/60 min-h-screen tw-flex-center">
+      <div className="md:bg-black/60 bg-dark min-h-screen tw-flex-center">
         <div>
           <p className="text-[150px] text-white font-semibold leading-none">
             404
