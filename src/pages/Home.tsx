@@ -95,7 +95,7 @@ const Home: FC = () => {
         />
 
         <div className="flex-grow md:pt-7 pt-0 pb-7 border-x md:px-[2vw] px-[4vw] border-gray-darken min-h-screen">
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between md:items-end items-center">
             <div className="inline-flex gap-[40px] pb-[14px] border-b border-gray-darken relative">
               <button
                 onClick={() => {
