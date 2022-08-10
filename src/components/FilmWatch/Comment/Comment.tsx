@@ -79,14 +79,23 @@ const Comment: FunctionComponent<CommentProps> = ({ id, media_type }) => {
             },
             value:
               "Ngoài bình luận, trang web còn có chức năng thả cảm xúc, xem thông tin những người thả cảm xúc, (cảm xúc được nhiều người thả sẽ được ưu tiên hiện đầu), trả lời bình luận, chỉnh sửa, xóa, ẩn bình luận, sắp xếp bình luận, tải thêm bình luận.",
+            // reactions: {
+            //   "3RkuRS4zSqadAkKDqSfTjCzwzF92": "haha",
+            //   GMaGmpy8ZaRBEhtaoZJdd9pNNXz1: "love",
+            //   UNuwtFtu69YHDGTs2emT6O8ClSG3: "love",
+            //   Z3eRARZ9jlftBLA6u0g8MWABkwo2: "like",
+            //   nj99GDXzPwNhcfUpk5PkyNFiwPt1: "sad",
+            //   ufw994VFRnQDCL0f6ISXpeIBTFX2: "haha",
+            //   vOV472eiPwf1GT8YPjiXs4xfYxt1: "haha",
+            // },
             reactions: {
-              "3RkuRS4zSqadAkKDqSfTjCzwzF92": "haha",
-              GMaGmpy8ZaRBEhtaoZJdd9pNNXz1: "love",
-              UNuwtFtu69YHDGTs2emT6O8ClSG3: "love",
-              Z3eRARZ9jlftBLA6u0g8MWABkwo2: "like",
-              nj99GDXzPwNhcfUpk5PkyNFiwPt1: "sad",
-              ufw994VFRnQDCL0f6ISXpeIBTFX2: "haha",
-              vOV472eiPwf1GT8YPjiXs4xfYxt1: "haha",
+              "6Lg5V78TSEWckhcLAh2DVwq5uBQ2": "haha",
+              "7heoxozOe1W14I5sYUgAPr50Zj52": "love",
+              DyXuUkhd9aTbJIeUn8Sgagoiv042: "love",
+              PxxS9XDYd3RgU2Dgjq63MwdCvvn1: "angry",
+              SUzdiwRMrNcRVJaKOJP3YH5hg7n1: "haha",
+              aRoVaCH1MeakCx6Hnx6nRKmVwrt2: "haha",
+              cn9xgPSUVlNzGasKyxoTTvFnVWk1: "wow",
             },
             createdAt: Timestamp.fromDate(
               new Date("Sat Aug 03 2022 10:10:32 GMT+0700 (Indochina Time)")
