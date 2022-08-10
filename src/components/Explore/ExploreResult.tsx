@@ -120,24 +120,11 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
   return (
     <>
       {currentTab === "movie" && (
-        <InfiniteScroll
-          dataLength={movies?.pages.length || 0}
-          next={() => fetchNextPageMovie()}
-          hasMore={Boolean(hasNextPageMovie)}
-          loader={<div>Loading...</div>}
-          endMessage={<div>No more results</div>}
-        >
-          <ExploreMovieResult pages={movies?.pages} />
-        </InfiniteScroll>
-      )}
-
-      {currentTab === "tv" && (
-        <InfiniteScroll
-          dataLength={tvs?.pages.length || 0}
-          next={() => fetchNextPageTv()}
-          hasMore={Boolean(hasNextPageTv)}
-          loader={<div>Loading...</div>}
-          endMessage={
+        <>
+          {movies?.pages.reduce(
+            (acc, current) => [...acc, ...current.results],
+            [] as any
+          ).length === 0 ? (
             <div className="flex flex-col items-center mb-12">
               <LazyLoadImage
                 src="/error.png"
@@ -147,10 +134,47 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
               />
               <p className="text-white text-3xl mt-5">There is no such films</p>
             </div>
-          }
-        >
-          <ExploreTVResult pages={tvs?.pages} />
-        </InfiniteScroll>
+          ) : (
+            <InfiniteScroll
+              dataLength={movies?.pages.length || 0}
+              next={() => fetchNextPageMovie()}
+              hasMore={Boolean(hasNextPageMovie)}
+              loader={<div>Loading...</div>}
+              endMessage={<></>}
+            >
+              <ExploreMovieResult pages={movies?.pages} />
+            </InfiniteScroll>
+          )}
+        </>
+      )}
+
+      {currentTab === "tv" && (
+        <>
+          {tvs?.pages.reduce(
+            (acc, current) => [...acc, ...current.results],
+            [] as any
+          ).length === 0 ? (
+            <div className="flex flex-col items-center mb-12">
+              <LazyLoadImage
+                src="/error.png"
+                alt=""
+                effect="opacity"
+                className="w-[600px]"
+              />
+              <p className="text-white text-3xl mt-5">There is no such films</p>
+            </div>
+          ) : (
+            <InfiniteScroll
+              dataLength={tvs?.pages.length || 0}
+              next={() => fetchNextPageTv()}
+              hasMore={Boolean(hasNextPageTv)}
+              loader={<div>Loading...</div>}
+              endMessage={<></>}
+            >
+              <ExploreTVResult pages={tvs?.pages} />
+            </InfiniteScroll>
+          )}
+        </>
       )}
     </>
   );
