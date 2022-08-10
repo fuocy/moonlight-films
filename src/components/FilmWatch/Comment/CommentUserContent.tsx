@@ -249,7 +249,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                             </button>
                           </>
 
-                          <div className="group-hover:opacity-100 opacity-0 bg-dark-lighten-2 transition duration-300 shadow-md px-2 py-2 rounded-full absolute -top-10 -right-[105px] flex gap-2 z-40">
+                          <div className="group-hover:opacity-100 group-hover:visible opacity-0 invisible bg-dark-lighten-2 transition duration-300 shadow-md px-2 py-2 rounded-full absolute -top-8 -right-[105px] flex gap-2 z-40">
                             <button onClick={() => addReaction(doc.id, "like")}>
                               <AiTwotoneLike
                                 className="text-blue-500 hover:scale-125 transition duration-300"

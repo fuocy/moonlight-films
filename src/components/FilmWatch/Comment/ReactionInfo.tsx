@@ -97,7 +97,7 @@ const ReactionInfo: FunctionComponent<ReactionInfoProps> = ({ docData }) => {
               ))}
             <p className="text-sm">{Object.values(docData.reactions).length}</p>
           </button>
-          <ul className="flex flex-col gap-2 peer-hover:opacity-100 opacity-0 transition duration-300 absolute -right-24 top-[90px] bg-dark-lighten-2/60 px-3 py-2 rounded-md shadow-md z-10">
+          <ul className="flex flex-col gap-2 peer-hover:opacity-100 peer-hover:visible opacity-0 invisible transition duration-300 absolute -right-24 top-[90px] bg-dark-lighten-2/60 px-3 py-2 rounded-md shadow-md z-10">
             {convertReaction(docData.reactions).map(
               (reactionEntry: any, index: number) => (
                 <li key={index}>
