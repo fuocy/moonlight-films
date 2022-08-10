@@ -44,10 +44,15 @@ const Reply: FunctionComponent<ReplyProps> = ({ commendId }) => {
             uid: "Z3eRARZ9jlftBLA6u0g8MWABkwo2",
           },
           value: "ghê vậy shao",
+          // reactions: {
+          //   CZGmXpePYsd1YryQR3C8xA5YOzb2: "angry",
+          //   GMaGmpy8ZaRBEhtaoZJdd9pNNXz1: "haha",
+          //   UNuwtFtu69YHDGTs2emT6O8ClSG3: "haha",
+          // },
           reactions: {
-            CZGmXpePYsd1YryQR3C8xA5YOzb2: "angry",
-            GMaGmpy8ZaRBEhtaoZJdd9pNNXz1: "haha",
-            UNuwtFtu69YHDGTs2emT6O8ClSG3: "haha",
+            "6Lg5V78TSEWckhcLAh2DVwq5uBQ2": "haha",
+            "7heoxozOe1W14I5sYUgAPr50Zj52": "love",
+            DyXuUkhd9aTbJIeUn8Sgagoiv042: "love",
           },
           createdAt: Timestamp.fromDate(
             new Date("Sat Aug 06 2022 10:10:32 GMT+0700 (Indochina Time)")
