@@ -1,5 +1,3 @@
-import { LargeNumberLike } from "crypto";
-
 export interface Item {
   poster_path: string;
   overview: string;
@@ -195,7 +193,7 @@ export interface Episode {
     credit_id: string;
     adult: boolean;
     gender: number;
-    id: LargeNumberLike;
+    id: number;
     known_for_department: string;
     name: string;
     original_name: string;

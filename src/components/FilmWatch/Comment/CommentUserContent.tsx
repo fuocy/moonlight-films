@@ -26,6 +26,7 @@ interface CommentUserContentProps {
   commentLimit: number;
   media_type: string;
   id?: number | string;
+  role: string;
 }
 
 const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
@@ -34,6 +35,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
   commentLimit,
   media_type,
   id,
+  role,
 }) => {
   const [parent] = useAutoAnimate();
   const currentUser = useAppSelector((state) => state.auth.user);
@@ -291,18 +293,20 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                           </div>
                         </div>
                       )}
-                      <button
-                        onClick={() => {
-                          if (!currentUser) return;
-                          if (isReplyingFor !== doc.id)
-                            setIsReplyingFor(doc.id);
-                          else setIsReplyingFor(undefined);
-                        }}
-                      >
-                        <p className="hover:text-white transition duration-300">
-                          Reply
-                        </p>
-                      </button>
+                      {role !== "reply" && (
+                        <button
+                          onClick={() => {
+                            if (!currentUser) return;
+                            if (isReplyingFor !== doc.id)
+                              setIsReplyingFor(doc.id);
+                            else setIsReplyingFor(undefined);
+                          }}
+                        >
+                          <p className="hover:text-white transition duration-300">
+                            Reply
+                          </p>
+                        </button>
+                      )}
                       <p className="text-sm">
                         {calculateTimePassed(
                           docData.createdAt?.seconds * 1000 || 0

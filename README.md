@@ -12,7 +12,7 @@ The Movie Database API
 
 ## Main technology used
 
-- React, Typescript, TailwindCSS
+- ReactJS, Typescript, TailwindCSS
 - Redux-Toolkit
 - React-Query, Axios
 - Firebase

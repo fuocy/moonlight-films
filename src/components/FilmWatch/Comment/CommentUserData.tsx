@@ -72,6 +72,7 @@ const CommentUserData: FunctionComponent<CommentUserDataProps> = ({
           media_type={media_type}
           sortType={sortType}
           id={id}
+          role={role}
         />
       )}
     </>
