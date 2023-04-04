@@ -67,9 +67,9 @@ export const getWatchTV = async (id: number): Promise<getWatchReturnedType> => {
     recommendations: res[1].data.results,
   };
 
-  const detailSeasons = (
+  const detailSeasons: DetailSeason[] = (
     await Promise.all(
-      data.detail.seasons.map((season: DetailSeason) =>
+      data.detail.seasons.map((season: any) =>
         axios.get(`/tv/${id}/season/${season.season_number}`)
       )
     )

@@ -23,13 +23,15 @@ import { setCurrentUser } from "./store/slice/authSlice";
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  // const currentUser = useAppSelector((state) => state.auth.user);
-  const [isSignedIn, setIsSignedIn] = useState(
+
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(
     Number(localStorage.getItem("isSignedIn")) ? true : false
   );
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log(user);
+
       if (!user) {
         dispatch(setCurrentUser(null));
         setIsSignedIn(false);
@@ -86,7 +88,10 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [location.pathname, location.search]);
 
   return (
@@ -109,7 +114,11 @@ function App() {
       />
       <Route
         path="history"
-        element={<Protected isSignedIn={isSignedIn}>{<History />}</Protected>}
+        element={
+          <Protected isSignedIn={isSignedIn}>
+            <History />
+          </Protected>
+        }
       />
       <Route
         path="profile"

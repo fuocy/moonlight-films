@@ -1,4 +1,3 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -13,7 +12,6 @@ interface FilterByGenresProps {
 const FilterByGenres: FunctionComponent<FilterByGenresProps> = ({
   currentTab,
 }) => {
-  const [genres] = useAutoAnimate();
   const { isLoading, data, isError, error } = useQuery<
     getRecommendGenres2Type,
     Error
@@ -62,16 +60,12 @@ const FilterByGenres: FunctionComponent<FilterByGenresProps> = ({
   };
 
   return (
-    <ul
-      // @ts-ignore
-      ref={genres}
-      className="flex gap-3 flex-wrap max-h-[200px] overflow-y-auto"
-    >
-      {currentTab === "movie" &&
-        data.movieGenres.map((genre) => (
+    <ul className="flex gap-3 flex-wrap max-h-[200px] overflow-y-auto">
+      {data[currentTab === "movie" ? "movieGenres" : "tvGenres"].map(
+        (genre) => (
           <li key={genre.id}>
             <button
-              onClick={() => chooseGenre(String(genre.id))}
+              onClick={chooseGenre.bind(this, String(genre.id))}
               className={`px-4 py-1 border border-[#989898] rounded-full hover:brightness-75 transition duration-300 inline-block ${
                 searchParam.getAll("genre").includes(String(genre.id)) &&
                 "bg-primary text-white"
@@ -80,21 +74,8 @@ const FilterByGenres: FunctionComponent<FilterByGenresProps> = ({
               {genre.name}
             </button>
           </li>
-        ))}
-      {currentTab === "tv" &&
-        data.tvGenres.map((genre) => (
-          <li key={genre.id}>
-            <button
-              onClick={() => chooseGenre(String(genre.id))}
-              className={`px-4 py-1 border border-[#989898] rounded-full hover:brightness-75 transition duration-300 inline-block ${
-                searchParam.getAll("genre").includes(String(genre.id)) &&
-                "bg-primary text-white"
-              }`}
-            >
-              {genre.name}
-            </button>
-          </li>
-        ))}
+        )
+      )}
     </ul>
   );
 };

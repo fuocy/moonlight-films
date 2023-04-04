@@ -39,6 +39,12 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
   const [action] = useAutoAnimate();
   const [show] = useAutoAnimate();
 
+  const tabs = [
+    { label: "All", value: "all", id: 1 },
+    { label: "TV Show", value: "tv", id: 3 },
+    { label: "Movie", value: "movie", id: 2 },
+  ];
+
   const selectAllHandler = () => {
     if (isSelectAll) {
       setSelections([]);
@@ -90,7 +96,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
           <>
             <div className="fixed top-[30%] md:left-[40%] left-[5%] right-[5%] md:w-[400px] z-40 bg-dark-lighten rounded-md min-h-[100px] shadow-md px-3 py-5">
               <div className="mx-auto mb-7 h-16 w-16 rounded-full border-[3px] border-red-500 tw-flex-center">
-                <AiOutlineDelete size={40} className="text-red-500 " />
+                <AiOutlineDelete size={40} className="text-red-500" />
               </div>
               <p className="text-white text-xl text-center font-medium mb-4">
                 You are about to remove
@@ -173,44 +179,30 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
             ref={action}
             className="flex flex-col md:flex-row items-start md:items-end gap-5 md:justify-between m mb-8"
           >
-            <div className="inline-flex gap-[30px] pb-[14px] border-b border-gray-darken relative">
-              <button
-                onClick={() => {
-                  setCurrentTab("all");
-                  localStorage.setItem("bookmarkCurrentTab", "all");
-                }}
-                className={`${
-                  currentTab === "all" &&
-                  "text-white font-medium after:absolute after:bottom-0 after:left-[0%] after:bg-white after:h-[3px] after:w-5"
-                } transition duration-300 hover:text-white`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentTab("tv");
-                  localStorage.setItem("bookmarkCurrentTab", "tv");
-                }}
-                className={`${
-                  currentTab === "tv" &&
-                  "text-white font-medium after:absolute after:bottom-0 after:left-[38%] after:bg-white after:h-[3px] after:w-5"
-                } transition duration-300 hover:text-white`}
-              >
-                TV Show
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentTab("movie");
-                  localStorage.setItem("bookmarkCurrentTab", "movie");
-                }}
-                className={`${
-                  currentTab === "movie" &&
-                  "text-white font-medium after:absolute after:bottom-0 after:right-[5%] after:bg-white after:h-[3px] after:w-5"
-                } transition duration-300 hover:text-white`}
-              >
-                Movie
-              </button>
-            </div>
+            <ul className="inline-flex gap-[30px] pb-[14px] border-b border-gray-darken relative">
+              {tabs.map((tab) => (
+                <li key={tab.id}>
+                  <button
+                    onClick={() => {
+                      setCurrentTab(tab.value);
+                      localStorage.setItem("bookmarkCurrentTab", tab.value);
+                    }}
+                    className={`${
+                      currentTab === tab.value &&
+                      `text-white font-medium after:absolute after:bottom-0 ${
+                        tab.value === "all"
+                          ? "after:left-0"
+                          : tab.value === "tv"
+                          ? "after:left-[38%]"
+                          : "after:right-[5%]"
+                      } after:bg-white after:h-[3px] after:w-5`
+                    } transition duration-300 hover:text-white`}
+                  >
+                    {tab.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
 
             {!isEditing && (
               <button
@@ -226,8 +218,8 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
               <div className="flex gap-5 self-end">
                 <button
                   onClick={selectAllHandler}
-                  className={`text-lg hover:text-primary transition duration-300 flex gap-2 items-center ${
-                    isSelectAll ? "text-primary" : "!text-gray-lighten"
+                  className={`text-lg hover:!text-primary transition duration-300 flex gap-2 items-center ${
+                    isSelectAll ? "text-primary" : "text-gray-lighten"
                   }`}
                 >
                   <BiSelectMultiple size={25} />

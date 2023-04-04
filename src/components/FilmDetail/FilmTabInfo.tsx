@@ -14,48 +14,29 @@ interface FilmTabInfoProps {
 const FilmTabInfo: FC<FilmTabInfoProps> = ({ detail, credits, reviews }) => {
   const [currentTab, setCurrentTab] = useState("overall");
 
+  const tabButtons = ["overall", "cast", "reviews", "seasons"];
+
   return (
     <>
-      <div className="flex gap-10 text-gray-400 text-lg justify-center">
-        <button
-          className={`hover:text-white transition duration-300 pb-1  ${
-            currentTab === "overall" &&
-            "font-medium -translate-y-2 border-b-2 border-primary text-white"
-          }`}
-          onClick={() => setCurrentTab("overall")}
-        >
-          Overall
-        </button>
-        <button
-          className={`hover:text-white transition duration-300 pb-1 ${
-            currentTab === "cast" &&
-            "font-medium -translate-y-2 border-b-2 border-primary text-white"
-          }`}
-          onClick={() => setCurrentTab("cast")}
-        >
-          Cast
-        </button>
-        <button
-          className={`hover:text-white transition duration-300 pb-1 ${
-            currentTab === "reviews" &&
-            "font-medium -translate-y-2 border-b-2 border-primary text-white"
-          }`}
-          onClick={() => setCurrentTab("reviews")}
-        >
-          Reviews
-        </button>
-        {detail && detail.media_type === "tv" && (
-          <button
-            className={`hover:text-white transition duration-300 pb-1 ${
-              currentTab === "seasons" &&
-              "font-medium -translate-y-2 border-b-2 border-primary text-white"
-            }`}
-            onClick={() => setCurrentTab("seasons")}
+      <ul className="flex gap-10 text-gray-400 text-lg justify-center">
+        {tabButtons.map((btnName: string, index: number) => (
+          <li
+            key={index}
+            className={detail?.media_type === "movie" ? "last:hidden" : ""}
           >
-            Seasons
-          </button>
-        )}
-      </div>
+            <button
+              onClick={() => setCurrentTab(btnName)}
+              className={`hover:text-white transition duration-300 pb-1 ${
+                currentTab === btnName &&
+                "font-medium -translate-y-2 border-b-2 border-primary text-white"
+              }`}
+            >
+              {btnName[0].toUpperCase() + btnName.slice(1)}
+            </button>
+          </li>
+        ))}
+      </ul>
+
       <div className="mt-10 text-lg">
         {currentTab === "overall" && (
           <>
@@ -105,7 +86,7 @@ const FilmTabInfo: FC<FilmTabInfoProps> = ({ detail, credits, reviews }) => {
                     (language, index) =>
                       `${index ? ", " : ""} ${language.english_name}`
                   )}
-                </p>{" "}
+                </p>
               </>
             )}
           </>
@@ -160,10 +141,7 @@ const FilmTabInfo: FC<FilmTabInfoProps> = ({ detail, credits, reviews }) => {
                         <p className="text-white font-medium">{season.name}</p>
                         <p>{season.episode_count} episodes</p>
                       </div>
-                      <ReadMore
-                        limitTextLength={130}
-                        className="mb-2 inline-block"
-                      >
+                      <ReadMore limitTextLength={130} className="mb-2">
                         {season.overview}
                       </ReadMore>
                       <p className="text-base">{season.air_date}</p>

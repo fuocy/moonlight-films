@@ -260,6 +260,11 @@ export interface HomeFilms {
   [key: string]: Item[];
 }
 
+export interface BannerInfo {
+  genre: { name: string; id: number }[];
+  translation: string[];
+}
+
 export interface FilmInfo {
   detail?: DetailMovie | DetailTV | undefined;
   credits?: Cast[] | undefined;

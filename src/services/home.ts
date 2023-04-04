@@ -1,5 +1,5 @@
 import axios from "../shared/axios";
-import { Item } from "../shared/types";
+import { BannerInfo, Item } from "../shared/types";
 import { HomeFilms } from "../shared/types";
 
 // MOVIE TAB
@@ -31,7 +31,9 @@ export const getHomeMovies = async (): Promise<HomeFilms> => {
   return data;
 };
 
-export const getMovieBannerInfo = async (movies: Item[]): Promise<any> => {
+export const getMovieBannerInfo = async (
+  movies: Item[]
+): Promise<BannerInfo[]> => {
   const detailRes = await Promise.all(
     movies.map((movie) => axios.get(`/movie/${movie.id}`))
   );
@@ -40,7 +42,7 @@ export const getMovieBannerInfo = async (movies: Item[]): Promise<any> => {
     movies.map((movie) => axios.get(`/movie/${movie.id}/translations`))
   );
 
-  const translations = translationRes.map((item: any) =>
+  const translations: string[][] = translationRes.map((item: any) =>
     item.data.translations
       .filter((translation: any) =>
         ["vi", "fr", "ja", "pt", "ru", "es"].includes(translation.iso_639_1)
@@ -54,14 +56,21 @@ export const getMovieBannerInfo = async (movies: Item[]): Promise<any> => {
       .map((translation: any) => translation.data.title)
   );
 
-  const genres = detailRes.map((item: any) =>
+  // translations will look like: [["bác sĩ kì lạ", "doctor strange", "doctor Strange tiếng nước nào đó"],["nhện xa nhà", "nhện xa nhà tiếng nước nào đó", "spider man fram from home", "spider man tiếng châu phi"],...]
+
+  const genres: { name: string; id: number }[][] = detailRes.map((item: any) =>
     item.data.genres.filter((_: any, index: number) => index < 3)
   );
 
+  // genres will look like: [[{name: "action", id: 14}, {name: "wild", id: 19}, {name: "love", ket: 23}],[{name: "fantasy", id: 22}, {name: "science", id: 99}],...]
+
+  // we have translations.length = genres.length, so let's merge these 2 arrays together
   return genres.map((genre, index) => ({
     genre,
     translation: translations[index],
-  }));
+  })) as BannerInfo[];
+
+  // yeah I admit that it's hard to understand my code :)
 };
 
 // TV TAB
@@ -94,7 +103,7 @@ export const getHomeTVs = async (): Promise<HomeFilms> => {
   return data;
 };
 
-export const getTVBannerInfo = async (tvs: Item[]): Promise<any> => {
+export const getTVBannerInfo = async (tvs: Item[]): Promise<BannerInfo[]> => {
   const detailRes = await Promise.all(
     tvs.map((tv) => axios.get(`/tv/${tv.id}`))
   );
@@ -124,7 +133,7 @@ export const getTVBannerInfo = async (tvs: Item[]): Promise<any> => {
   return genres.map((genre, index) => ({
     genre,
     translation: translations[index],
-  }));
+  })) as BannerInfo[];
 };
 
 // GENERAL

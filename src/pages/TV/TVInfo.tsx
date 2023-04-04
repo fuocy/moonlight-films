@@ -9,9 +9,8 @@ import Error from "../Error";
 const TVInfo: FC = () => {
   const { id } = useParams();
 
-  const { data, isError, error } = useQuery<FilmInfo, Error>(
-    ["tvDetail", id],
-    () => getTVFullDetail(Number(id as string))
+  const { data, isError } = useQuery<FilmInfo, Error>(["tvDetail", id], () =>
+    getTVFullDetail(Number(id as string))
   );
 
   // if (isError) return <div>ERROR: {error.message}</div>;

@@ -37,12 +37,11 @@ const Explore: FunctionComponent<ExploreProps> = () => {
     return () => window.removeEventListener("scroll", checkIfShowScrollUpBtn);
   }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = () =>
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-  };
 
   const [searchParams, setSearchParams] = useSearchParams();
   // const initialConfig = {} as { [key: string]: string };
@@ -93,20 +92,19 @@ const Explore: FunctionComponent<ExploreProps> = () => {
   }, [location.search]);
   return (
     <>
-      <Title value={"Explore | Moonlight"} />
-      {isShowScrollUpBtn && (
-        <button
-          onClick={scrollToTop}
-          className={`fixed bottom-[30px] right-[30px] z-10 transition duration-500 ${
-            isShowScrollUpBtn ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <BsFillArrowUpCircleFill
-            size={35}
-            className="text-primary hover:brightness-75 transition duration-300"
-          />
-        </button>
-      )}
+      <Title value="Explore | Moonlight" />
+
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-[30px] right-[30px] z-10 transition duration-500 ${
+          isShowScrollUpBtn ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <BsFillArrowUpCircleFill
+          size={35}
+          className="text-primary hover:brightness-75 transition duration-300"
+        />
+      </button>
 
       <div className="flex md:hidden justify-between items-center px-5 my-5">
         <Link to="/" className="flex gap-2 items-center">

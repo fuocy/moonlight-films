@@ -3,7 +3,7 @@ import { FunctionComponent, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import FilterByDate from "./FilterByDate";
 import FilterByGenres from "./FilterByGenres";
-import FilterByRating from "./FilterByRating";
+import FilterByRuntime from "./FilterByRuntime";
 
 interface FilterByProps {
   currentTab: string;
@@ -33,7 +33,7 @@ const FilterBy: FunctionComponent<FilterByProps> = ({ currentTab }) => {
           <FilterByGenres currentTab={currentTab} />
 
           <p className="text-lg mb-2 mt-8 text-white/80">Runtime</p>
-          <FilterByRating />
+          <FilterByRuntime />
           <p className="text-lg mb-2 mt-8 text-white/80">Release Dates</p>
           <FilterByDate />
         </div>

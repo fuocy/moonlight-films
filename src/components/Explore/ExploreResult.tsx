@@ -3,21 +3,21 @@ import { FunctionComponent } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getExploreMovie, getExploreTV } from "../../services/explore";
-import { ConfigType, ItemsPage } from "../../shared/types";
+import { ConfigType, Item, ItemsPage } from "../../shared/types";
 import FilmItem from "../Common/FilmItem";
 import Skeleton from "../Common/Skeleton";
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-interface ExploreMovieResultProps {
+interface ExploreResultContentProps {
   pages?: ItemsPage[];
 }
 
-const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
+const ExploreResultContent: FunctionComponent<ExploreResultContentProps> = ({
   pages,
 }) => {
   return (
-    <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2">
+    <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2 px-2">
       {pages &&
         pages.map((page) =>
           page.results.map((item) => (
@@ -39,32 +39,32 @@ const ExploreMovieResult: FunctionComponent<ExploreMovieResultProps> = ({
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
-interface ExploreTVResultProps {
-  pages?: ItemsPage[];
-}
+// interface ExploreTVResultProps {
+//   pages?: ItemsPage[];
+// }
 
-const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
-  pages,
-}) => {
-  return (
-    <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10">
-      {pages &&
-        pages.map((page) =>
-          page.results.map((item) => (
-            <li key={item.id}>
-              <FilmItem item={item} />
-            </li>
-          ))
-        )}
-      {!pages &&
-        [...new Array(15)].map((_, index) => (
-          <li key={index}>
-            <Skeleton className="h-0 pb-[160%]" />
-          </li>
-        ))}
-    </ul>
-  );
-};
+// const ExploreTVResult: FunctionComponent<ExploreTVResultProps> = ({
+//   pages,
+// }) => {
+//   return (
+//     <ul className="grid grid-cols-sm lg:grid-cols-lg gap-x-8 gap-y-10 pt-2 px-2">
+//       {pages &&
+//         pages.map((page) =>
+//           page.results.map((item) => (
+//             <li key={item.id}>
+//               <FilmItem item={item} />
+//             </li>
+//           ))
+//         )}
+//       {!pages &&
+//         [...new Array(15)].map((_, index) => (
+//           <li key={index}>
+//             <Skeleton className="h-0 pb-[160%]" />
+//           </li>
+//         ))}
+//     </ul>
+//   );
+// };
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -102,7 +102,10 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
   } = useInfiniteQuery<ItemsPage, Error>(
     ["explore-result-tv", config],
     ({ pageParam = 1, queryKey }) =>
-      getExploreTV(pageParam, queryKey[1] as { [key: string]: string }),
+      getExploreTV(
+        pageParam,
+        queryKey[1] as { [key: string]: string | number }
+      ),
     {
       getNextPageParam: (lastPage) =>
         lastPage.page + 1 <= lastPage.total_pages
@@ -123,7 +126,7 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
         <>
           {movies?.pages.reduce(
             (acc, current) => [...acc, ...current.results],
-            [] as any
+            [] as Item[]
           ).length === 0 ? (
             <div className="flex flex-col items-center mb-12">
               <LazyLoadImage
@@ -138,11 +141,11 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
             <InfiniteScroll
               dataLength={movies?.pages.length || 0}
               next={() => fetchNextPageMovie()}
-              hasMore={Boolean(hasNextPageMovie)}
+              hasMore={!!hasNextPageMovie}
               loader={<div>Loading...</div>}
               endMessage={<></>}
             >
-              <ExploreMovieResult pages={movies?.pages} />
+              <ExploreResultContent pages={movies?.pages} />
             </InfiniteScroll>
           )}
         </>
@@ -152,7 +155,7 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
         <>
           {tvs?.pages.reduce(
             (acc, current) => [...acc, ...current.results],
-            [] as any
+            [] as Item[]
           ).length === 0 ? (
             <div className="flex flex-col items-center mb-12">
               <LazyLoadImage
@@ -171,7 +174,7 @@ const ExploreResult: FunctionComponent<ExploreResultProps> = ({
               loader={<div>Loading...</div>}
               endMessage={<></>}
             >
-              <ExploreTVResult pages={tvs?.pages} />
+              <ExploreResultContent pages={tvs?.pages} />
             </InfiniteScroll>
           )}
         </>

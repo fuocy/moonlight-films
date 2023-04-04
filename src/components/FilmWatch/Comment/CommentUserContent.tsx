@@ -11,6 +11,7 @@ import { BsEmojiLaughingFill } from "react-icons/bs";
 import { FaAngry, FaSadTear, FaSurprise } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { reactionColorForTailwindCSS } from "../../../shared/constants";
 import { db } from "../../../shared/firebase";
 import { CommentDataType, User } from "../../../shared/types";
 import { calculateTimePassed } from "../../../shared/utils";
@@ -55,7 +56,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
   ) => {
     if (!commentData) return undefined;
 
-    if (type === "popular") {
+    if (type === "popular")
       return commentData.docs
         .slice()
         .sort(
@@ -63,9 +64,8 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
             Object.values(b.data()?.reactions).length -
             Object.values(a.data()?.reactions).length
         );
-    } else if (type === "latest") {
-      return commentData.docs;
-    }
+
+    if (type === "latest") return commentData.docs;
   };
 
   const addReaction = (commentId: string, value: string) => {
@@ -77,16 +77,29 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
   };
 
   const determineReactionText = (reactions: { [key: string]: string }) => {
-    if (!Object.keys(reactions).includes((currentUser as User).uid)) {
-      return "Reaction";
-    }
+    // if (!Object.keys(reactions).includes((currentUser as User).uid)) {
+    //   return "Reaction";
+    // }
 
-    // @ts-ignore
     const userReactionValue = Object.entries(reactions).find(
       (entry) => entry[0] === (currentUser as User).uid
-    )[1];
+    )?.[1];
 
-    return userReactionValue[0].toUpperCase() + userReactionValue.slice(1);
+    if (!userReactionValue)
+      return {
+        ableToCancelReaction: false,
+        value: "Reaction",
+        color: "text-inherit",
+      };
+
+    return {
+      ableToCancelReaction: true,
+      value: userReactionValue[0].toUpperCase() + userReactionValue.slice(1),
+      color:
+        reactionColorForTailwindCSS[
+          userReactionValue as keyof typeof reactionColorForTailwindCSS
+        ],
+    };
   };
 
   const removeReaction = (docData: CommentDataType, commentId: string) => {
@@ -114,13 +127,10 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
 
     updateDoc(doc(db, `${media_type}-${id}`, commentId), {
       value: editText,
+      isEdited: true,
     });
 
     setEditingCommentFor(undefined);
-
-    updateDoc(doc(db, `${media_type}-${id as number}`, commentId), {
-      isEdited: true,
-    });
   };
 
   return (
@@ -146,6 +156,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                       referrerPolicy="no-referrer"
                     />
                   </div>
+
                   <div
                     className={`peer ${
                       editingCommentFor === doc.id && "flex-1"
@@ -158,22 +169,21 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                     >
                       <ReactionInfo docData={docData} />
 
-                      <div className="flex justify-between items-center">
-                        <div className="flex gap-4 items-center">
-                          <p className="text-white font-medium">
-                            {docData.user.displayName}
-                          </p>
-                        </div>
-                      </div>
-                      {editingCommentFor !== doc.id && (
+                      {/* <div className="flex justify-between items-center"> */}
+                      {/* <div className="flex gap-4 items-center"> */}
+                      <p className="text-white font-medium">
+                        {docData.user.displayName}
+                      </p>
+                      {/* </div> */}
+                      {/* </div> */}
+                      {editingCommentFor !== doc.id ? (
                         <p
                           style={{ wordWrap: "break-word" }}
                           className="text-lg mt-1 max-w-[63vw] md:max-w-none"
                         >
                           {docData.value}
                         </p>
-                      )}
-                      {editingCommentFor === doc.id && (
+                      ) : (
                         <>
                           <form
                             onSubmit={(e) => {
@@ -193,7 +203,7 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                               className="w-full bg-dark-lighten-2 outline-none py-1 px-2 rounded-md mt-1 text-lg text-white"
                               autoFocus
                             />
-                            <button type="submit">
+                            <button>
                               <MdSend size={25} className="text-primary" />
                             </button>
                           </form>
@@ -204,52 +214,17 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                     <div className="flex gap-3 mt-3 items-center">
                       {currentUser && (
                         <div className="relative group">
-                          <>
-                            <button>
-                              {determineReactionText(docData.reactions) ===
-                                "Reaction" && <p>Reaction</p>}
-                            </button>
-                            <button
-                              onClick={() => removeReaction(docData, doc.id)}
-                            >
-                              {determineReactionText(docData.reactions) ===
-                                "Like" && (
-                                <p className="text-primary">
-                                  {determineReactionText(docData.reactions)}
-                                </p>
-                              )}
-                              {determineReactionText(docData.reactions) ===
-                                "Love" && (
-                                <p className="text-red-500">
-                                  {determineReactionText(docData.reactions)}
-                                </p>
-                              )}
-                              {determineReactionText(docData.reactions) ===
-                                "Haha" && (
-                                <p className="text-yellow-500">
-                                  {determineReactionText(docData.reactions)}
-                                </p>
-                              )}
-                              {determineReactionText(docData.reactions) ===
-                                "Wow" && (
-                                <p className="text-green-500">
-                                  {determineReactionText(docData.reactions)}
-                                </p>
-                              )}
-                              {determineReactionText(docData.reactions) ===
-                                "Sad" && (
-                                <p className="text-purple-500">
-                                  {determineReactionText(docData.reactions)}
-                                </p>
-                              )}
-                              {determineReactionText(docData.reactions) ===
-                                "Angry" && (
-                                <p className="text-orange-500">
-                                  {determineReactionText(docData.reactions)}
-                                </p>
-                              )}
-                            </button>
-                          </>
+                          <button
+                            {...(determineReactionText(docData.reactions)
+                              .ableToCancelReaction && {
+                              onClick: () => removeReaction(docData, doc.id),
+                            })}
+                            className={`${
+                              determineReactionText(docData.reactions).color
+                            }`}
+                          >
+                            {determineReactionText(docData.reactions).value}
+                          </button>
 
                           <div className="group-hover:opacity-100 group-hover:visible opacity-0 invisible bg-dark-lighten-2 transition duration-300 shadow-md px-2 py-2 rounded-full absolute -top-8 -right-[105px] flex gap-2 z-40">
                             <button onClick={() => addReaction(doc.id, "like")}>
@@ -301,10 +276,9 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
                               setIsReplyingFor(doc.id);
                             else setIsReplyingFor(undefined);
                           }}
+                          className="hover:text-white transition duration-300"
                         >
-                          <p className="hover:text-white transition duration-300">
-                            Reply
-                          </p>
+                          Reply
                         </button>
                       )}
                       <p className="text-sm">

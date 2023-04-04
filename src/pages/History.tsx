@@ -12,7 +12,7 @@ interface HistoryProps {}
 const History: FunctionComponent<HistoryProps> = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [recentlyWatchFilms, setRecentlyWatchFilms] = useState<Item[]>([]);
-  const [isLoading, setIsLoading] = useState(
+  const [isLoading, setIsLoading] = useState<boolean>(
     !Boolean(recentlyWatchFilms.length)
   );
   const [isError, setIsError] = useState(false);

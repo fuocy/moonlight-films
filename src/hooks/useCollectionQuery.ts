@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 
 export const useCollectionQuery: (
-  id: number | string | undefined,
+  id: number | string | undefined, // (tbh, I dont really need this id parameter)
   collection: CollectionReference | Query<DocumentData>
 ) => {
   isLoading: boolean;

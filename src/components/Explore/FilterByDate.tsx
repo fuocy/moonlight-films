@@ -36,7 +36,7 @@ const FilterByDate: FunctionComponent<FilterByDateProps> = () => {
         />
       </div>
       <div className="flex justify-between items-center">
-        <label htmlFor="from">To</label>
+        <label htmlFor="to">To</label>
         <input
           type="date"
           id="to"

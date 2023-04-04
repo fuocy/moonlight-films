@@ -22,6 +22,13 @@ const Search: FunctionComponent<SearchProps> = () => {
   const query = searchParams.get("query");
   const page = searchParams.get("page") || 1;
   const [currentTab, setCurrentTab] = useState("multi");
+
+  const filterOptions = [
+    { label: "All", value: "multi", id: 1 },
+    { label: "Movie", value: "movie", id: 2 },
+    { label: "TV Show", value: "tv", id: 3 },
+    { label: "People", value: "person", id: 4 },
+  ];
   return (
     <>
       {!query && <Title value="Search | Moonlight" />}
@@ -43,7 +50,7 @@ const Search: FunctionComponent<SearchProps> = () => {
       </div>
 
       {/* <div className="bg-black/90 z-10 pb-5"> */}
-      <div className="flex min-h-screen flex-col-reverse md:flex-row">
+      <div className="flex min-h-screen">
         {/* <SidebarMini /> */}
         <Sidebar
           setIsSidebarActive={setIsSidebarActive}
@@ -75,6 +82,7 @@ const Search: FunctionComponent<SearchProps> = () => {
               />
             </div>
           )}
+
           {isMobile && query && (
             <div className="shrink-0 md:max-w-[310px] w-full md:pt-32 pt-[104px] px-3">
               <div
@@ -90,56 +98,29 @@ const Search: FunctionComponent<SearchProps> = () => {
                   </button>
                 </div>
                 {openSearchFilter && (
-                  <div className="md:py-6 py-2 border-t border-dark-darken text-white text-lg flex md:flex-col flex-row gap-3">
-                    <button
-                      onClick={() => {
-                        setSearchParams({ query: query || "", page: "1" });
-                        setCurrentTab("multi");
-                      }}
-                      className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                        currentTab === "multi" && "bg-dark-lighten-2"
-                      }`}
-                    >
-                      <span>All</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSearchParams({ query: query || "", page: "1" });
-                        setCurrentTab("movie");
-                      }}
-                      className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                        currentTab === "movie" && "bg-dark-lighten-2"
-                      }`}
-                    >
-                      <span>Movie</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSearchParams({ query: query || "", page: "1" });
-                        setCurrentTab("tv");
-                      }}
-                      className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                        currentTab === "tv" && "bg-dark-lighten-2"
-                      }`}
-                    >
-                      <span>TV Show</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSearchParams({ query: query || "", page: "1" });
-                        setCurrentTab("person");
-                      }}
-                      className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                        currentTab === "person" && "bg-dark-lighten-2"
-                      }`}
-                    >
-                      <span>People</span>
-                    </button>
-                  </div>
+                  <ul className="md:py-6 py-2 border-t border-dark-darken text-white text-lg flex md:flex-col flex-row gap-3">
+                    {filterOptions.map((filterOption) => (
+                      <li key={filterOption.id} className="flex-1">
+                        <button
+                          onClick={() => {
+                            setSearchParams({ query: query ?? "", page: "1" });
+                            setCurrentTab(filterOption.value);
+                          }}
+                          className={`w-full hover:bg-dark-lighten-2 py-1 rounded-md transition duration-300 ${
+                            currentTab === filterOption.value &&
+                            "bg-dark-lighten-2"
+                          }`}
+                        >
+                          {filterOption.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
             </div>
           )}
+
           {query && (
             <SearchResult
               currentTab={currentTab}
@@ -148,6 +129,7 @@ const Search: FunctionComponent<SearchProps> = () => {
             />
           )}
         </div>
+
         {!isMobile && (
           <div className="shrink-0 md:max-w-[310px] w-full md:pt-32 pt-4 px-3">
             <div
@@ -163,58 +145,29 @@ const Search: FunctionComponent<SearchProps> = () => {
                 </button>
               </div>
               {openSearchFilter && (
-                <div className="md:py-6 py-2 border-t border-dark-darken text-white text-lg flex md:flex-col flex-row gap-3">
-                  <button
-                    onClick={() => {
-                      setSearchParams({ query: query || "", page: "1" });
-                      setCurrentTab("multi");
-                    }}
-                    className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                      currentTab === "multi" && "bg-dark-lighten-2"
-                    }`}
-                  >
-                    <span>All</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setSearchParams({ query: query || "", page: "1" });
-                      setCurrentTab("movie");
-                    }}
-                    className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                      currentTab === "movie" && "bg-dark-lighten-2"
-                    }`}
-                  >
-                    <span>Movie</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setSearchParams({ query: query || "", page: "1" });
-                      setCurrentTab("tv");
-                    }}
-                    className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                      currentTab === "tv" && "bg-dark-lighten-2"
-                    }`}
-                  >
-                    <span>TV Show</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setSearchParams({ query: query || "", page: "1" });
-                      setCurrentTab("person");
-                    }}
-                    className={`w-full hover:bg-dark-lighten-2  py-1 rounded-md transition duration-300 ${
-                      currentTab === "person" && "bg-dark-lighten-2"
-                    }`}
-                  >
-                    <span>People</span>
-                  </button>
-                </div>
+                <ul className="md:py-6 py-2 border-t border-dark-darken text-white text-lg flex md:flex-col flex-row gap-3">
+                  {filterOptions.map((filterOption) => (
+                    <li key={filterOption.id} className="flex-1">
+                      <button
+                        onClick={() => {
+                          setSearchParams({ query: query ?? "", page: "1" });
+                          setCurrentTab(filterOption.value);
+                        }}
+                        className={`w-full hover:bg-dark-lighten-2 py-1 rounded-md transition duration-300 ${
+                          currentTab === filterOption.value &&
+                          "bg-dark-lighten-2"
+                        }`}
+                      >
+                        {filterOption.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               )}
             </div>
           </div>
         )}
       </div>
-      {/* </div> */}
       <Footer />
     </>
   );

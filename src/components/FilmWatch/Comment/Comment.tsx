@@ -70,8 +70,7 @@ const Comment: FunctionComponent<CommentProps> = ({ id, media_type }) => {
         ) {
           setDoc(doc(db, `${media_type}-${id as number}`, "admin"), {
             user: {
-              displayName:
-                "Anh có thể làm tính năng reaction nhưng sẽ không bao giờ được em react story",
+              displayName: "_fuocy",
               email: "huuphuoc@gmail.com",
               emailVerified: false,
               photoURL: "https://i.ibb.co/CJqGvY6/satthudatinh.jpg",
@@ -147,7 +146,7 @@ const Comment: FunctionComponent<CommentProps> = ({ id, media_type }) => {
                 to={`/auth?redirect=${encodeURIComponent(location.pathname)}`}
                 className="text-primary font-medium"
               >
-                {" login "}
+                &nbsp;login&nbsp;
               </Link>
               to comment.
             </p>

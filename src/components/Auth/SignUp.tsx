@@ -18,11 +18,10 @@ import { useAppSelector } from "../../store/hooks";
 import ModalNotification from "./ModalNotification";
 import { signInWithProvider } from "./signInWithProvider";
 interface SignUpProps {
-  setIsSignIn: any;
-  isSignIn: boolean;
+  setIsShowSignInBox: any;
 }
 
-const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
+const SignUp: FunctionComponent<SignUpProps> = ({ setIsShowSignInBox }) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -75,6 +74,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
               Create Account
             </div>
           </div>
+
           <div className="flex gap-4 mb-8">
             <button
               onClick={() =>
@@ -93,6 +93,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
               <FaFacebookF size={25} className="text-primary" />
             </button>
           </div>
+
           <p className="text-lg">or use your email account: </p>
         </div>
 
@@ -114,7 +115,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
               .email("Invalid email address")
               .required("Required"),
             password: Yup.string()
-              .required("No password provided.")
+              .required("Required")
               .min(6, "Password is too short - should be 6 chars minimum."),
           })}
           onSubmit={signUpHandler}
@@ -125,6 +126,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
                 <Field
                   name="firstName"
                   type="text"
+                  id="firstName"
                   placeholder="First name"
                   className="w-full bg-dark-lighten px-5 py-4 pr-12 rounded-xl outline-none peer text-white"
                 />
@@ -226,8 +228,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
         <p className="text-xl flex gap-2 mt-32 justify-center">
           <span>Already a member?</span>
           <button
-            type="submit"
-            onClick={() => setIsSignIn(!isSignIn)}
+            onClick={() => setIsShowSignInBox(true)}
             className="text-primary/90 underline"
           >
             Sign In

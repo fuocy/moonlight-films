@@ -15,11 +15,10 @@ import ModalNotification from "./ModalNotification";
 import { signInWithProvider } from "./signInWithProvider";
 
 interface SignInProps {
-  setIsSignIn: any;
-  isSignIn: boolean;
+  setIsShowSignInBox: any;
 }
 
-const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
+const SignIn: FunctionComponent<SignInProps> = ({ setIsShowSignInBox }) => {
   const emailRef = useRef<HTMLInputElement>(null!);
   const passwordRef = useRef<HTMLInputElement>(null!);
   const currentUser = useAppSelector((state) => state.auth.user);
@@ -56,7 +55,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
         <ModalNotification type="error" message={error} setError={setError} />
       )}
 
-      <div className="px-4 py-2 rounded-xl max-w-xl w-full min-h-[500px] text-white/70 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+      <div className="px-4 py-2 rounded-xl max-w-xl w-full min-h-[500px] text-white/70 tw-absolute-center">
         <div className="flex flex-col items-center mb-5">
           <div className="text-[50px] font-semibold mb-1 mx-auto">
             <div className="text-primary leading-none mb-4 text-center">
@@ -89,6 +88,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
             <input
               ref={emailRef}
               name="email"
+              id="email"
               type="email"
               placeholder="Email"
               className="w-full bg-dark-lighten px-5 py-4 pr-12 rounded-xl outline-none peer text-white"
@@ -96,7 +96,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
             <label
               htmlFor="email"
               className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none 
-        translate-y-[-50%] visible peer-placeholder-shown:opacity-0 peer-placeholder-shown:invisible peer-placeholder-shown:translate-y-[-10%] ease-in-out
+        -translate-y-1/2 visible peer-placeholder-shown:opacity-0 peer-placeholder-shown:invisible peer-placeholder-shown:translate-y-[-10%] ease-in-out
         `}
             >
               Email
@@ -110,6 +110,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
             <input
               ref={passwordRef}
               name="password"
+              id="password"
               type="password"
               placeholder="Password"
               className="w-full bg-dark-lighten px-5 py-4 pr-12 rounded-xl outline-none peer text-white"
@@ -135,8 +136,7 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsSignIn, isSignIn }) => {
         <p className="text-xl flex gap-2 mt-32 justify-center">
           <span>Not a member?</span>
           <button
-            type="submit"
-            onClick={() => setIsSignIn(!isSignIn)}
+            onClick={() => setIsShowSignInBox(false)}
             className="text-primary/90 underline"
           >
             Sign Up

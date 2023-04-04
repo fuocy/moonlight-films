@@ -42,9 +42,10 @@ export const getMovieFullDetail = async (id: number): Promise<FilmInfo> => {
       case 4:
         final.videos = current.data.results
           .filter((item: Video) => item.site === "YouTube")
-          .reduce((acc: any, current: Video) => {
+          .reduce((acc: Video[], current: Video) => {
             if (current.type === "Trailer") return [current, ...acc];
-            else return [...acc, current];
+
+            return [...acc, current];
           }, [] as Video[]);
         break;
     }

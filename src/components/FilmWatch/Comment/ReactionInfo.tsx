@@ -102,66 +102,54 @@ const ReactionInfo: FunctionComponent<ReactionInfoProps> = ({ docData }) => {
               (reactionEntry: any, index: number) => (
                 <li key={index}>
                   {reactionEntry[0] === "like" && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       <AiTwotoneLike
-                        className={`relative text-blue-500 -ml-1 ${
-                          index === 0 ? "z-30" : index === 1 ? "z-20" : "z-10"
-                        }`}
+                        className={`relative text-blue-500  `}
                         size={20}
                       />
                       <p>{reactionEntry[1]}</p>
                     </div>
                   )}
                   {reactionEntry[0] === "love" && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       <AiFillHeart
-                        className={`relative text-red-500 -ml-1 ${
-                          index === 0 ? "z-30" : index === 1 ? "z-20" : "z-10"
-                        }`}
+                        className={`relative text-red-500  `}
                         size={20}
                       />
                       <p>{reactionEntry[1]}</p>
                     </div>
                   )}
                   {reactionEntry[0] === "haha" && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       <BsEmojiLaughingFill
-                        className={`relative text-yellow-500 -ml-1 ${
-                          index === 0 ? "z-30" : index === 1 ? "z-20" : "z-10"
-                        }`}
+                        className={`relative text-yellow-500 `}
                         size={20}
                       />
                       <p>{reactionEntry[1]}</p>
                     </div>
                   )}
                   {reactionEntry[0] === "wow" && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       <FaSurprise
-                        className={`relative text-green-500 -ml-1 ${
-                          index === 0 ? "z-30" : index === 1 ? "z-20" : "z-10"
-                        }`}
+                        className={`relative text-green-500 `}
                         size={20}
                       />
                       <p>{reactionEntry[1]}</p>
                     </div>
                   )}
                   {reactionEntry[0] === "sad" && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       <FaSadTear
-                        className={`relative text-purple-500 -ml-1 ${
-                          index === 0 ? "z-30" : index === 1 ? "z-20" : "z-10"
-                        }`}
+                        className={`relative text-purple-500  `}
                         size={20}
                       />
                       <p>{reactionEntry[1]}</p>
                     </div>
                   )}
                   {reactionEntry[0] === "angry" && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       <FaAngry
-                        className={`relative text-orange-500 -ml-1 ${
-                          index === 0 ? "z-30" : index === 1 ? "z-20" : "z-10"
-                        }`}
+                        className={`relative text-orange-500  `}
                         size={20}
                       />
                       <p>{reactionEntry[1]}</p>
@@ -172,7 +160,7 @@ const ReactionInfo: FunctionComponent<ReactionInfoProps> = ({ docData }) => {
             )}
           </ul>
         </>
-      )}{" "}
+      )}
     </>
   );
 };

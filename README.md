@@ -51,10 +51,23 @@ The Movie Database API
 
 ![Screenshot 9](https://i.ibb.co/5BhLp4x/auth.png)
 
-![Screenshot 10](https://i.ibb.co/LrYHgCF/mobile.png)
+![Screenshot 10](https://i.ibb.co/fGgp0P0/moonlight.png)
+
+![Screenshot 11](https://i.ibb.co/z6JSPYj/404.png)
+
+![Screenshot 12](https://i.ibb.co/LrYHgCF/mobile.png)
 
 ## Start
 
 From July 19, 2022 to August 9, 2022
+
+## How to clone this project
+
+You have to create an account on the website: https://www.themoviedb.org/ to get the API KEY. You then create a file named ".env" in your root project folder.
+
+In that file, assign the API KEY that you get from the previous step to a variable named REACT_APP_API_KEY (it has to be this specific name).
+
+It looks like this:
+REACT_APP_API_KEY = a8a6fa2f944128e971223235bc3cxxxxx
 
 ### 👉 If you like this project, give it a star ✨ and share 👨🏻‍💻 it to your friends 👈

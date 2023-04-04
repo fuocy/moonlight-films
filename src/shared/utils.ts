@@ -23,8 +23,8 @@ export const embedTV = (id: number, season: number, episode: number): string =>
 
 export const calculateTimePassed = (time: number): string => {
   const unit = {
-    year: 12 * 30 * 7 * 24 * 60 * 60 * 1000,
-    month: 30 * 7 * 24 * 60 * 60 * 1000,
+    year: 12 * 30 * 24 * 60 * 60 * 1000,
+    month: 30 * 24 * 60 * 60 * 1000,
     week: 7 * 24 * 60 * 60 * 1000,
     day: 24 * 60 * 60 * 1000,
     hour: 60 * 60 * 1000,
@@ -42,17 +42,16 @@ export const calculateTimePassed = (time: number): string => {
   return "Just now";
 };
 
-export const convertErrorCodeToMessage = (errorCode: string) => {
+export const convertErrorCodeToMessage = (errorCode: string): string => {
   if (errorCode === "auth/email-already-in-use")
     return "Your email is already in use.";
-  else if (errorCode === "auth/user-not-found")
+  if (errorCode === "auth/user-not-found")
     return "Your email may be incorrect.";
-  else if (errorCode === "auth/wrong-password")
-    return "Your password is incorrect.";
-  else if (errorCode === "auth/invalid-email") return "Your email is invalid";
-  else if (errorCode === "auth/too-many-requests")
+  if (errorCode === "auth/wrong-password") return "Your password is incorrect.";
+  if (errorCode === "auth/invalid-email") return "Your email is invalid";
+  if (errorCode === "auth/too-many-requests")
     return "You request too many times!";
-  else return "Something weird happened.";
+  return "Something weird happened.";
 };
 
 export const getRandomAvatar = (): string => {

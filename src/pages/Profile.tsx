@@ -21,6 +21,7 @@ import ProfileImage from "../components/Profile/ProfileImage";
 import { auth } from "../shared/firebase";
 import { convertErrorCodeToMessage } from "../shared/utils";
 import { ToastContainer, toast } from "react-toastify";
+import BlackBackdrop from "../components/Common/BlackBackdrop";
 interface ProfileProps {}
 
 const Profile: FunctionComponent<ProfileProps> = () => {
@@ -96,18 +97,19 @@ const Profile: FunctionComponent<ProfileProps> = () => {
   const changeEmail = () => {
     const emailValue = emailValueRef.current.value;
 
-    if (!emailValue.trim().length) {
-      toast.error("You gotta type something", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      return;
-    }
+    // if (!emailValue.trim().length) {
+    //   toast.error("You gotta type something", {
+    //     position: "top-right",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    //   return;
+    // }
+
     setIsUpdating(true);
     // @ts-ignore
     updateEmail(firebaseUser, emailValue)
@@ -132,18 +134,18 @@ const Profile: FunctionComponent<ProfileProps> = () => {
 
   const changePassword = () => {
     const newPassword = newPasswordValueRef.current.value;
-    if (!newPassword.trim().length) {
-      toast.error("You gotta type something", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      return;
-    }
+    // if (!newPassword.trim().length) {
+    //   toast.error("You gotta type something", {
+    //     position: "top-right",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    //   return;
+    // }
     setIsUpdating(true);
     // @ts-ignore
     updatePassword(firebaseUser, newPassword)
@@ -202,33 +204,30 @@ const Profile: FunctionComponent<ProfileProps> = () => {
               e.preventDefault();
               reAuthentication(isShowPromptReAuthFor);
             }}
-            className="z-10 fixed md:w-[500px] md:min-h-[200px] min-h-[230px] top-[40%] md:left-[35%] left-[5%] right-[5%] bg-dark-lighten rounded-md px-3 py-2"
+            className="z-10 fixed md:w-[500px] md:min-h-[200px] min-h-[230px] top-1/2 -translate-y-1/2 md:left-1/2 md:-translate-x-1/2 left-[5%] right-[5%] bg-dark-lighten rounded-md px-3 py-2"
           >
-            <p className="text-white font-medium mb-3 text-lg text-center">
+            <p className="text-white font-medium mb-6 text-lg text-center">
               Type your password again to reauthenticate
             </p>
             <input
               ref={oldPasswordValueRef}
               type="password"
               autoFocus
-              className="bg-dark-lighten-2 py-3 mt-3 rounded-md  outline-none px-5 text-white mb-4 w-full"
+              className="bg-dark-lighten-2 py-3 rounded-md px-5 text-white mb-4 w-full"
               placeholder="Type your password..."
             />
-            <button className="px-6 py-4 bg-dark-lighten-2 rounded-xl hover:brightness-125 transition duration-300 text-white md:top-[130px] top-[160px] tw-absolute-center-horizontal">
+            <button className="px-6 py-2 bg-dark-lighten-2 rounded-xl hover:brightness-125 transition duration-300 text-white md:top-[130px] top-[160px] tw-absolute-center-horizontal">
               Continue
             </button>
           </form>
-          <div
-            onClick={() => setIsShowPromptReAuthFor(undefined)}
-            className="fixed top-0 left-0 w-full h-full z-[5] bg-black/60"
-          ></div>
+          <BlackBackdrop onClick={() => setIsShowPromptReAuthFor(undefined)} />
         </>
       )}
 
       {isUpdating && (
         <>
           <div className="border-[8px] border-primary border-t-transparent h-32 w-32 rounded-full animate-spin fixed top-[40%] left-[40%] z-10"></div>
-          <div className="fixed top-0 left-0 w-full h-full z-[5]"></div>
+          <BlackBackdrop className="!z-[5]" />
         </>
       )}
 

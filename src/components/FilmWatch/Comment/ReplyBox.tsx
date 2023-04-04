@@ -56,7 +56,7 @@ const ReplyBox: FunctionComponent<ReplyBoxProps> = ({ commendId }) => {
         <div className="w-10 h-10 rounded-full border-[3px] border-t-transparent border-primary animate-spin"></div>
       ) : (
         <button>
-          <MdSend size={30} className="text-primary " />
+          <MdSend size={30} className="text-primary" />
         </button>
       )}
     </form>

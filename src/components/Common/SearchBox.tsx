@@ -48,6 +48,7 @@ const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
     if (!searchInput.trim()) return;
 
     navigate(`/search?query=${encodeURIComponent(searchInput.trim())}`);
+
     clearTimeout(timeoutRef.current);
     setSuggestions([]);
   };
@@ -85,8 +86,8 @@ const SearchBox: FC<SearchBoxProps> = ({ autoFocus = false }) => {
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
-              className="focus:bg-red-500 outline-none"
-              tabIndex={index - 1}
+              // className="focus:bg-red-500 outline-none"
+              // tabIndex={index - 1}
             >
               <button
                 onClick={() => {

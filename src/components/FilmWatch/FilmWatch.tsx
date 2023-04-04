@@ -126,6 +126,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
             isSidebarActive={isSidebarActive}
           />
         )}
+
         <div className="flex-grow px-[2vw] md:pt-11 pt-0">
           <div className="relative h-0 pb-[56.25%]">
             {!detail && (
@@ -222,6 +223,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
                 </div>
               )}
             </div>
+
             {isMobile && detail && (
               <ul className="flex gap-2 flex-wrap mt-3">
                 {detail.genres.map((genre) => (
@@ -236,6 +238,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
                 ))}
               </ul>
             )}
+
             <div className="md:text-xl text-lg font-medium text-white mt-5">
               Overview:
             </div>
@@ -253,6 +256,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
           </div>
           <Comment media_type={media_type} id={detail?.id} />
         </div>
+
         <div className="shrink-0 md:max-w-[400px] w-full relative px-6">
           {!isMobile && <SearchBox />}
           {media_type === "movie" && (
@@ -261,11 +265,11 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
               films={recommendations?.filter((item) => item.id !== detail?.id)}
               limitNumber={4}
               isLoading={!recommendations}
-              className="md:mt-24 mt-0"
+              className="md:mt-24"
             />
           )}
           {media_type === "tv" && (
-            <div className="md:mt-24 mt-0">
+            <div className="md:mt-24">
               <p className="mb-6 text-xl font-medium flex justify-between items-center">
                 <span className="text-white">Seasons:</span>
                 <BsThreeDotsVertical size={20} />
@@ -279,6 +283,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
           )}
         </div>
       </div>
+
       <Footer />
     </>
   );

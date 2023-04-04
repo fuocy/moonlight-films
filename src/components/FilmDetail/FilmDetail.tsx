@@ -26,6 +26,7 @@ import Skeleton from "../Common/Skeleton";
 import Title from "../Common/Title";
 import Footer from "../Footer/Footer";
 import FilmTabInfo from "./FilmTabInfo";
+
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -137,6 +138,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
         )}
 
         <div className="flex-grow min-h-screen">
+          {/* BACKDROP AND GENERAL INFORMATION */}
           {!detail && (
             <Skeleton className="h-[400px] rounded-bl-2xl "></Skeleton>
           )}
@@ -148,7 +150,8 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
               className="bg-cover bg-center bg-no-repeat md:h-[400px] h-[300px] rounded-bl-2xl relative"
             >
               <div className="bg-gradient-to-br from-transparent to-black/70 h-full rounded-bl-2xl">
-                <div className="flex flex-col md:flex-row bottom-[-85%] md:bottom-[-20%]  items-start absolute left-1/2 -translate-x-1/2  w-full max-w-[1000px] ">
+                <div className="flex flex-col md:flex-row bottom-[-85%] md:bottom-[-20%]  items-start tw-absolute-center-horizontal w-full max-w-[1000px]">
+                  {/* POSTER */}
                   <div className="flex gap-5 items-center">
                     <div className="shrink-0 w-[185px] ml-3 md:ml-0">
                       <LazyLoadImage
@@ -169,9 +172,10 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                     )}
                   </div>
 
+                  {/* FILM TITLE */}
                   <div className="flex-grow md:ml-14 ml-6 mt-6 md:mt-0">
                     <div className="md:h-28 flex items-end">
-                      <h1 className=" text-white text-[45px] font-bold leading-tight ">
+                      <h1 className=" text-white text-[45px] font-bold leading-tight">
                         {(detail as DetailMovie).title ||
                           (detail as DetailTV).name}
                       </h1>
@@ -190,6 +194,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                     </ul>
                   </div>
 
+                  {/* WATCH NOW */}
                   {!isMobile && (
                     <Link
                       to="watch"
@@ -200,6 +205,8 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
                     </Link>
                   )}
                 </div>
+
+                {/* BOOKMARK BUTTONS */}
                 <div className="flex gap-3 absolute top-[5%] right-[3%]">
                   <button
                     onClick={bookmarkedHandler}
@@ -235,6 +242,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
             </div>
           )}
 
+          {/* DETAIL INFORMATION */}
           <div className="flex z-20 relative flex-col md:flex-row mt-32 md:mt-0">
             {!isMobile && (
               <div className="shrink-0 md:max-w-[150px] w-full flex items-center md:flex-col justify-center flex-row gap-20 mt-20 md:border-r border-dark-lighten pt-16">
@@ -429,6 +437,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
           />
         </div>
       </div>
+
       <Footer />
     </>
   );

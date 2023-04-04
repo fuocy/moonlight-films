@@ -19,6 +19,7 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  // deriving state
   const isCloseModalAutomatically = timeLeft === 0;
 
   useEffect(() => {

@@ -6,6 +6,7 @@ import { db } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 import { ToastContainer, toast } from "react-toastify";
+
 interface NameProps {
   setIsUpdating: any;
 }
@@ -62,7 +63,6 @@ const Name: FunctionComponent<NameProps> = ({ setIsUpdating }) => {
 
   return (
     <>
-      {" "}
       <ToastContainer />
       <div>
         <p className="text-white text-lg">Name</p>

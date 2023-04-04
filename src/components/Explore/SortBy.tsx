@@ -34,9 +34,7 @@ const SortBy: FunctionComponent<SortByProps> = () => {
       backgroundColor: isSelected ? "#989898" : "#49494b",
     }),
 
-    singleValue: (provided: any) => {
-      return { ...provided, color: "white" };
-    },
+    singleValue: (provided: any) => ({ ...provided, color: "white" }),
 
     menu: (styles: any) => ({
       ...styles,

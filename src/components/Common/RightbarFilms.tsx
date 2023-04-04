@@ -18,7 +18,7 @@ interface RightbarFilmsProps {
 const RightbarFilms: FunctionComponent<RightbarFilmsProps> = ({
   films,
   name,
-  limitNumber,
+  limitNumber = 20,
   isLoading,
   className = "",
 }) => {

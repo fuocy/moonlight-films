@@ -17,7 +17,7 @@ export const getExploreMovie: (
 
   const adjustedItems = data.results
     .filter((item: Item) => item.poster_path)
-    .map((item: any) => ({
+    .map((item: Item) => ({
       ...item,
       media_type: "movie",
     }));

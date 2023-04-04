@@ -1,11 +1,11 @@
 import { FC, HTMLProps } from "react";
 
 interface SkeletonProps {
-  className: string;
-  children: React.ReactNode;
+  className?: string;
+  children?: React.ReactNode;
 }
 
-const Skeleton: FC<HTMLProps<HTMLDivElement> | SkeletonProps> = ({
+const Skeleton: FC<HTMLProps<HTMLDivElement> & SkeletonProps> = ({
   className,
   children,
   ...others

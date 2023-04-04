@@ -5,6 +5,7 @@ import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 
 import { ToastContainer, toast } from "react-toastify";
+import BlackBackdrop from "../Common/BlackBackdrop";
 interface EmailVerificationProps {
   setIsUpdating: any;
 }
@@ -41,6 +42,7 @@ const EmailVerification: FunctionComponent<EmailVerificationProps> = ({
   return (
     <>
       <ToastContainer />
+
       {isVerificationEmailSent && (
         <>
           <div className="px-5 py-3 rounded-md z-10 bg-dark-lighten-2 md:w-[500px] fixed top-[35%] md:left-[35%] left-[5%] right-[5%] min-h-[150px]">
@@ -56,19 +58,17 @@ const EmailVerification: FunctionComponent<EmailVerificationProps> = ({
               OK
             </button>
           </div>
-          <div
-            onClick={() => setIsVerificationEmailSent(false)}
-            className="fixed top-0 left-0 w-full h-full z-[5] bg-black/60"
-          ></div>
+          <BlackBackdrop onClick={() => setIsVerificationEmailSent(false)} />
         </>
       )}
+
       <div className="mt-10 flex justify-between max-w-[600px]">
         <p className="text-white text-lg">
           {!currentUser?.emailVerified
             ? "Your email is not verified yet."
             : "Your email is verified."}
         </p>
-        {isShowSentButton && (
+        {isShowSentButton && !currentUser?.emailVerified && (
           <button
             onClick={sendVerificationEmail}
             className="text-primary underline text-lg"
@@ -76,7 +76,9 @@ const EmailVerification: FunctionComponent<EmailVerificationProps> = ({
             Send me verification email
           </button>
         )}
-        {!isShowSentButton && <p className="text-lg ">Waiting for verify</p>}
+        {!isShowSentButton && !currentUser?.emailVerified && (
+          <p className="text-lg">Waiting for verify</p>
+        )}
       </div>
     </>
   );

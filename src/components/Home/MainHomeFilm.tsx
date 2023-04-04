@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { HomeFilms } from "../../shared/types";
+import { BannerInfo, HomeFilms } from "../../shared/types";
 import Skeleton from "../Common/Skeleton";
 import BannerSlider from "../Slider/BannerSlider";
 import SectionSlider from "../Slider/SectionSlider";
 
 interface MainHomeFilmsProps {
   data: HomeFilms | undefined;
-  dataDetail: any;
+  dataDetail: BannerInfo[] | undefined;
   isLoadingBanner: boolean;
   isLoadingSection: boolean;
 }

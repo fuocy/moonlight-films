@@ -2,12 +2,12 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useCurrentParams } from "../../hooks/useCurrentParams";
 
-interface FilterByRatingProps {}
+interface FilterByRuntimeProps {}
 
 const MAX_RUNTIME = 200;
 const GAP = 20;
 
-const FilterByRating: FunctionComponent<FilterByRatingProps> = () => {
+const FilterByRuntime: FunctionComponent<FilterByRuntimeProps> = () => {
   const sliderRangeRef = useRef<HTMLDivElement>(null!);
   const location = useLocation();
 
@@ -70,7 +70,7 @@ const FilterByRating: FunctionComponent<FilterByRatingProps> = () => {
   };
 
   return (
-    <div>
+    <section>
       <div className="flex justify-between mb-3">
         <div className="flex gap-2 items-center">
           <span>From</span>
@@ -91,12 +91,14 @@ const FilterByRating: FunctionComponent<FilterByRatingProps> = () => {
           </p>
         </div>
       </div>
+
       <div className="relative h-[5px] bg-dark-darken rounded-md">
         <div
           ref={sliderRangeRef}
           className="absolute top-0 h-[5px] bg-primary rounded-md"
         ></div>
       </div>
+
       <div className="relative">
         <input
           className="absolute -top-[5px] left-0 w-full h-[5px] appearance-none [background:none] pointer-events-none tw-slider-range"
@@ -119,8 +121,8 @@ const FilterByRating: FunctionComponent<FilterByRatingProps> = () => {
           onChange={handleDragSliderRange}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
-export default FilterByRating;
+export default FilterByRuntime;

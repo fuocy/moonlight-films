@@ -52,24 +52,3 @@ const SectionSlider: FC<SectionSliderProps> = ({ films }) => {
 };
 
 export default SectionSlider;
-
-// OLD ITEM
-{
-  /* <Link to={film.media_type === "movie" ? `movie/${film.id}` : `tv/${film.id}`}>
-  <div className="shadow-sm bg-dark-darken pb-2 rounded-md overflow-hidden hover:scale-105 hover:brightness-110 transition duration-300 relative group">
-    <LazyLoadImage
-      alt="Poster film"
-      src={resizeImage(film.poster_path, "w185")}
-      className="object-cover"
-      effect="blur"
-    />
-    <p className="whitespace-nowrap overflow-hidden text-ellipsis text-base text-gray-300 mt-1 text-center px-2 group-hover:text-white transition duration-300">
-      {film.title || film.name}
-    </p>
-    <div className="bg-primary px-2 py-1 rounded-full absolute top-[5%] left-[8%] z-20 flex items-center gap-1 text-white text-xs">
-      {film.vote_average.toFixed(1)}
-      <AiFillStar size={15} />
-    </div>
-  </div>
-</Link>; */
-}

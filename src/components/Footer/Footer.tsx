@@ -8,7 +8,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
   return (
     <div className="bg-dark-lighten text-white flex justify-between items-center py-3 px-4 shadow-md mt-3">
       <p className="flex gap-2">
-        <span>Copyright _Fuocy</span>
+        <span>Copyright _fuocy</span>
         <span className="hidden md:block"> &copy; 19/7/2022</span>
       </p>
       <div className="flex gap-3 items-center">

@@ -12,3 +12,12 @@ export const SUPPORTED_QUERY = {
   from: [],
   to: [],
 };
+
+export const reactionColorForTailwindCSS = {
+  haha: "text-yellow-500",
+  like: "text-primary",
+  love: "text-red-500",
+  angry: "text-orange-500",
+  wow: "text-green-500",
+  sad: "text-purple-500",
+};

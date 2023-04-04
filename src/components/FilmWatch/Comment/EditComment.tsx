@@ -6,6 +6,7 @@ import { doc } from "firebase/firestore";
 import { db } from "../../../shared/firebase";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AiOutlineDelete } from "react-icons/ai";
+import BlackBackdrop from "../../Common/BlackBackdrop";
 interface EditCommentProps {
   singleDoc: any;
   showOptionFor: string | undefined;
@@ -80,6 +81,7 @@ const EditComment: FunctionComponent<EditCommentProps> = ({
         )}
       </div>
       {showOptionFor === singleDoc.id && (
+        // transparent overlay to cancel show edit options
         <div
           onClick={() => setShowOptionFor(undefined)}
           className="fixed top-0 left-0 w-full h-full z-[35]"
@@ -119,10 +121,10 @@ const EditComment: FunctionComponent<EditCommentProps> = ({
                 </button>
               </div>
             </div>
-            <div
+            <BlackBackdrop
               onClick={() => setIsShowPrompt(false)}
-              className="fixed top-0 left-0 w-full h-full z-40 bg-black/60"
-            ></div>
+              className="!z-40"
+            />
           </>
         )}
       </div>

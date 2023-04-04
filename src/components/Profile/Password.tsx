@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import BlackBackdrop from "../Common/BlackBackdrop";
 interface PasswordProps {
   setIsShowPromptReAuthFor: any;
   isUpdatedPassword: boolean;
@@ -30,10 +31,7 @@ const Password: FunctionComponent<PasswordProps> = ({
               OK
             </button>
           </div>
-          <div
-            onClick={() => setIsUpdatedPassword(false)}
-            className="fixed top-0 left-0 w-full h-full z-[5] bg-black/60"
-          ></div>
+          <BlackBackdrop onClick={() => setIsUpdatedPassword(false)} />
         </>
       )}
       <div className="mt-10 max-w-[600px]">
@@ -56,17 +54,17 @@ const Password: FunctionComponent<PasswordProps> = ({
             }
             setIsShowPromptReAuthFor("password");
           }}
-          className="flex justify-between gap-32 items-center"
+          className="flex gap-32 items-center"
         >
           <div className="flex-1">
             <input
               ref={newPasswordValueRef}
               type="password"
-              className="bg-dark-lighten py-3 rounded-md  outline-none px-5 text-white w-full"
+              className="bg-dark-lighten py-3 rounded-md  outline-none px-5 text-black w-full"
               placeholder="New password"
             />
           </div>
-          <button className="px-6 py-4 bg-dark-lighten-2 rounded-xl hover:bg-dark-lighten transition duration-300 text-white">
+          <button className="px-6 py-2 bg-dark-lighten-2 rounded-xl hover:bg-dark-lighten transition duration-300 text-white">
             Update
           </button>
         </form>

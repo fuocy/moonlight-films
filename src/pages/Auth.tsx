@@ -7,7 +7,7 @@ import { useCurrentViewportView } from "../hooks/useCurrentViewportView";
 interface AuthProps {}
 
 const Auth: FunctionComponent<AuthProps> = () => {
-  const [isSignIn, setIsSignIn] = useState(true);
+  const [isShowSignInBox, setIsShowSignInBox] = useState(true);
   const { isMobile } = useCurrentViewportView();
   return (
     <>
@@ -29,8 +29,8 @@ const Auth: FunctionComponent<AuthProps> = () => {
       )}
 
       <div className="md:bg-black/80 bg-dark min-h-screen">
-        {!isSignIn && <SignUp setIsSignIn={setIsSignIn} isSignIn={isSignIn} />}
-        {isSignIn && <SignIn setIsSignIn={setIsSignIn} isSignIn={isSignIn} />}
+        {!isShowSignInBox && <SignUp setIsShowSignInBox={setIsShowSignInBox} />}
+        {isShowSignInBox && <SignIn setIsShowSignInBox={setIsShowSignInBox} />}
       </div>
     </>
   );

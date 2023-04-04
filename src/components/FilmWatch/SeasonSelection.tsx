@@ -22,8 +22,8 @@ const Season: FunctionComponent<SeasonProps> = ({
   seasonId,
   episodeId,
 }) => {
-  const [seasonExpanded, setSeasonExpanded] = useState<number | undefined>(
-    seasonId
+  const [isSeasonExpanded, setIsSeasonExpanded] = useState<boolean>(
+    season.season_number === 1
   );
   const [list] = useAutoAnimate();
   return (
@@ -33,13 +33,7 @@ const Season: FunctionComponent<SeasonProps> = ({
       // key={season.id}:  key is now set for custom component named Season
     >
       <button
-        onClick={() =>
-          setSeasonExpanded(
-            seasonExpanded !== season.season_number
-              ? season.season_number
-              : undefined
-          )
-        }
+        onClick={() => setIsSeasonExpanded((prev) => !prev)}
         className="inline-flex items-center w-full gap-7 hover:bg-dark-lighten transiton duration-300 rounded-md px-2 pt-2 pb-1"
       >
         <div className="shrink-0 max-w-[100px] w-full">
@@ -68,7 +62,7 @@ const Season: FunctionComponent<SeasonProps> = ({
         </div>
       </button>
 
-      {seasonExpanded === season.season_number && (
+      {isSeasonExpanded && (
         <ul className="flex flex-col gap-4 pl-6 mt-2">
           {season.episodes.map((episode) => (
             <li key={episode.id}>
@@ -123,12 +117,12 @@ const SeasonSelection: FunctionComponent<SeasonSelectionProps> = ({
   seasonId,
   episodeId,
 }) => {
-  const [parent] = useAutoAnimate();
+  // const [parent] = useAutoAnimate();
 
   return (
     <ul
       // @ts-ignore
-      ref={parent}
+      // ref={parent}
       className="flex flex-col gap-4 max-h-[750px] overflow-y-auto"
     >
       {detailSeasons &&

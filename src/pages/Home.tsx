@@ -16,8 +16,9 @@ import {
   getMovieBannerInfo,
   getTVBannerInfo,
 } from "../services/home";
-import { HomeFilms, Item } from "../shared/types";
+import { BannerInfo, HomeFilms, Item } from "../shared/types";
 import { useAppSelector } from "../store/hooks";
+
 const Home: FC = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [currentTab, setCurrentTab] = useState(
@@ -37,7 +38,7 @@ const Home: FC = () => {
     isLoading: isLoadingMovieDetail,
     isError: isErrorMovieDetail,
     error: errorMovieDetail,
-  } = useQuery<any, Error>(
+  } = useQuery<BannerInfo[], Error>(
     ["detailMovies", dataMovie?.Trending],
     () => getMovieBannerInfo(dataMovie?.Trending as Item[]),
     { enabled: !!dataMovie?.Trending }
@@ -55,7 +56,7 @@ const Home: FC = () => {
     isLoading: isLoadingTVDetail,
     isError: isErrorTVDetail,
     error: errorTVDetail,
-  } = useQuery<any, Error>(
+  } = useQuery<BannerInfo[], Error>(
     ["detailTvs", dataTV?.Trending],
     () => getTVBannerInfo(dataTV?.Trending as Item[]),
     { enabled: !!dataTV?.Trending }
@@ -71,7 +72,7 @@ const Home: FC = () => {
 
   return (
     <>
-      <Title value="Moonlight | Watching Website" />
+      <Title value="Moonlight | Watch Films You Like" />
 
       <div className="flex md:hidden justify-between items-center px-5 my-5">
         <Link to="/" className="flex gap-2 items-center">
