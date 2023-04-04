@@ -8,11 +8,13 @@ body {
   @apply bg-dark text-gray-lighten font-roboto;
 }
 
-/* to prevent horizontal scrolling in small viewport width, I need to set the property overflow-x-hidden on both the body and html selector */
-/* for the sake of safety, I could also reset this property on big viewport width, by adding: md:overflow-x-visible */
+/* to prevent horizontal scrolling in small viewport width, I need to set the property overflow-x-hidden on both the body and html element */
+
+/* for the property position: sticky used on this website to work properly, we need to reset the property overflow to its default value on big viewport width, by adding: md:overflow-x-visible (because position: sticky doesn't work as expected when descendant element (body, html) has property overflow set to hidden)*/
+
 body,
 :root {
-  @apply overflow-x-hidden;
+  @apply overflow-x-hidden md:overflow-x-visible;
 }
 
 /* CUSTOM UTILITIES */
