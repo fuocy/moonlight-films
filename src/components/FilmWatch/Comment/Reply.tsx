@@ -49,11 +49,6 @@ const Reply: FunctionComponent<ReplyProps> = ({ commendId }) => {
             GMaGmpy8ZaRBEhtaoZJdd9pNNXz1: "haha",
             UNuwtFtu69YHDGTs2emT6O8ClSG3: "haha",
           },
-          // reactions: {
-          //   "6Lg5V78TSEWckhcLAh2DVwq5uBQ2": "haha",
-          //   "7heoxozOe1W14I5sYUgAPr50Zj52": "love",
-          //   DyXuUkhd9aTbJIeUn8Sgagoiv042: "love",
-          // },
           createdAt: Timestamp.fromDate(
             new Date("Sat Aug 06 2022 10:10:32 GMT+0700 (Indochina Time)")
           ),

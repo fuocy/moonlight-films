@@ -146,7 +146,10 @@ const CommentUserContent: FunctionComponent<CommentUserContentProps> = ({
           return (
             <Fragment key={doc.id}>
               {!commentHiden.includes(doc.id) && (
-                <li className="mb-6 flex md:gap-4 gap-2 items-start last:mb-0">
+                <li
+                  key={doc.id}
+                  className="mb-6 flex md:gap-4 gap-2 items-start last:mb-0"
+                >
                   <div className="w-[44px] h-[44px] shrink-0">
                     <LazyLoadImage
                       src={docData.user.photoURL as string}

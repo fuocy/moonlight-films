@@ -29,9 +29,8 @@ function App() {
   );
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
-
+    let unSubDoc: () => void;
+    const unSubAuth: () => void = onAuthStateChanged(auth, (user) => {
       if (!user) {
         dispatch(setCurrentUser(null));
         setIsSignedIn(false);
@@ -43,7 +42,7 @@ function App() {
       localStorage.setItem("isSignedIn", "1");
 
       if (user.providerData[0].providerId === "google.com") {
-        onSnapshot(doc(db, "users", user.uid), (doc) => {
+        unSubDoc = onSnapshot(doc(db, "users", user.uid), (doc) => {
           dispatch(
             setCurrentUser({
               displayName:
@@ -56,7 +55,7 @@ function App() {
           );
         });
       } else if (user.providerData[0].providerId === "facebook.com") {
-        onSnapshot(doc(db, "users", user.uid), (doc) => {
+        unSubDoc = onSnapshot(doc(db, "users", user.uid), (doc) => {
           dispatch(
             setCurrentUser({
               displayName:
@@ -71,7 +70,7 @@ function App() {
           );
         });
       } else {
-        onSnapshot(doc(db, "users", user.uid), (doc) => {
+        unSubDoc = onSnapshot(doc(db, "users", user.uid), (doc) => {
           dispatch(
             setCurrentUser({
               displayName:
@@ -85,6 +84,11 @@ function App() {
         });
       }
     });
+
+    return () => {
+      unSubAuth();
+      unSubDoc();
+    };
   }, [dispatch]);
 
   useEffect(() => {

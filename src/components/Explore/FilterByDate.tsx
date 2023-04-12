@@ -1,24 +1,18 @@
 import React, { FunctionComponent } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useCurrentParams } from "../../hooks/useCurrentParams";
 
 interface FilterByDateProps {}
 
 const FilterByDate: FunctionComponent<FilterByDateProps> = () => {
-  const [currentSearchParams] = useCurrentParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleFilterDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "from") {
-      setSearchParams({
-        ...currentSearchParams,
-        from: e.target.value,
-      });
+      searchParams.set("from", e.target.value);
+      setSearchParams(searchParams);
     } else {
-      setSearchParams({
-        ...currentSearchParams,
-        to: e.target.value,
-      });
+      searchParams.set("to", e.target.value);
+      setSearchParams(searchParams);
     }
   };
 

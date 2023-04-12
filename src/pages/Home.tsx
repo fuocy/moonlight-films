@@ -18,6 +18,7 @@ import {
 } from "../services/home";
 import { BannerInfo, HomeFilms, Item } from "../shared/types";
 import { useAppSelector } from "../store/hooks";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Home: FC = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
@@ -25,6 +26,7 @@ const Home: FC = () => {
     localStorage.getItem("currentTab") || "tv"
   );
   const [isSidebarActive, setIsSidebarActive] = useState(false);
+  const [parent] = useAutoAnimate();
 
   const {
     data: dataMovie,
@@ -95,7 +97,11 @@ const Home: FC = () => {
           isSidebarActive={isSidebarActive}
         />
 
-        <div className="flex-grow md:pt-7 pt-0 pb-7 border-x md:px-[2vw] px-[4vw] border-gray-darken min-h-screen">
+        <div
+          // @ts-ignore
+          ref={parent}
+          className="flex-grow md:pt-7 pt-0 pb-7 border-x md:px-[2vw] px-[4vw] border-gray-darken min-h-screen"
+        >
           <div className="flex justify-between md:items-end items-center">
             <div className="inline-flex gap-[40px] pb-[14px] border-b border-gray-darken relative">
               <button

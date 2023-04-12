@@ -47,49 +47,6 @@ const UserWhoReact: FunctionComponent<UserWhoReactProps> = ({
     setInfoReactionUser(reactionInfo);
   }, [docData.reactions]);
 
-  // const infoReactionUserFake = [
-  //   {
-  //     user: {
-  //       firstName: "phuoc",
-  //       lastName: "huu",
-  //       photoUrl: "/me.jpg",
-  //     },
-  //     reaction: "sad",
-  //   },
-  //   {
-  //     user: {
-  //       firstName: "phuoc",
-  //       lastName: "huu",
-  //       photoUrl: "/me.jpg",
-  //     },
-  //     reaction: "sad",
-  //   },
-  //   {
-  //     user: {
-  //       firstName: "phuoc",
-  //       lastName: "huu",
-  //       photoUrl: "/me.jpg",
-  //     },
-  //     reaction: "haha",
-  //   },
-  //   {
-  //     user: {
-  //       firstName: "phuoc",
-  //       lastName: "huu",
-  //       photoUrl: "/me.jpg",
-  //     },
-  //     reaction: "love",
-  //   },
-  //   {
-  //     user: {
-  //       firstName: "phuoc",
-  //       lastName: "huu",
-  //       photoUrl: "/me.jpg",
-  //     },
-  //     reaction: "love",
-  //   },
-  // ];
-
   return (
     <>
       {isShowReactionData && (

@@ -127,17 +127,6 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
             <p>Explore</p>
           </Link>
 
-          {/* <Link
-            to="/shorts"
-            className={`flex gap-5 items-center  ${
-              location.pathname === "/shorts" &&
-              "!text-primary border-r-4 border-primary font-medium"
-            } hover:text-white transition duration-300`}
-          >
-            <TbBrandTiktok size={30} />
-            <p>Shorts</p>
-          </Link> */}
-
           <Link
             to="/search"
             className={`flex gap-6 items-center  ${

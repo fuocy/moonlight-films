@@ -39,7 +39,6 @@ const Email: FunctionComponent<EmailProps> = ({
         {isUpdatingEmail && (
           <>
             <form
-              // onSubmit={changeEmail}
               onSubmit={(e) => {
                 e.preventDefault();
                 if (!emailValueRef.current.value.trim().length) {

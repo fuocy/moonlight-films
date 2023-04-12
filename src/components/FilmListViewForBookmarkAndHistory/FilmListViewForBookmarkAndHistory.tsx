@@ -13,6 +13,7 @@ import { useAppSelector } from "../../store/hooks";
 import BookmarkResult from "../Bookmark/BookmarkResult";
 import Sidebar from "../Common/Sidebar";
 import Skeleton from "../Common/Skeleton";
+import BlackBackdrop from "../Common/BlackBackdrop";
 
 interface FilmListViewForBookmarkAndHistoryProps {
   films: Item[];
@@ -41,8 +42,8 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
 
   const tabs = [
     { label: "All", value: "all", id: 1 },
-    { label: "TV Show", value: "tv", id: 3 },
-    { label: "Movie", value: "movie", id: 2 },
+    { label: "TV Show", value: "tv", id: 2 },
+    { label: "Movie", value: "movie", id: 3 },
   ];
 
   const selectAllHandler = () => {
@@ -121,10 +122,10 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
                 </button>
               </div>
             </div>
-            <div
+            <BlackBackdrop
               onClick={() => setIsShowPrompt(false)}
-              className="fixed top-0 left-0 w-full h-full z-30 bg-black/60"
-            ></div>
+              className="!z-30"
+            />
           </>
         )}
       </div>
@@ -228,7 +229,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
                 <button
                   onClick={() => setIsShowPrompt(true)}
                   disabled={selections.length === 0}
-                  className="disabled:text-gray-700 text-lg hover:text-red-500 transition duration-300 flex gap-2 items-center"
+                  className="disabled:text-gray-600 text-lg hover:text-red-500 transition duration-300 flex gap-2 items-center"
                 >
                   <AiOutlineDelete size={25} />
                   <p>Clear</p>
@@ -252,7 +253,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
             }`}
           >
             {isLoading &&
-              [...new Array(6)].map((_, index) => (
+              [...new Array(12)].map((_, index) => (
                 <li key={index}>
                   <Skeleton className="h-0 pb-[160%]" />
                 </li>

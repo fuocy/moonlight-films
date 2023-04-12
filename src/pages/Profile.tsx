@@ -97,25 +97,12 @@ const Profile: FunctionComponent<ProfileProps> = () => {
   const changeEmail = () => {
     const emailValue = emailValueRef.current.value;
 
-    // if (!emailValue.trim().length) {
-    //   toast.error("You gotta type something", {
-    //     position: "top-right",
-    //     autoClose: 2000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //   });
-    //   return;
-    // }
-
     setIsUpdating(true);
     // @ts-ignore
     updateEmail(firebaseUser, emailValue)
       .then(() => {
         setIsUpdatingEmail(false);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -134,18 +121,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
 
   const changePassword = () => {
     const newPassword = newPasswordValueRef.current.value;
-    // if (!newPassword.trim().length) {
-    //   toast.error("You gotta type something", {
-    //     position: "top-right",
-    //     autoClose: 2000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //   });
-    //   return;
-    // }
+
     setIsUpdating(true);
     // @ts-ignore
     updatePassword(firebaseUser, newPassword)

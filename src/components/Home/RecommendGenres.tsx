@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { getRecommendGenres2 } from "../../services/search";
 import { getRecommendGenres2Type } from "../../shared/types";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const getRandomGenres = (genres: { id: number; name: string }[]) => {
   // const NUMBER_OF_GENRES = 6;
@@ -26,6 +27,7 @@ const RecommendGenres: FC<RecommendGenresProps> = ({ currentTab }) => {
     getRecommendGenres2Type,
     Error
   >(["genres"], getRecommendGenres2);
+  const [parent] = useAutoAnimate();
 
   if (isError) return <div>ERROR: {error.message}</div>;
 
@@ -40,7 +42,11 @@ const RecommendGenres: FC<RecommendGenresProps> = ({ currentTab }) => {
   );
 
   return (
-    <ul className="mt-28 flex gap-3 flex-wrap ">
+    <ul
+      // @ts-ignore
+      ref={parent}
+      className="mt-28 flex gap-3 flex-wrap "
+    >
       {randomGenres.map((genre) => (
         <li key={genre.id} className="mb-2">
           <Link
