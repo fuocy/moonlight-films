@@ -51,7 +51,7 @@ const UserWhoReact: FunctionComponent<UserWhoReactProps> = ({
     <>
       {isShowReactionData && (
         <BlackBackdrop
-          onClick={() => setIsShowReactionData(false)}
+          onCloseBlackBackdrop={() => setIsShowReactionData(false)}
           className="!z-40"
         >
           <div

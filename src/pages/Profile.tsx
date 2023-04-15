@@ -196,7 +196,9 @@ const Profile: FunctionComponent<ProfileProps> = () => {
               Continue
             </button>
           </form>
-          <BlackBackdrop onClick={() => setIsShowPromptReAuthFor(undefined)} />
+          <BlackBackdrop
+            onCloseBlackBackdrop={() => setIsShowPromptReAuthFor(undefined)}
+          />
         </>
       )}
 

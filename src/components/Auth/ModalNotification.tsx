@@ -80,7 +80,10 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
           <p>({timeLeft})</p>
         </button>
       </div>
-      <BlackBackdrop onClick={() => setError("")} className="!z-20" />
+      <BlackBackdrop
+        onCloseBlackBackdrop={() => setError("")}
+        className="!z-20"
+      />
     </>
   );
 };

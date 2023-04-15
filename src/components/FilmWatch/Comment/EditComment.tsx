@@ -122,7 +122,7 @@ const EditComment: FunctionComponent<EditCommentProps> = ({
               </div>
             </div>
             <BlackBackdrop
-              onClick={() => setIsShowPrompt(false)}
+              onCloseBlackBackdrop={() => setIsShowPrompt(false)}
               className="!z-40"
             />
           </>

@@ -31,7 +31,9 @@ const Password: FunctionComponent<PasswordProps> = ({
               OK
             </button>
           </div>
-          <BlackBackdrop onClick={() => setIsUpdatedPassword(false)} />
+          <BlackBackdrop
+            onCloseBlackBackdrop={() => setIsUpdatedPassword(false)}
+          />
         </>
       )}
       <div className="mt-10 max-w-[600px]">

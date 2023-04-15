@@ -45,7 +45,7 @@ const DeleteAccount: FunctionComponent<DeleteAccountProps> = ({
             </div>
           </div>
           <BlackBackdrop
-            onClick={() => setIsShowPrompt(false)}
+            onCloseBlackBackdrop={() => setIsShowPrompt(false)}
             className="!z-40"
           />
         </>

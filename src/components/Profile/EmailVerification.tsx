@@ -58,7 +58,9 @@ const EmailVerification: FunctionComponent<EmailVerificationProps> = ({
               OK
             </button>
           </div>
-          <BlackBackdrop onClick={() => setIsVerificationEmailSent(false)} />
+          <BlackBackdrop
+            onCloseBlackBackdrop={() => setIsVerificationEmailSent(false)}
+          />
         </>
       )}
 

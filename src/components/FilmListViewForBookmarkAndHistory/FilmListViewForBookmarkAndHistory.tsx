@@ -123,7 +123,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
               </div>
             </div>
             <BlackBackdrop
-              onClick={() => setIsShowPrompt(false)}
+              onCloseBlackBackdrop={() => setIsShowPrompt(false)}
               className="!z-30"
             />
           </>
