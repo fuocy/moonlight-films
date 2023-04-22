@@ -14,10 +14,10 @@ import { useAppSelector } from "../../store/hooks";
 
 interface SidebarProps {
   isSidebarActive: boolean;
-  setIsSidebarActive: any;
+  onCloseSidebar: () => void;
 }
 
-const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
+const Sidebar: FC<SidebarProps> = ({ isSidebarActive, onCloseSidebar }) => {
   const location = useLocation();
   const currentUser = useAppSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -200,7 +200,7 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
       </div>
 
       <div
-        onClick={() => setIsSidebarActive(false)}
+        onClick={onCloseSidebar}
         className={`bg-black/60 z-[5] fixed top-0 left-0 w-full h-full md:opacity-0 transition duration-300 ${
           isSidebarActive ? "opacity-100 visible" : "opacity-0 invisible"
         }`}

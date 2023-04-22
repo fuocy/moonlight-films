@@ -211,7 +211,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
 
       <div className="flex">
         <Sidebar
-          setIsSidebarActive={setIsSidebarActive}
+          onCloseSidebar={() => setIsSidebarActive(false)}
           isSidebarActive={isSidebarActive}
         />
         <div className="flex-grow pt-7 md:pl-10 px-3">
@@ -233,7 +233,9 @@ const Profile: FunctionComponent<ProfileProps> = () => {
 
               <div className="mt-7 max-w-[600px] w-full flex flex-col gap-3">
                 <Email
-                  setIsShowPromptReAuthFor={setIsShowPromptReAuthFor}
+                  onShowPromptReAuthForEmail={() =>
+                    setIsShowPromptReAuthFor("email")
+                  }
                   isUpdatingEmail={isUpdatingEmail}
                   setIsUpdatingEmail={setIsUpdatingEmail}
                   emailValueRef={emailValueRef}
@@ -244,14 +246,18 @@ const Profile: FunctionComponent<ProfileProps> = () => {
               <EmailVerification setIsUpdating={setIsUpdating} />
 
               <Password
-                setIsShowPromptReAuthFor={setIsShowPromptReAuthFor}
+                onShowPromptReAuthForPassword={() =>
+                  setIsShowPromptReAuthFor("password")
+                }
                 isUpdatedPassword={isUpdatedPassword}
                 setIsUpdatedPassword={setIsUpdatedPassword}
                 newPasswordValueRef={newPasswordValueRef}
               />
 
               <DeleteAccount
-                setIsShowPromptReAuthFor={setIsShowPromptReAuthFor}
+                onShowPromptReAuthForDeleteAccount={() =>
+                  setIsShowPromptReAuthFor("delete")
+                }
               />
             </div>
             <ProfileImage />

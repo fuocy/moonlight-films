@@ -52,7 +52,11 @@ const SignIn: FunctionComponent<SignInProps> = ({ setIsShowSignInBox }) => {
         </div>
       )}
       {error && (
-        <ModalNotification type="error" message={error} setError={setError} />
+        <ModalNotification
+          type="error"
+          message={error}
+          onCloseModal={() => setError("")}
+        />
       )}
 
       <div className="px-4 py-2 rounded-xl max-w-xl w-full min-h-[500px] text-white/70 tw-absolute-center">

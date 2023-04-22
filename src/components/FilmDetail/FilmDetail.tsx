@@ -132,7 +132,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
         {!isMobile && <SidebarMini />}
         {isMobile && (
           <Sidebar
-            setIsSidebarActive={setIsSidebarActive}
+            onCloseSidebar={() => setIsSidebarActive(false)}
             isSidebarActive={isSidebarActive}
           />
         )}

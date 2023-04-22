@@ -3,11 +3,11 @@ import { AiOutlineDelete } from "react-icons/ai";
 import BlackBackdrop from "../Common/BlackBackdrop";
 
 interface DeleteAccountProps {
-  setIsShowPromptReAuthFor: any;
+  onShowPromptReAuthForDeleteAccount: () => void;
 }
 
 const DeleteAccount: FunctionComponent<DeleteAccountProps> = ({
-  setIsShowPromptReAuthFor,
+  onShowPromptReAuthForDeleteAccount,
 }) => {
   const [isShowPrompt, setIsShowPrompt] = useState(false);
 
@@ -35,7 +35,7 @@ const DeleteAccount: FunctionComponent<DeleteAccountProps> = ({
               </button>
               <button
                 onClick={() => {
-                  setIsShowPromptReAuthFor("delete");
+                  onShowPromptReAuthForDeleteAccount();
                   setIsShowPrompt(false);
                 }}
                 className="px-6 py-1 rounded-md text-white bg-red-500 hover:bg-red-600 transition duration-300"

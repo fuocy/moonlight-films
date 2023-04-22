@@ -108,7 +108,7 @@ const Explore: FunctionComponent<ExploreProps> = () => {
         {!isMobile && <SidebarMini />}
         {isMobile && (
           <Sidebar
-            setIsSidebarActive={setIsSidebarActive}
+            onCloseSidebar={() => setIsSidebarActive(false)}
             isSidebarActive={isSidebarActive}
           />
         )}

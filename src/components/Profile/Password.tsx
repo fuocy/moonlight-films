@@ -2,14 +2,14 @@ import { FunctionComponent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import BlackBackdrop from "../Common/BlackBackdrop";
 interface PasswordProps {
-  setIsShowPromptReAuthFor: any;
+  onShowPromptReAuthForPassword: () => void;
   isUpdatedPassword: boolean;
   setIsUpdatedPassword: any;
   newPasswordValueRef: any;
 }
 
 const Password: FunctionComponent<PasswordProps> = ({
-  setIsShowPromptReAuthFor,
+  onShowPromptReAuthForPassword,
   isUpdatedPassword,
   setIsUpdatedPassword,
   newPasswordValueRef,
@@ -54,7 +54,7 @@ const Password: FunctionComponent<PasswordProps> = ({
               });
               return;
             }
-            setIsShowPromptReAuthFor("password");
+            onShowPromptReAuthForPassword();
           }}
           className="flex gap-32 items-center"
         >

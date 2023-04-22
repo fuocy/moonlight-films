@@ -122,7 +122,7 @@ const FilmWatch: FunctionComponent<FilmWatchProps & getWatchReturnedType> = ({
         {!isMobile && <SidebarMini />}
         {isMobile && (
           <Sidebar
-            setIsSidebarActive={setIsSidebarActive}
+            onCloseSidebar={() => setIsSidebarActive(false)}
             isSidebarActive={isSidebarActive}
           />
         )}

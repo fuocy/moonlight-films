@@ -5,14 +5,14 @@ import BlackBackdrop from "../Common/BlackBackdrop";
 interface ModalNotificationProps {
   type: string;
   message: string;
-  setError?: any;
+  onCloseModal?: () => void;
 }
 const TIMEOUT_AUTO_CLOSE_ERROR = 5;
 const TIMEOUT_AUTO_CLOSE_SUCCESS = 2;
 const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
   type,
   message,
-  setError,
+  onCloseModal,
 }) => {
   const [timeLeft, setTimeLeft] = useState(
     type === "success" ? TIMEOUT_AUTO_CLOSE_SUCCESS : TIMEOUT_AUTO_CLOSE_ERROR
@@ -28,7 +28,7 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
       if (type === "success") {
         navigate(`${searchParams.get("redirect") || "/"}`);
       } else {
-        setError("");
+        onCloseModal?.();
       }
     }
     // eslint-disable-next-line
@@ -67,7 +67,7 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
             if (type === "success") {
               navigate(`${searchParams.get("redirect") || "/"}`);
             } else {
-              setError("");
+              onCloseModal?.();
             }
           }}
           className={`${
@@ -80,10 +80,7 @@ const ModalNotification: FunctionComponent<ModalNotificationProps> = ({
           <p>({timeLeft})</p>
         </button>
       </div>
-      <BlackBackdrop
-        onCloseBlackBackdrop={() => setError("")}
-        className="!z-20"
-      />
+      <BlackBackdrop onCloseBlackBackdrop={onCloseModal} className="!z-20" />
     </>
   );
 };

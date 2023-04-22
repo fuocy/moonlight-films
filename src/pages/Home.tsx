@@ -93,7 +93,7 @@ const Home: FC = () => {
 
       <div className="flex items-start">
         <Sidebar
-          setIsSidebarActive={setIsSidebarActive}
+          onCloseSidebar={() => setIsSidebarActive(false)}
           isSidebarActive={isSidebarActive}
         />
 

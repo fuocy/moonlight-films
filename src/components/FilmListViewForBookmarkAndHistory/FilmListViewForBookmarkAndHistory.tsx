@@ -165,9 +165,8 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
       </div>
 
       <div className="flex">
-        {/* <SidebarMini /> */}
         <Sidebar
-          setIsSidebarActive={setIsSidebarActive}
+          onCloseSidebar={() => setIsSidebarActive(false)}
           isSidebarActive={isSidebarActive}
         />
         <div className="flex-grow px-[2vw] pb-16 pt-7 min-h-screen">

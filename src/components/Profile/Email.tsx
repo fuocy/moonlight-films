@@ -4,14 +4,14 @@ import { BiSend } from "react-icons/bi";
 import { useAppSelector } from "../../store/hooks";
 import { ToastContainer, toast } from "react-toastify";
 interface EmailProps {
-  setIsShowPromptReAuthFor: any;
+  onShowPromptReAuthForEmail: () => void;
   isUpdatingEmail: boolean;
   setIsUpdatingEmail: any;
   emailValueRef: any;
 }
 
 const Email: FunctionComponent<EmailProps> = ({
-  setIsShowPromptReAuthFor,
+  onShowPromptReAuthForEmail,
   isUpdatingEmail,
   setIsUpdatingEmail,
   emailValueRef,
@@ -53,7 +53,7 @@ const Email: FunctionComponent<EmailProps> = ({
                   });
                   return;
                 }
-                setIsShowPromptReAuthFor("email");
+                onShowPromptReAuthForEmail();
               }}
               className="flex justify-between gap-48 mt-1"
             >

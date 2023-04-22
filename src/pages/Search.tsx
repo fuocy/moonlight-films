@@ -51,9 +51,8 @@ const Search: FunctionComponent<SearchProps> = () => {
 
       {/* <div className="bg-black/90 z-10 pb-5"> */}
       <div className="flex min-h-screen">
-        {/* <SidebarMini /> */}
         <Sidebar
-          setIsSidebarActive={setIsSidebarActive}
+          onCloseSidebar={() => setIsSidebarActive(false)}
           isSidebarActive={isSidebarActive}
         />
         <div className="flex-grow">
