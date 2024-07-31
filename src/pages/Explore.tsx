@@ -11,6 +11,7 @@ import ExploreFilter from "../components/Explore/ExploreFilter";
 import ExploreResult from "../components/Explore/ExploreResult";
 import { useCurrentViewportView } from "../hooks/useCurrentViewportView";
 import { ConfigType } from "../shared/types";
+import { debounce } from "lodash-es";
 interface ExploreProps {}
 
 const Explore: FunctionComponent<ExploreProps> = () => {
@@ -22,14 +23,14 @@ const Explore: FunctionComponent<ExploreProps> = () => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   useEffect(() => {
-    const checkIfShowScrollUpBtn = () => {
+    const checkIfShowScrollUpBtn = debounce(() => {
       const scrollOffset = document.documentElement.scrollTop;
       if (scrollOffset > 1000) {
         setIsShowScrollUpBtn(true);
       } else {
         setIsShowScrollUpBtn(false);
       }
-    };
+    }, 300);
 
     window.addEventListener("scroll", checkIfShowScrollUpBtn);
 

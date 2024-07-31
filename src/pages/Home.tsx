@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FC, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -10,16 +10,8 @@ import Footer from "../components/Footer/Footer";
 import MainHomeFilms from "../components/Home/MainHomeFilm";
 import RecommendGenres from "../components/Home/RecommendGenres";
 import TrendingNow from "../components/Home/TrendingNow";
-import {
-  getHomeMovies,
-  getHomeTVs,
-  getMovieBannerInfo,
-  getTVBannerInfo,
-} from "../services/home";
-import { BannerInfo, HomeFilms, Item } from "../shared/types";
-import { useAppSelector } from "../store/hooks";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useHomeData } from "../hooks/useHomeData";
+import { useAppSelector } from "../store/hooks";
 
 const Home: FC = () => {
   const currentUser = useAppSelector((state) => state.auth.user);

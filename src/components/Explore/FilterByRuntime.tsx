@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MAX_RUNTIME, GAP } from "../../shared/constants";
+import { useDebounce } from "../../hooks/useDebounce";
 interface FilterByRuntimeProps {}
 
 const FilterByRuntime: FunctionComponent<FilterByRuntimeProps> = () => {
@@ -9,7 +10,7 @@ const FilterByRuntime: FunctionComponent<FilterByRuntimeProps> = () => {
   const [minRuntime, setMinRuntime] = useState(0);
   const [maxRuntime, setMaxRuntime] = useState(200);
 
-  const timeoutRef = useRef<any>(null);
+  // const timeoutRef = useRef<any>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -31,9 +32,37 @@ const FilterByRuntime: FunctionComponent<FilterByRuntimeProps> = () => {
     sliderRangeRef.current.style.right = rightOffet + "%";
   };
 
-  const handleDragSliderRange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  // FOR REFERENCE: MANUALLY USE TIMEOUT REF TO MANAGE DEBOUNCE
 
+  // const handleDragSliderRange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+  //   if (e.target.name === "min-range") {
+  //     updateMinRangeBar(
+  //       maxRuntime - Number(e.target.value) < GAP
+  //         ? maxRuntime - GAP
+  //         : Number(e.target.value)
+  //     );
+
+  //     timeoutRef.current = setTimeout(() => {
+  //       searchParams.set("minRuntime", e.target.value);
+  //       setSearchParams(searchParams);
+  //     }, 500);
+  //   } else {
+  //     updateMaxRangeBar(
+  //       Number(e.target.value) - minRuntime < GAP
+  //         ? minRuntime + GAP
+  //         : Number(e.target.value)
+  //     );
+
+  //     timeoutRef.current = setTimeout(() => {
+  //       searchParams.set("maxRuntime", e.target.value);
+  //       setSearchParams(searchParams);
+  //     }, 500);
+  //   }
+  // };
+
+  const handleDragSliderRange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "min-range") {
       updateMinRangeBar(
         maxRuntime - Number(e.target.value) < GAP
@@ -41,10 +70,8 @@ const FilterByRuntime: FunctionComponent<FilterByRuntimeProps> = () => {
           : Number(e.target.value)
       );
 
-      timeoutRef.current = setTimeout(() => {
-        searchParams.set("minRuntime", e.target.value);
-        setSearchParams(searchParams);
-      }, 500);
+      // searchParams.set("minRuntime", e.target.value);
+      // setSearchParams(searchParams);
     } else {
       updateMaxRangeBar(
         Number(e.target.value) - minRuntime < GAP
@@ -52,12 +79,19 @@ const FilterByRuntime: FunctionComponent<FilterByRuntimeProps> = () => {
           : Number(e.target.value)
       );
 
-      timeoutRef.current = setTimeout(() => {
-        searchParams.set("maxRuntime", e.target.value);
-        setSearchParams(searchParams);
-      }, 500);
+      // searchParams.set("maxRuntime", e.target.value);
+      // setSearchParams(searchParams);
     }
   };
+
+  const debouncedMinRuntime = useDebounce(minRuntime, 300);
+  const debouncedMaxRuntime = useDebounce(maxRuntime, 300);
+
+  useEffect(() => {
+    searchParams.set("minRuntime", String(debouncedMinRuntime));
+    searchParams.set("maxRuntime", String(debouncedMaxRuntime));
+    setSearchParams(searchParams);
+  }, [debouncedMinRuntime, debouncedMaxRuntime, searchParams, setSearchParams]);
 
   return (
     <section>

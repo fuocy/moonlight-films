@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-
+import { debounce } from "lodash-es";
 export const useCurrentViewportView = () => {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWidth(window.innerWidth);
-    });
+    const updateWidthDebounce = debounce(
+      () => setWidth(window.innerWidth),
+      300
+    );
 
-    return () =>
-      window.removeEventListener("resize", () => {
-        setWidth(window.innerWidth);
-      });
+    window.addEventListener("resize", updateWidthDebounce);
+
+    return () => window.removeEventListener("resize", updateWidthDebounce);
   }, []);
 
   return { width, isMobile: width < 768 };
