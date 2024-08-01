@@ -14,6 +14,7 @@ import BookmarkResult from "../Bookmark/BookmarkResult";
 import Sidebar from "../Common/Sidebar";
 import Skeleton from "../Common/Skeleton";
 import BlackBackdrop from "../Common/BlackBackdrop";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 interface FilmListViewForBookmarkAndHistoryProps {
   films: Item[];
@@ -31,9 +32,9 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
   const [isSelectAll, setIsSelectAll] = useState(false);
   const [selections, setSelections] = useState<number[]>([]);
   const [isShowPrompt, setIsShowPrompt] = useState(false);
-
-  const [currentTab, setCurrentTab] = useState(
-    localStorage.getItem("bookmarkCurrentTab") || "all"
+  const [currentTab, setCurrentTab] = useLocalStorage(
+    "bookmarkCurrentTab",
+    "all"
   );
 
   const [parent] = useAutoAnimate();
@@ -185,7 +186,6 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
                   <button
                     onClick={() => {
                       setCurrentTab(tab.value);
-                      localStorage.setItem("bookmarkCurrentTab", tab.value);
                     }}
                     className={`${
                       currentTab === tab.value &&

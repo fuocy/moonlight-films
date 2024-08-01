@@ -19,14 +19,16 @@ import TVWatch from "./pages/TV/TVWatch";
 import { auth, db } from "./shared/firebase";
 import { useAppDispatch } from "./store/hooks";
 import { setCurrentUser } from "./store/slice/authSlice";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 function App() {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(
-    Number(localStorage.getItem("isSignedIn")) ? true : false
-  );
+  // const [isSignedIn, setIsSignedIn] = useState<boolean>(
+  //   Number(localStorage.getItem("isSignedIn")) ? true : false
+  // );
+  const [isSignedIn, setIsSignedIn] = useLocalStorage("isSignedIn", false);
 
   useEffect(() => {
     let unSubDoc: () => void;
@@ -34,12 +36,12 @@ function App() {
       if (!user) {
         dispatch(setCurrentUser(null));
         setIsSignedIn(false);
-        localStorage.setItem("isSignedIn", "0");
+        // localStorage.setItem("isSignedIn", "0");
         return;
       }
 
       setIsSignedIn(true);
-      localStorage.setItem("isSignedIn", "1");
+      // localStorage.setItem("isSignedIn", "1");
 
       if (user.providerData[0].providerId === "google.com") {
         unSubDoc = onSnapshot(doc(db, "users", user.uid), (doc) => {

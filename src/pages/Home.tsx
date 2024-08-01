@@ -1,5 +1,6 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { FC, useEffect, useState } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import { FC, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
@@ -15,15 +16,23 @@ import { useAppSelector } from "../store/hooks";
 
 const Home: FC = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
-  const [currentTab, setCurrentTab] = useState(
-    localStorage.getItem("currentTab") || "tv"
-  );
+
   const [isSidebarActive, setIsSidebarActive] = useState(false);
   const [parent] = useAutoAnimate();
 
-  useEffect(() => {
-    localStorage.setItem("currentTab", currentTab);
-  }, [currentTab]);
+  ///////////////////////////////////////////////////////////////////////////////////
+  // WAY 1: MANUALLY SET UP LOCAL STORAGE
+
+  // const [currentTab, setCurrentTab] = useState(
+  //   localStorage.getItem("currentTab") || "tv"
+  // );
+  // useEffect(() => {
+  //   localStorage.setItem("currentTab", currentTab);
+  // }, [currentTab]);
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  // WAY 2: USE useLocalStorage from @uidotdev/usehooks
+  const [currentTab, setCurrentTab] = useLocalStorage("currentTab", "tv");
 
   const {
     data: dataMovie,
@@ -84,12 +93,12 @@ const Home: FC = () => {
               <FilmTypeButton
                 buttonType="tv"
                 currentTab={currentTab}
-                onSetCurrentTab={(currentTab) => setCurrentTab(currentTab)}
+                onSetCurrentTab={setCurrentTab}
               />
               <FilmTypeButton
                 buttonType="movie"
                 currentTab={currentTab}
-                onSetCurrentTab={(currentTab) => setCurrentTab(currentTab)}
+                onSetCurrentTab={setCurrentTab}
               />
             </div>
             <div className="flex gap-6 items-center">

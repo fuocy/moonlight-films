@@ -12,12 +12,11 @@ import ExploreResult from "../components/Explore/ExploreResult";
 import { useCurrentViewportView } from "../hooks/useCurrentViewportView";
 import { ConfigType } from "../shared/types";
 import { debounce } from "lodash-es";
+import { useLocalStorage } from "@uidotdev/usehooks";
 interface ExploreProps {}
 
 const Explore: FunctionComponent<ExploreProps> = () => {
-  const [currentTab, setCurrentTab] = useState(
-    localStorage.getItem("currentTab") || "tv"
-  );
+  const [currentTab, setCurrentTab] = useLocalStorage("currentTab", "tv");
   const { isMobile } = useCurrentViewportView();
   const [isShowScrollUpBtn, setIsShowScrollUpBtn] = useState(false);
   const [isSidebarActive, setIsSidebarActive] = useState(false);
@@ -130,7 +129,6 @@ const Explore: FunctionComponent<ExploreProps> = () => {
             <button
               onClick={() => {
                 setCurrentTab("tv");
-                localStorage.setItem("currentTab", "tv");
                 setSearchParams({});
               }}
               className={`${
@@ -143,7 +141,6 @@ const Explore: FunctionComponent<ExploreProps> = () => {
             <button
               onClick={() => {
                 setCurrentTab("movie");
-                localStorage.setItem("currentTab", "movie");
                 setSearchParams({});
               }}
               className={`${
